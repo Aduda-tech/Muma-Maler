@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { 
   Menu, 
   MoreVertical, 
@@ -22,7 +22,10 @@ import {
   Flame,
   Sparkles,
   Sunrise,
-  UserPlus
+  UserPlus,
+  Compass,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Capacitor } from '@capacitor/core';
@@ -109,6 +112,25 @@ export default function App() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showInstallBtn, setShowInstallBtn] = useState(false);
   const [showInstallHelp, setShowInstallHelp] = useState(false);
+
+  // Quick Selector & Scroll Tracking States
+  const [isSelectorOpen, setIsSelectorOpen] = useState(false);
+  const [selectorBook, setSelectorBook] = useState('Mathayo');
+  const [selectorChapter, setSelectorChapter] = useState(1);
+  const [selectorVerse, setSelectorVerse] = useState<number | null>(null);
+  const [currentReadingVerse, setCurrentReadingVerse] = useState(1);
+  const [targetScrollVerse, setTargetScrollVerse] = useState<number | null>(null);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
+  const [selectorTab, setSelectorTab] = useState<'book' | 'chapter' | 'verse'>('book');
+
+  // Top Search/Selector States
+  const [isQuickJumpOpen, setIsQuickJumpOpen] = useState(false);
+  const [quickBook, setQuickBook] = useState('Mathayo');
+  const [quickChapter, setQuickChapter] = useState(1);
+  const [quickVerse, setQuickVerse] = useState('');
+
+  const readerScrollRef = useRef<HTMLDivElement>(null);
 
   const isNative = useMemo(() => {
     return Capacitor.isNativePlatform();
@@ -247,6 +269,123 @@ export default function App() {
     }
   };
 
+  // Synchronize selector state with current book and chapter being read
+  useEffect(() => {
+    if (selectedBook) {
+      setSelectorBook(selectedBook.name);
+      setSelectorChapter(selectedChapter);
+      if (!isSelectorOpen) {
+        setSelectorVerse(currentReadingVerse);
+      }
+    }
+  }, [selectedBook, selectedChapter, currentReadingVerse, isSelectorOpen]);
+
+  // Synchronize top Quick Jump state with current book, chapter and verse being read
+  useEffect(() => {
+    if (selectedBook && !isQuickJumpOpen) {
+      setQuickBook(selectedBook.name);
+      setQuickChapter(selectedChapter);
+      setQuickVerse(String(currentReadingVerse));
+    }
+  }, [selectedBook, selectedChapter, currentReadingVerse, isQuickJumpOpen]);
+
+  const handleCollapseQuickJump = () => {
+    if (selectedBook) {
+      setQuickBook(selectedBook.name);
+      setQuickChapter(selectedChapter);
+      setQuickVerse(String(currentReadingVerse));
+    } else {
+      setQuickBook('Mathayo');
+      setQuickChapter(1);
+      setQuickVerse('');
+    }
+    setIsQuickJumpOpen(false);
+  };
+
+  const handleQuickRead = () => {
+    const bookName = quickBook;
+    const chapterNum = quickChapter ? parseInt(String(quickChapter)) : 1;
+    const verseNum = quickVerse ? parseInt(quickVerse) : 1;
+
+    jumpToVerse(bookName, chapterNum, verseNum);
+    setIsQuickJumpOpen(false);
+  };
+
+  // Handle auto-scroll to selected target verse
+  useEffect(() => {
+    if (isReaderOpen && selectedBook && targetScrollVerse !== null) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById(`verse-${targetScrollVerse}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        setTargetScrollVerse(null);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isReaderOpen, selectedBook, selectedChapter, targetScrollVerse]);
+
+  const jumpToVerse = (bookName: string, chapterNum: number | null, verseNum: number | null) => {
+    const book = BOOKS.find(b => b.name === bookName);
+    if (!book) return;
+
+    const finalChapter = chapterNum || 1;
+    const finalVerse = verseNum || 1;
+
+    setSelectedBook(book);
+    setSelectedChapter(finalChapter);
+    setTargetScrollVerse(finalVerse);
+    setShowIntro(false);
+    setIsReaderOpen(true);
+    setIsSelectorOpen(false);
+  };
+
+  const handleReaderScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const containerTop = container.getBoundingClientRect().top;
+    
+    const verseElements = container.querySelectorAll('[id^="verse-"]');
+    let currentActiveVerse = 1;
+    let minDiff = Infinity;
+    
+    verseElements.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      const diff = Math.abs(rect.top - containerTop - 30);
+      if (diff < minDiff) {
+        minDiff = diff;
+        const idMatch = el.id.match(/verse-(\d+)/);
+        if (idMatch) {
+          currentActiveVerse = parseInt(idMatch[1]);
+        }
+      }
+    });
+    
+    setCurrentReadingVerse(currentActiveVerse);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+    setTouchStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null || touchStartY === null) return;
+    
+    const diffX = e.changedTouches[0].clientX - touchStartX;
+    const diffY = e.changedTouches[0].clientY - touchStartY;
+    
+    if (Math.abs(diffX) > 100 && Math.abs(diffY) < 60) {
+      setIsSelectorOpen(true);
+      setSelectorTab('book');
+    } else if (Math.abs(diffY) > 120 && Math.abs(diffX) < 60) {
+      setIsSelectorOpen(true);
+      setSelectorTab('book');
+    }
+    
+    setTouchStartX(null);
+    setTouchStartY(null);
+  };
+
   return (
     <div className="min-h-screen bg-[#1a1a1a] text-[#eaeaea] font-sans selection:bg-orange-500/30">
       <div className="max-w-[520px] mx-auto min-h-screen flex flex-col relative overflow-hidden bg-[#1a1a1a] shadow-2xl">
@@ -340,28 +479,142 @@ export default function App() {
             </div>
           </div>
 
-          <div className="px-3 pb-3">
-            <div className="flex items-center gap-2">
-              <div className="flex-1 flex items-center gap-2 rounded-lg px-3 py-2 bg-white h-11">
-                <Search size={20} className="text-[#888]" />
-                <input 
-                  type="text" 
-                  placeholder="Search" 
-                  className="w-full bg-transparent outline-none text-base text-black placeholder:text-[#888]"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-              <button 
-                onClick={() => setSearchQuery('')}
-                className="bg-[#555] text-white font-bold h-11 px-5 rounded-lg text-sm tracking-wider"
-              >
-                CANCEL
-              </button>
+          {/* Collapsible Search & Scripture Reference Navigation Box */}
+          <div className="relative border-b border-white/5 bg-[#252525]/30 group/nav transition-all duration-300">
+            {/* The Toggle Bar - transparent by default, becomes visible when cursor hovers over it, or when open */}
+            <div 
+              className={cn(
+                "flex justify-center items-center h-8 cursor-pointer select-none transition-all duration-300",
+                "bg-[#202020]/20 hover:bg-[#202020]/80 border-b border-white/5",
+                isQuickJumpOpen ? "opacity-100" : "opacity-35 hover:opacity-100 focus-within:opacity-100"
+              )}
+              onClick={() => {
+                if (isQuickJumpOpen) {
+                  handleCollapseQuickJump();
+                } else {
+                  setIsQuickJumpOpen(true);
+                }
+              }}
+            >
+              <span className="text-[10px] uppercase tracking-widest text-white/60 font-black flex items-center gap-1.5">
+                {isQuickJumpOpen ? (
+                  <>
+                    <span>Muno ko (Collapse)</span>
+                    <ChevronUp size={14} className="text-[#f97316]" />
+                  </>
+                ) : (
+                  <>
+                    <span>Sula gi Wes (Quick Jump)</span>
+                    <ChevronDown size={14} className="text-[#f97316] animate-bounce" />
+                  </>
+                )}
+              </span>
             </div>
-            
-            <div className="mt-3 bg-[#2a2a2a] rounded-full h-8 flex items-center overflow-hidden relative">
-              <div className="whitespace-nowrap inline-block animate-marquee absolute left-full font-bold text-[11px] tracking-wider uppercase text-white/50 px-4">
+
+            {/* Sliding Panel - transparent/semitransparent by default, becomes fully visible on hover/focus */}
+            <AnimatePresence>
+              {isQuickJumpOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className={cn(
+                    "bg-[#222]/90 border-b border-white/10 px-4 py-4 space-y-4 shadow-2xl relative z-30 transition-all duration-300",
+                    "opacity-50 hover:opacity-100 focus-within:opacity-100"
+                  )}
+                >
+                  <div className="flex flex-col gap-3">
+                    {/* Controls row */}
+                    <div className="grid grid-cols-12 gap-2 items-end">
+                      {/* Book combo box */}
+                      <div className="col-span-5 space-y-1">
+                        <label className="block text-[9px] uppercase tracking-widest text-white/40 font-black">Buku (Book)</label>
+                        <select
+                          value={quickBook}
+                          onChange={(e) => {
+                            setQuickBook(e.target.value);
+                            setQuickChapter(1);
+                          }}
+                          className="w-full h-11 px-2 bg-neutral-900 border border-white/10 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-orange-500 transition-colors"
+                        >
+                          {BOOKS.map(b => (
+                            <option key={b.name} value={b.name} className="bg-neutral-950 text-white font-semibold">
+                              {b.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* Chapter box */}
+                      <div className="col-span-3 space-y-1">
+                        <label className="block text-[9px] uppercase tracking-widest text-white/40 font-black">Sula (Ch.)</label>
+                        <select
+                          value={quickChapter}
+                          onChange={(e) => setQuickChapter(parseInt(e.target.value))}
+                          className="w-full h-11 px-2 bg-neutral-900 border border-white/10 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-orange-500 transition-colors"
+                        >
+                          {Array.from(
+                            { length: BOOKS.find(b => b.name === quickBook)?.chapters || 1 },
+                            (_, i) => i + 1
+                          ).map(ch => (
+                            <option key={ch} value={ch} className="bg-neutral-950 text-white font-semibold">
+                              {ch}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* Verse typing box */}
+                      <div className="col-span-2 space-y-1">
+                        <label className="block text-[9px] uppercase tracking-widest text-white/40 font-black">Wes (Ver.)</label>
+                        <input
+                          type="number"
+                          placeholder="1"
+                          min="1"
+                          max="150"
+                          value={quickVerse}
+                          onChange={(e) => setQuickVerse(e.target.value)}
+                          className="w-full h-11 px-2 bg-neutral-900 border border-white/10 rounded-xl text-xs font-bold text-white text-center focus:outline-none focus:border-orange-500 transition-colors placeholder:text-white/20"
+                        />
+                      </div>
+
+                      {/* Read button */}
+                      <div className="col-span-2">
+                        <button
+                          onClick={handleQuickRead}
+                          className="w-full h-11 bg-orange-500 hover:bg-orange-400 text-black font-black rounded-xl text-xs uppercase tracking-wider active:scale-95 transition-all flex items-center justify-center shadow-lg shadow-orange-500/10 cursor-pointer"
+                        >
+                          Soma
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Quick Search bar - so users can still search! */}
+                    <div className="flex items-center gap-2">
+                      <div className="flex-1 flex items-center gap-2 rounded-xl px-3 py-1.5 bg-neutral-900 h-10 border border-white/5">
+                        <Search size={16} className="text-[#888]" />
+                        <input 
+                          type="text" 
+                          placeholder="Kata manyo weche..." 
+                          className="w-full bg-transparent outline-none text-xs text-white placeholder:text-[#888]"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        {searchQuery && (
+                          <button onClick={() => setSearchQuery('')} className="text-white/40 hover:text-white">
+                            <X size={14} />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Marquee Banner */}
+            <div className="bg-[#1f1f1f] h-6 flex items-center overflow-hidden relative border-t border-white/5">
+              <div className="whitespace-nowrap inline-block animate-marquee absolute left-full font-bold text-[9px] tracking-wider uppercase text-white/40 px-4">
                 MORNING & EVENING DEVOTIONS BY C. SPURGEON • MORNING & EVENING DEVOTIONS BY C. SPURGEON
               </div>
             </div>
@@ -701,9 +954,11 @@ export default function App() {
                     <button onClick={closeReader} className="text-white/60">
                       <ArrowLeft size={24} />
                     </button>
-                    <div>
-                      <h2 className="font-bold text-lg leading-none">{selectedBook.name}</h2>
-                      <span className="text-[10px] uppercase tracking-widest text-[#f97316] font-bold">Muma Manyien</span>
+                    <div className="cursor-pointer select-none" onClick={() => { setIsSelectorOpen(true); setSelectorTab('book'); }}>
+                      <h2 className="font-bold text-lg leading-none hover:text-orange-400 transition-colors flex items-center gap-1.5">
+                        {selectedBook.name} <Compass size={14} className="text-[#f97316] animate-pulse" />
+                      </h2>
+                      <span className="text-[10px] uppercase tracking-widest text-[#f97316]/80 font-black">Loch kendo (Tap to jump)</span>
                     </div>
                   </div>
                   
@@ -756,7 +1011,13 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar">
+                <div 
+                  ref={readerScrollRef}
+                  onScroll={handleReaderScroll}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar"
+                >
                   {showIntro && BOOK_INTROS[selectedBook.name] ? (
                     <div className="px-2 py-4 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                       <div className="space-y-1">
@@ -824,7 +1085,7 @@ export default function App() {
                         const verseNum = i + 1;
                         const isBookmarked = isVerseBookmarked(selectedBook.name, selectedChapter, verseNum);
                         return (
-                          <div key={i} className="flex gap-4 group">
+                          <div key={i} id={`verse-${verseNum}`} className="flex gap-4 group">
                             <span 
                               className={cn(
                                 "shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-black text-xs transition-colors",
@@ -864,6 +1125,188 @@ export default function App() {
                 )}
                 <div className="h-20" />
               </div>
+
+              {/* Floating Jump Button in Reader */}
+              <button
+                onClick={() => {
+                  setIsSelectorOpen(true);
+                  setSelectorTab('book');
+                }}
+                className="absolute bottom-6 right-6 px-4 py-3 bg-orange-500 text-black hover:bg-orange-400 font-extrabold rounded-full shadow-2xl z-40 flex items-center gap-2 active:scale-95 transition-all"
+              >
+                <Compass size={18} className="animate-pulse" />
+                <span className="text-[11px] uppercase tracking-wider font-black">Loch kendo</span>
+              </button>
+
+              {/* Quick Selector Sliding Panel */}
+              <AnimatePresence>
+                {isSelectorOpen && (
+                  <motion.div
+                    initial={{ y: '100%' }}
+                    animate={{ y: 0 }}
+                    exit={{ y: '100%' }}
+                    transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+                    className="absolute inset-0 bg-[#161616] z-50 flex flex-col overflow-hidden"
+                  >
+                    {/* Pull tab handle indicator */}
+                    <div className="w-full flex justify-center py-2 bg-[#222]">
+                      <div className="w-12 h-1 rounded-full bg-white/20" />
+                    </div>
+
+                    {/* Header */}
+                    <div className="px-4 py-3.5 bg-[#222] border-b border-white/5 flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <h3 className="font-extrabold text-white text-sm uppercase tracking-wider">Loch Manyien (Quick Navigator)</h3>
+                        <p className="text-[11px] text-white/40">Goch sula kata wes ma idwaro somo piga.</p>
+                      </div>
+                      <button
+                        onClick={() => setIsSelectorOpen(false)}
+                        className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/60"
+                      >
+                        <X size={18} />
+                      </button>
+                    </div>
+
+                    {/* Current selection display */}
+                    <div className="px-4 py-2.5 bg-[#1b1b1b] border-b border-white/5 flex items-center justify-between text-xs font-bold">
+                      <span className="text-white/40">Selected:</span>
+                      <span className="text-[#f97316] font-black uppercase tracking-wider">
+                        {selectorBook} {selectorChapter}{selectorVerse ? ` : ${selectorVerse}` : ''}
+                      </span>
+                    </div>
+
+                    {/* Segmented Tab Controls */}
+                    <div className="p-2 bg-[#1b1b1b] flex gap-1 border-b border-white/5">
+                      {[
+                        { id: 'book', label: 'Buku (Book)' },
+                        { id: 'chapter', label: 'Sula (Chapter)' },
+                        { id: 'verse', label: 'Wes (Verse)' }
+                      ].map(tab => (
+                        <button
+                          key={tab.id}
+                          onClick={() => setSelectorTab(tab.id as any)}
+                          className={cn(
+                            "flex-1 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all",
+                            selectorTab === tab.id
+                              ? "bg-orange-500 text-black shadow-lg shadow-orange-500/10"
+                              : "text-white/40 hover:text-white/60 hover:bg-white/5"
+                          )}
+                        >
+                          {tab.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Scrollable Content Area */}
+                    <div className="flex-1 overflow-y-auto p-4 custom-scrollbar bg-[#161616]">
+                      {selectorTab === 'book' && (
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-2 gap-2">
+                            {BOOKS.map(book => {
+                              const isCurrent = selectorBook === book.name;
+                              return (
+                                <button
+                                  key={book.name}
+                                  onClick={() => {
+                                    setSelectorBook(book.name);
+                                    setSelectorChapter(1);
+                                    setSelectorVerse(null);
+                                    setSelectorTab('chapter');
+                                  }}
+                                  className={cn(
+                                    "p-3 rounded-xl border text-left flex flex-col justify-between h-16 transition-all",
+                                    isCurrent
+                                      ? "bg-orange-500/10 border-orange-500/30 text-orange-400 font-extrabold"
+                                      : "bg-white/5 border-white/5 text-white/70 hover:bg-white/10"
+                                  )}
+                                >
+                                  <span className="text-[13px] font-extrabold leading-tight">{book.name}</span>
+                                  <span className="text-[9px] uppercase tracking-widest text-white/30 font-bold">
+                                    {book.chapters} Chapters
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
+                      {selectorTab === 'chapter' && (
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-5 gap-2">
+                            {Array.from(
+                              { length: BOOKS.find(b => b.name === selectorBook)?.chapters || 1 },
+                              (_, i) => i + 1
+                            ).map(ch => {
+                              const isCurrent = selectorChapter === ch;
+                              return (
+                                <button
+                                  key={ch}
+                                  onClick={() => {
+                                    setSelectorChapter(ch);
+                                    setSelectorVerse(null);
+                                    setSelectorTab('verse');
+                                  }}
+                                  className={cn(
+                                    "aspect-square rounded-xl border flex items-center justify-center font-bold transition-all text-sm",
+                                    isCurrent
+                                      ? "bg-orange-500 border-orange-500 text-black font-black"
+                                      : "bg-white/5 border-white/5 text-white/70 hover:bg-white/10"
+                                  )}
+                                >
+                                  {ch}
+                                </button>
+                              );
+                            })}
+                          </div>
+                          <button
+                            onClick={() => jumpToVerse(selectorBook, selectorChapter, null)}
+                            className="w-full mt-4 py-4 bg-white text-black hover:bg-orange-500 hover:text-black font-black rounded-xl text-xs uppercase tracking-widest transition-all"
+                          >
+                            Soma Sula {selectorChapter} (Read Chapter)
+                          </button>
+                        </div>
+                      )}
+
+                      {selectorTab === 'verse' && (
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-6 gap-2">
+                            {Array.from(
+                              { length: BIBLE_DATA[selectorBook]?.[selectorChapter]?.length || 30 },
+                              (_, i) => i + 1
+                            ).map(v => {
+                              const isCurrent = selectorVerse === v;
+                              return (
+                                <button
+                                  key={v}
+                                  onClick={() => {
+                                    setSelectorVerse(v);
+                                    jumpToVerse(selectorBook, selectorChapter, v);
+                                  }}
+                                  className={cn(
+                                    "aspect-square rounded-xl border flex items-center justify-center font-bold transition-all text-xs",
+                                    isCurrent
+                                      ? "bg-orange-500 border-orange-500 text-black font-black"
+                                      : "bg-white/5 border-white/5 text-white/70 hover:bg-white/10"
+                                    )}
+                                  >
+                                    {v}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                            <button
+                              onClick={() => jumpToVerse(selectorBook, selectorChapter, null)}
+                              className="w-full mt-4 py-4 bg-white/5 border border-white/10 text-white hover:bg-orange-500 hover:text-black font-black rounded-xl text-xs uppercase tracking-widest transition-all"
+                            >
+                              Soma Sula {selectorChapter} duto
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             </>
           )}
