@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  
+  --color-bible-bg: #0F1115;
+  --color-bible-sidebar: #16191F;
+  --color-bible-accent: #f97316;
+  --color-bible-text: #E2E8F0;
+  --color-bible-border: rgba(255, 255, 255, 0.1);
+}
+
+@layer base {
+  body {
+    @apply bg-bible-bg text-bible-text font-sans;
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Luo Bible — Muma Manyien",
+  "description": "A complete Luo New Testament application with search, chapter navigation, and devotionals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

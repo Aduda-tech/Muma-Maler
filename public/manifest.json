@@ -1,0 +1,18 @@
+{
+  "name": "Luo Bible — Biblia Maler",
+  "short_name": "Luo Bible",
+  "description": "Luo Biblia Maler with New Testament, Psalms, and customized reading experience",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#121212",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "/icon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
