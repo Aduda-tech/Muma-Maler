@@ -1126,17 +1126,7 @@ export default function App() {
                 <div className="h-20" />
               </div>
 
-              {/* Floating Jump Button in Reader */}
-              <button
-                onClick={() => {
-                  setIsSelectorOpen(true);
-                  setSelectorTab('book');
-                }}
-                className="absolute bottom-6 right-6 px-4 py-3 bg-orange-500 text-black hover:bg-orange-400 font-extrabold rounded-full shadow-2xl z-40 flex items-center gap-2 active:scale-95 transition-all"
-              >
-                <Compass size={18} className="animate-pulse" />
-                <span className="text-[11px] uppercase tracking-wider font-black">Loch kendo</span>
-              </button>
+
 
               {/* Quick Selector Sliding Panel */}
               <AnimatePresence>
