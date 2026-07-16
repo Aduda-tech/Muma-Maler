@@ -653,10 +653,10 @@ export default function App() {
         {/* Bottom Nav - Matching Image */}
         <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[520px] bg-[#222] border-t border-white/5 h-16 grid grid-cols-5 items-center px-1">
           {[
-            { id: 'old', icon: Home, label: 'Old Test' },
-            { id: 'new', icon: BookOpen, label: 'New Test' },
+            { id: 'old', icon: Home, label: 'Muma Machon' },
+            { id: 'new', icon: BookOpen, label: 'Muma Manyien' },
             { id: 'stories', icon: Plus, label: 'Stories' },
-            { id: 'daily', icon: FileText, label: 'Daily Verse' },
+            { id: 'daily', icon: FileText, label: 'Wes Ma Kawuono' },
             { id: 'more', icon: Info, label: 'More' }
           ].map(tab => (
             <button
