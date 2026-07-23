@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "postinstall": "sed -i 's/JavaVersion.VERSION_21/JavaVersion.VERSION_17/g' android/app/capacitor.build.gradle android/capacitor-cordova-android-plugins/build.gradle node_modules/@capacitor/android/capacitor/build.gradle node_modules/@capacitor/cli/dist/android/update.js 2>/dev/null || true"
   },
   "dependencies": {
     "@capacitor/android": "^7.0.0",
