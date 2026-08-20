@@ -466,10 +466,10 @@ export default function App() {
     const diffX = e.changedTouches[0].clientX - touchStartX;
     const diffY = e.changedTouches[0].clientY - touchStartY;
     
-    if (Math.abs(diffX) > 100 && Math.abs(diffY) < 60) {
-      setIsSelectorOpen(true);
-      setSelectorTab('book');
-    } else if (Math.abs(diffY) > 120 && Math.abs(diffX) < 60) {
+    // Only a deliberate horizontal swipe opens the quick navigator.
+    // Vertical movement (normal scrolling) never opens it, so the reader can
+    // scroll freely to the end of the chapter without interruption.
+    if (Math.abs(diffX) > 120 && Math.abs(diffY) < 40) {
       setIsSelectorOpen(true);
       setSelectorTab('book');
     }
