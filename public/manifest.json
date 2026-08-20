@@ -1,7 +1,7 @@
 {
-  "name": "Luo Bible — Biblia Maler",
-  "short_name": "Luo Bible",
-  "description": "Luo Biblia Maler with New Testament, Psalms, and customized reading experience",
+  "name": "Muma Maler — Luo Bible",
+  "short_name": "Muma Maler",
+  "description": "Muma Maler: Luo New Testament with red-letter words of Christ, reading themes, search, bookmarks and verse sharing.",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
@@ -9,10 +9,22 @@
   "theme_color": "#f97316",
   "icons": [
     {
-      "src": "/icon.jpg",
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

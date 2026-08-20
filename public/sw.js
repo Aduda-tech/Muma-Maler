@@ -1,9 +1,10 @@
-const CACHE_NAME = 'luo-bible-cache-v1';
+const CACHE_NAME = 'muma-maler-cache-v2';
 const ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icon.jpg'
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
 // Install Event

@@ -30,7 +30,8 @@ import {
   Moon,
   Palette,
   Minus,
-  Type
+  Type,
+  Share2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Capacitor } from '@capacitor/core';
@@ -41,6 +42,7 @@ import { BOOK_INTROS, BookIntro } from './data/book-intros';
 import { HEADINGS } from './data/headings';
 import { RED_LETTER } from './data/red-letter';
 import { Book } from './types';
+import ShareModal from './ShareModal';
 
 // Storage key for bookmarks
 const BOOKMARKS_KEY = 'luo_bible_bookmarks';
@@ -106,13 +108,13 @@ interface BibleStory {
 
 const BIBLE_STORIES: BibleStory[] = [
   {
-    title: "Nyakol mar Yesu (The Birth of Jesus)",
+    title: "Nyuol mar Yesu (The Birth of Jesus)",
     reference: { book: "Luka", chapter: 2 },
-    summary: "Nyalego mar Yesu Kristo e Bethlehem, kama malaika ne lando ne jokwath moko ni Jandiko onywol.",
+    summary: "Nyuol mar Yesu Kristo e Bethlehem, kama malaika ne lando ne jokwath ni Jawar onywol.",
     iconName: "Sparkles"
   },
   {
-    title: "Yesu Koyo Yamo gi Opepe (Jesus Calms the Storm)",
+    title: "Yesu Kueyo Yamo gi Opepe (Jesus Calms the Storm)",
     reference: { book: "Luka", chapter: 8 },
     summary: "Yesu ni e yie gi jopuonjrene ka yamo maduong' goyo yie. Oelogi kendo okwero yamo kod opepe ma piny lingo thi.",
     iconName: "Wind"
@@ -120,7 +122,7 @@ const BIBLE_STORIES: BibleStory[] = [
   {
     title: "Batiso mar Yesu (The Baptism of Jesus)",
     reference: { book: "Mathayo", chapter: 3 },
-    summary: "Johana Jabatiso batiso Yesu e Aora Jordan, kendo Chuny Maler lor kuome ka akuru.",
+    summary: "Johana Jabatiso batiso Yesu e Aora Jordan, kendo Roho Maler lor kuome ka akuru.",
     iconName: "Waves"
   },
   {
@@ -136,9 +138,9 @@ const BIBLE_STORIES: BibleStory[] = [
     iconName: "Sunrise"
   },
   {
-    title: "Pentekost kod Chuny Maler (Pentecost & The Holy Spirit)",
+    title: "Pentekost kod Roho Maler (Pentecost & The Holy Spirit)",
     reference: { book: "Tich Joote", chapter: 2 },
-    summary: "Chuny Maler lornigi jopuonjre e od ranyisi kaka dho-mach, mi gichako wacho dhok mopogore opogore.",
+    summary: "Roho Maler lornigi jopuonjre kaka dho-mach, mi gichako wacho dhok mopogore opogore.",
     iconName: "Flame"
   }
 ];
@@ -187,6 +189,9 @@ export default function App() {
   const [readerTheme, setReaderTheme] = useState<ReaderTheme>('dark');
   const [fontSizeIndex, setFontSizeIndex] = useState(1);
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+
+  // Share verse state
+  const [shareVerse, setShareVerse] = useState<{ verse: string; book: string; chapter: number; verseNum: number } | null>(null);
 
   const theme = READER_THEMES[readerTheme];
 
@@ -498,7 +503,7 @@ export default function App() {
             <button className="text-white/80">
               <Menu size={24} />
             </button>
-            <h1 className="font-extrabold text-sm tracking-widest text-white uppercase">LUO BIBLE</h1>
+            <h1 className="font-extrabold text-sm tracking-widest text-white uppercase">MUMA MALER</h1>
             <div className="relative">
               <button 
                 onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
@@ -537,7 +542,7 @@ export default function App() {
                               className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-left text-sm font-bold text-orange-400 hover:bg-orange-500/10 transition-colors"
                             >
                               <Smartphone size={18} />
-                              <span>Mako Simbi (Install App)</span>
+                              <span>Ket e Simbi (Install App)</span>
                             </button>
                             <a 
                               href="/luo-bible-source.zip" 
@@ -558,7 +563,7 @@ export default function App() {
                           className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-left text-sm font-bold text-white/80 hover:bg-white/5 transition-colors"
                         >
                           <Bookmark size={18} />
-                          <span>Mago Moseywaki (Bookmarks)</span>
+                          <span>Weche Mokan (Bookmarks)</span>
                         </button>
                         <button
                           onClick={() => {
@@ -568,7 +573,7 @@ export default function App() {
                           className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-left text-sm font-bold text-white/80 hover:bg-white/5 transition-colors"
                         >
                           <FileText size={18} />
-                          <span>Wes Ma Kawuono</span>
+                          <span>Wach Ma Kawuono</span>
                         </button>
                         <div className="h-px bg-white/5 my-1" />
                         <div className="px-3 py-1.5 text-[10px] text-white/30 font-black uppercase tracking-widest">
@@ -602,12 +607,12 @@ export default function App() {
               <span className="text-[10px] uppercase tracking-widest text-white/60 font-black flex items-center gap-1.5">
                 {isQuickJumpOpen ? (
                   <>
-                    <span>Muno ko (Collapse)</span>
+                    <span>Pand (Collapse)</span>
                     <ChevronUp size={14} className="text-[#f97316]" />
                   </>
                 ) : (
                   <>
-                    <span>Sula gi Wes (Quick Jump)</span>
+                    <span>Sula gi Wach (Quick Jump)</span>
                     <ChevronDown size={14} className="text-[#f97316] animate-bounce" />
                   </>
                 )}
@@ -669,7 +674,7 @@ export default function App() {
 
                       {/* Verse typing box */}
                       <div className="col-span-2 space-y-1">
-                        <label className="block text-[9px] uppercase tracking-widest text-white/40 font-black">Wes (Ver.)</label>
+                        <label className="block text-[9px] uppercase tracking-widest text-white/40 font-black">Wach (Ver.)</label>
                         <input
                           type="number"
                           placeholder="1"
@@ -718,7 +723,7 @@ export default function App() {
             {/* Marquee Banner */}
             <div className="bg-[#1f1f1f] h-6 flex items-center overflow-hidden relative border-t border-white/5">
               <div className="whitespace-nowrap inline-block animate-marquee absolute left-full font-bold text-[9px] tracking-wider uppercase text-white/40 px-4">
-                MORNING & EVENING DEVOTIONS BY C. SPURGEON • MORNING & EVENING DEVOTIONS BY C. SPURGEON
+                Nikech Nyasaye nohero piny ahinya, omiyo nochiwo Wuode achiel makende, mondo ng'ato ang'ata moyie kuome kik lal, to obed gi ngima manyaka chieng'. (Johana 3:16) • Nikech Nyasaye nohero piny ahinya, omiyo nochiwo Wuode achiel makende, mondo ng'ato ang'ata moyie kuome kik lal, to obed gi ngima manyaka chieng'. (Johana 3:16)
               </div>
             </div>
           </div>
@@ -744,7 +749,7 @@ export default function App() {
                       </div>
                     ))
                   ) : (
-                    <div className="p-12 text-center text-white/40 italic">No results found for "{searchQuery}"</div>
+                    <div className="p-12 text-center text-white/40 italic">Onge wach moyudi ne "{searchQuery}"</div>
                   )}
                 </div>
               ) : (
@@ -759,7 +764,7 @@ export default function App() {
                         {book.name}
                       </span>
                       <span className="text-[12px] font-bold text-white/20 mt-1">
-                        {book.chapters} Chapters
+                        {book.chapters} Sula
                       </span>
                       <ChevronRight size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/10" />
                     </div>
@@ -777,7 +782,7 @@ export default function App() {
               <div className="space-y-2">
                 <h3 className="text-lg font-black text-white/40 uppercase tracking-widest italic">Muma Machon</h3>
                 <p className="text-white/20 text-sm italic max-w-[240px] mx-auto">
-                  Muma Machon (Old Testament) is coming soon in the next update.
+                  Muma Machon (Old Testament) biro e lokruok mabiro.
                 </p>
               </div>
             </div>
@@ -824,13 +829,13 @@ export default function App() {
                     </div>
                     <div className="space-y-1 flex-1">
                       <h3 className="font-extrabold text-white text-base tracking-wide uppercase">Muma Manyien (Native App)</h3>
-                      <p className="text-orange-500 text-xs font-black uppercase tracking-wider">Status: Offline & Native Enabled</p>
+                      <p className="text-orange-500 text-xs font-black uppercase tracking-wider">Koro: Offline & Native</p>
                     </div>
                   </div>
                   
                   <div className="bg-[#1f1f1f] rounded-xl p-4 text-[12px] text-white/60 space-y-3 border border-white/5 leading-relaxed">
                     <p>
-                      Maber! App ni itiach <span className="text-white font-bold">offline</span> kuom simbi ma onge gowi kata gigo ma dwaro mbofwa (internet connection).
+                      Maber! App ni tiyo <span className="text-white font-bold">offline</span> e simbi, maonge gima dwaro mbofwa (internet).
                     </p>
                     <p>
                       All books, offline search engine, and device bookmarking are compiled natively within this APK package.
@@ -855,7 +860,7 @@ export default function App() {
                     <Smartphone size={28} />
                   </div>
                   <div className="space-y-1 flex-1">
-                    <h3 className="font-extrabold text-white text-base tracking-wide uppercase">Luo Bible e Simbi (Install App)</h3>
+                    <h3 className="font-extrabold text-white text-base tracking-wide uppercase">Muma Maler e Simbi (Install App)</h3>
                     <p className="text-white/50 text-xs leading-relaxed">
                       Sudo maber kendo tich offline gi simbi! Install this application on your phone as a home screen app with zero parse errors, full-offline capability, and an elegant custom launcher icon.
                     </p>
@@ -868,7 +873,7 @@ export default function App() {
                     className="w-full h-11 bg-orange-500 hover:bg-orange-600 text-black font-black flex items-center justify-center gap-2 rounded-xl text-sm uppercase tracking-wider transition-colors shadow-lg shadow-orange-500/10 active:scale-95 cursor-pointer border-0"
                   >
                     {deferredPrompt ? <Download size={18} /> : <Smartphone size={18} />}
-                    {deferredPrompt ? "Install Luo Bible App" : "Gik ma weko / View App Setup"}
+                    {deferredPrompt ? "Ket App Muma Maler" : "Ne Kaka Iketo (App Setup)"}
                   </button>
                 </div>
                 
@@ -889,7 +894,7 @@ export default function App() {
                     </div>
                     <div className="h-px bg-white/5" />
                     <div className="text-[10px] text-white/30 italic leading-relaxed">
-                      Luo Biblia Maler runs fully offline once added. It delivers a fast, standalone application interface that looks and behaves like a native utility!
+                      Muma Maler runs fully offline once added. It delivers a fast, standalone application interface that looks and behaves like a native utility!
                     </div>
                   </div>
                 )}
@@ -953,7 +958,7 @@ export default function App() {
               )}
 
               <section>
-                <h2 className="text-xs font-black uppercase tracking-widest text-[#f97316] mb-4">Mago moseywaki (Bookmarks)</h2>
+                <h2 className="text-xs font-black uppercase tracking-widest text-[#f97316] mb-4">Weche Mokan (Bookmarks)</h2>
                 {bookmarks.length > 0 ? (
                   <div className="space-y-3">
                     {bookmarks.map((b, i) => (
@@ -980,7 +985,7 @@ export default function App() {
                   </div>
                 ) : (
                   <div className="p-8 border border-dashed border-white/10 rounded-xl text-center text-white/30 text-sm">
-                    Pok iketo wes moro amora (No bookmarks yet)
+                    Pok iketo wach moro amora (No bookmarks yet)
                   </div>
                 )}
               </section>
@@ -989,7 +994,7 @@ export default function App() {
 
           {activeTab === 'daily' && (
             <div className="space-y-4">
-              <h2 className="text-xs font-black uppercase tracking-widest text-[#f97316] mb-2 px-1">Wes Ma Kawuono</h2>
+              <h2 className="text-xs font-black uppercase tracking-widest text-[#f97316] mb-2 px-1">Wach Ma Kawuono</h2>
               {dailyVerse && (
                 <div 
                   className="p-6 bg-gradient-to-br from-orange-500/20 to-transparent border border-orange-500/20 rounded-3xl cursor-pointer"
@@ -1011,9 +1016,9 @@ export default function App() {
           {[
             { id: 'old', icon: Home, label: 'Muma Machon' },
             { id: 'new', icon: BookOpen, label: 'Muma Manyien' },
-            { id: 'stories', icon: Plus, label: 'Stories' },
-            { id: 'daily', icon: FileText, label: 'Wes Ma Kawuono' },
-            { id: 'more', icon: Info, label: 'More' }
+            { id: 'stories', icon: Plus, label: 'Sigendni' },
+            { id: 'daily', icon: FileText, label: 'Wach Ma Kawuono' },
+            { id: 'more', icon: Info, label: 'Mamoko' }
           ].map(tab => (
             <button
               key={tab.id}
@@ -1062,7 +1067,7 @@ export default function App() {
                       <h2 className="font-bold text-lg leading-none transition-colors flex items-center gap-1.5" style={{ color: theme.text }}>
                         {selectedBook.name} <Compass size={14} className="animate-pulse" style={{ color: theme.accent }} />
                       </h2>
-                      <span className="text-[10px] uppercase tracking-widest font-black" style={{ color: theme.accent }}>Loch kendo (Tap to jump)</span>
+                      <span className="text-[10px] uppercase tracking-widest font-black" style={{ color: theme.accent }}>Go mondo ilok (Tap to jump)</span>
                     </div>
                   </div>
                   
@@ -1173,7 +1178,7 @@ export default function App() {
                         style={{ backgroundColor: theme.surface2, color: theme.text, border: `1px solid ${theme.border}` }}
                       >
                         {Array.from({ length: selectedBook.chapters }, (_, i) => i + 1).map(ch => (
-                          <option key={ch} value={ch}>Chapter {ch}</option>
+                          <option key={ch} value={ch}>Sula {ch}</option>
                         ))}
                       </select>
                       <button 
@@ -1202,7 +1207,7 @@ export default function App() {
                     <div className="px-2 py-4 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                       <div className="space-y-1">
                         <h1 className="text-4xl font-black italic" style={{ color: theme.text }}>{selectedBook.name}</h1>
-                        <p className="font-black uppercase tracking-[0.2em] text-xs" style={{ color: theme.accent }}>Wheche Motelo</p>
+                        <p className="font-black uppercase tracking-[0.2em] text-xs" style={{ color: theme.accent }}>Weche Motelo</p>
                       </div>
 
                       <div className="grid grid-cols-1 gap-4">
@@ -1223,7 +1228,7 @@ export default function App() {
                       </div>
 
                       <div className="space-y-4">
-                        <h4 className="text-sm font-black uppercase tracking-widest px-1" style={{ color: theme.accent }}>Summary</h4>
+                        <h4 className="text-sm font-black uppercase tracking-widest px-1" style={{ color: theme.accent }}>Wach Machwok (Summary)</h4>
                         <div className="p-6 rounded-3xl leading-relaxed italic" style={{ backgroundColor: theme.surface, border: `1px solid ${theme.border}`, color: theme.text }}>
                           {BOOK_INTROS[selectedBook.name].summary}
                         </div>
@@ -1286,13 +1291,23 @@ export default function App() {
                                   <p className={cn("leading-relaxed font-serif flex-1", FONT_STEPS[fontSizeIndex])} style={{ color: theme.text }}>
                                     {renderVerse(verse, selectedBook.name, selectedChapter, verseNum)}
                                   </p>
-                                  <button 
-                                    onClick={() => toggleBookmark(selectedBook.name, selectedChapter, verseNum, verse)}
-                                    className="p-1.5 rounded-lg transition-colors shrink-0"
-                                    style={{ color: isBookmarked ? theme.accent : theme.border }}
-                                  >
-                                    {isBookmarked ? <BookmarkCheck size={20} /> : <Bookmark size={20} />}
-                                  </button>
+                                  <div className="flex items-start gap-0.5 shrink-0">
+                                    <button 
+                                      onClick={() => setShareVerse({ verse, book: selectedBook.name, chapter: selectedChapter, verseNum })}
+                                      className="p-1.5 rounded-lg transition-colors shrink-0"
+                                      style={{ color: theme.muted }}
+                                      title="Gol wach (Share verse)"
+                                    >
+                                      <Share2 size={18} />
+                                    </button>
+                                    <button 
+                                      onClick={() => toggleBookmark(selectedBook.name, selectedChapter, verseNum, verse)}
+                                      className="p-1.5 rounded-lg transition-colors shrink-0"
+                                      style={{ color: isBookmarked ? theme.accent : theme.border }}
+                                    >
+                                      {isBookmarked ? <BookmarkCheck size={20} /> : <Bookmark size={20} />}
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -1331,8 +1346,8 @@ export default function App() {
                     {/* Header */}
                     <div className="px-4 py-3.5 bg-[#222] border-b border-white/5 flex items-center justify-between">
                       <div className="space-y-0.5">
-                        <h3 className="font-extrabold text-white text-sm uppercase tracking-wider">Loch Manyien (Quick Navigator)</h3>
-                        <p className="text-[11px] text-white/40">Goch sula kata wes ma idwaro somo piga.</p>
+                        <h3 className="font-extrabold text-white text-sm uppercase tracking-wider">Yor Manyo (Quick Navigator)</h3>
+                        <p className="text-[11px] text-white/40">Goch sula kata wach ma idwaro somo piyo.</p>
                       </div>
                       <button
                         onClick={() => setIsSelectorOpen(false)}
@@ -1344,7 +1359,7 @@ export default function App() {
 
                     {/* Current selection display */}
                     <div className="px-4 py-2.5 bg-[#1b1b1b] border-b border-white/5 flex items-center justify-between text-xs font-bold">
-                      <span className="text-white/40">Selected:</span>
+                      <span className="text-white/40">Moyiero:</span>
                       <span className="text-[#f97316] font-black uppercase tracking-wider">
                         {selectorBook} {selectorChapter}{selectorVerse ? ` : ${selectorVerse}` : ''}
                       </span>
@@ -1355,7 +1370,7 @@ export default function App() {
                       {[
                         { id: 'book', label: 'Buku (Book)' },
                         { id: 'chapter', label: 'Sula (Chapter)' },
-                        { id: 'verse', label: 'Wes (Verse)' }
+                        { id: 'verse', label: 'Wach (Verse)' }
                       ].map(tab => (
                         <button
                           key={tab.id}
@@ -1397,7 +1412,7 @@ export default function App() {
                                 >
                                   <span className="text-[13px] font-extrabold leading-tight">{book.name}</span>
                                   <span className="text-[9px] uppercase tracking-widest text-white/30 font-bold">
-                                    {book.chapters} Chapters
+                                    {book.chapters} Sula
                                   </span>
                                 </button>
                               );
@@ -1510,6 +1525,16 @@ export default function App() {
           background: rgba(255, 255, 255, 0.2);
         }
       `}</style>
+
+      {shareVerse && (
+        <ShareModal
+          verse={shareVerse.verse}
+          book={shareVerse.book}
+          chapter={shareVerse.chapter}
+          verseNum={shareVerse.verseNum}
+          onClose={() => setShareVerse(null)}
+        />
+      )}
     </div>
   );
 }

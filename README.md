@@ -19,6 +19,7 @@ This is the unified home of the project — the previous `Muma-Manyien` reposito
 - **Reading themes** — Otim (dark), Sepia, and Ler (light) themes + adjustable font size
 - **Red-letter words of Christ** — every word spoken by Jesus is coloured red in the reader
 - **Section headings** — per-book section titles rendered inline with the verses
+- **Verse sharing** — share any verse to WhatsApp, Facebook or other apps as a beautiful image card, with bundled backgrounds, device upload, or online backgrounds; or download/copy the text
 - **Book introductions** — author, place/date of writing, summary, overview, and outline
 - **Quick Jump & Quick Selector** — jump to any book / chapter / verse instantly
 - **Scroll tracking** — the reader tracks the verse you're reading
