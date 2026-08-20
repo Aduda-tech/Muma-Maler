@@ -155,16 +155,36 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
     }
   };
 
-  // Native share (Capacitor) — hands the image to the Android/iOS share sheet.
-  const nativeShare = async (text: string) => {
+  // Writes the rendered card to the device cache and returns its file:// URI.
+  // The Capacitor Share plugin only accepts file:// URIs (not data: URLs).
+  const getImageFileUri = async (): Promise<string | null> => {
     const dataUrl = getDataUrl();
-    if (!dataUrl) { flashStatus('Koro ok otim tije. Tem kendo.'); return; }
+    if (!dataUrl) return null;
+    try {
+      const base64 = dataUrl.split(',')[1];
+      const path = `muma-maler-${book}-${chapter}-${verseNum}-${Date.now()}.png`;
+      const result = await Filesystem.writeFile({
+        path,
+        data: base64,
+        directory: Directory.Cache,
+      });
+      return result.uri;
+    } catch {
+      return null;
+    }
+  };
+
+  // Native share (Capacitor) — hands the image file to the Android/iOS share
+  // sheet via its file:// URI so the picture (not just text) is shared.
+  const nativeShare = async (text: string) => {
+    const uri = await getImageFileUri();
+    if (!uri) { flashStatus('Koro ok otim tije. Tem kendo.'); return; }
     try {
       await Share.share({
         title: 'Muma Maler',
         text,
         dialogTitle: 'Or wes',
-        files: [dataUrl],
+        files: [uri],
       });
     } catch {
       // user cancelled
