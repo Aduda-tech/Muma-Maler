@@ -154,6 +154,46 @@ const STORY_ICONS: Record<string, React.ComponentType<any>> = {
   Flame
 };
 
+// Curated daily devotional verses — encouraging, inspiring passages (not a
+// random verse). One per day, cycling through the list.
+interface Devotional {
+  book: string;
+  chapter: number;
+  verse: number;
+  theme: string; // short inspiring Luo caption
+}
+
+const DEVOTIONALS: Devotional[] = [
+  { book: 'Mathayo', chapter: 11, verse: 28, theme: 'Yweyo (Rest)' },
+  { book: 'Mathayo', chapter: 6, verse: 33, theme: 'Dwar Pinyruodhe (Seek First)' },
+  { book: 'Mathayo', chapter: 5, verse: 14, theme: 'Ler Mar Piny (Light)' },
+  { book: 'Mathayo', chapter: 28, verse: 20, theme: 'An Kodu (I Am With You)' },
+  { book: 'Johana', chapter: 3, verse: 16, theme: 'Hera (Love)' },
+  { book: 'Johana', chapter: 14, verse: 27, theme: 'Kuwe (Peace)' },
+  { book: 'Johana', chapter: 16, verse: 33, theme: 'Lojo (Overcome)' },
+  { book: 'Johana', chapter: 8, verse: 12, theme: 'Ler Mar Piny (Light)' },
+  { book: 'Jo-Rumi', chapter: 8, verse: 28, theme: 'Tiyo Maber (Works For Good)' },
+  { book: 'Jo-Rumi', chapter: 8, verse: 38, theme: 'Hera Maok We (Unfailing Love)' },
+  { book: 'Jo-Rumi', chapter: 15, verse: 13, theme: 'Geno (Hope)' },
+  { book: 'Jo-Filipi', chapter: 4, verse: 6, theme: 'Kik Iparru (Do Not Worry)' },
+  { book: 'Jo-Filipi', chapter: 4, verse: 7, theme: 'Kuwe Mar Nyasaye (God\'s Peace)' },
+  { book: 'Jo-Filipi', chapter: 4, verse: 13, theme: 'Teko (Strength)' },
+  { book: 'Jo-Filipi', chapter: 4, verse: 19, theme: 'Chiwo (Provision)' },
+  { book: '1 Jo-Korintho', chapter: 13, verse: 13, theme: 'Hera (Love)' },
+  { book: '2 Jo-Korintho', chapter: 12, verse: 9, theme: 'Ng\'wono (Grace)' },
+  { book: '2 Jo-Korintho', chapter: 5, verse: 17, theme: 'Chwech Manyien (New Creation)' },
+  { book: 'Jo-Efeso', chapter: 3, verse: 20, theme: 'Teko (Power)' },
+  { book: 'Jo-Kolosai', chapter: 3, verse: 15, theme: 'Kuwe Mar Kristo (Peace of Christ)' },
+  { book: 'Jo-Hibrania', chapter: 13, verse: 5, theme: 'Ok Anaweu (Never Forsake)' },
+  { book: 'Jo-Hibrania', chapter: 4, verse: 16, theme: 'Ng\'wono (Grace)' },
+  { book: 'Jakobo', chapter: 1, verse: 5, theme: 'Rieko (Wisdom)' },
+  { book: '1 Petro', chapter: 5, verse: 7, theme: 'Ket Dwachu (Cast Your Cares)' },
+  { book: '2 Petro', chapter: 1, verse: 3, theme: 'Ngima (Life)' },
+  { book: '1 Johana', chapter: 4, verse: 19, theme: 'Hera (Love)' },
+  { book: 'Fweny', chapter: 21, verse: 4, theme: 'Geno Mogik (Final Hope)' },
+  { book: 'Fweny', chapter: 3, verse: 20, theme: 'Luongo (He Knocks)' },
+];
+
 interface BookmarkItem {
   book: string;
   chapter: number;
@@ -280,22 +320,22 @@ export default function App() {
     localStorage.setItem(FONT_KEY, String(fontSizeIndex));
   }, [fontSizeIndex]);
 
-  // Daily Verse logic
+  // Daily Verse logic — picks a curated, inspiring verse for the day
   const dailyVerse = useMemo(() => {
-    const today = new Date().toDateString();
-    let hash = 0;
-    for (let i = 0; i < today.length; i++) {
-        hash = ((hash << 5) - hash) + today.charCodeAt(i);
-        hash |= 0; 
-    }
-    const mathayo1 = BIBLE_DATA['Mathayo']?.[1] || [];
-    if (mathayo1.length === 0) return null;
-    const index = Math.abs(hash) % mathayo1.length;
+    const today = new Date();
+    const start = new Date(today.getFullYear(), 0, 0);
+    const dayOfYear = Math.floor((today.getTime() - start.getTime()) / 86400000);
+    const dev = DEVOTIONALS[dayOfYear % DEVOTIONALS.length];
+    const text = BIBLE_DATA[dev.book]?.[dev.chapter]?.[dev.verse - 1];
+    if (!text) return null;
+    // strip stray opening/closing quote marks for clean display
+    const clean = text.replace(/^["\u201c'\u2018]+/, '').replace(/["\u201d'\u2019]+$/, '');
     return {
-      book: 'Mathayo',
-      chapter: 1,
-      verse: index + 1,
-      text: mathayo1[index]
+      book: dev.book,
+      chapter: dev.chapter,
+      verse: dev.verse,
+      theme: dev.theme,
+      text: clean
     };
   }, []);
 
@@ -1000,6 +1040,11 @@ export default function App() {
                   className="p-6 bg-gradient-to-br from-orange-500/20 to-transparent border border-orange-500/20 rounded-3xl cursor-pointer"
                   onClick={() => openReader(dailyVerse.book, dailyVerse.chapter)}
                 >
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="px-3 py-1 rounded-full bg-orange-500/15 text-orange-400 text-[10px] font-black uppercase tracking-widest">
+                      {dailyVerse.theme}
+                    </span>
+                  </div>
                   <p className="font-serif text-xl leading-relaxed text-white italic mb-6">"{dailyVerse.text}"</p>
                   <div className="flex justify-between items-center">
                     <span className="font-black text-orange-500">{dailyVerse.book} {dailyVerse.chapter}:{dailyVerse.verse}</span>
