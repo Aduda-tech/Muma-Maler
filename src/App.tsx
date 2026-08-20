@@ -25,7 +25,12 @@ import {
   UserPlus,
   Compass,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Sun,
+  Moon,
+  Palette,
+  Minus,
+  Type
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Capacitor } from '@capacitor/core';
@@ -33,10 +38,59 @@ import { cn } from './lib/utils';
 import { BOOKS } from './constants';
 import { BIBLE_DATA } from './data/bible-data';
 import { BOOK_INTROS, BookIntro } from './data/book-intros';
+import { HEADINGS } from './data/headings';
 import { Book } from './types';
 
 // Storage key for bookmarks
 const BOOKMARKS_KEY = 'luo_bible_bookmarks';
+
+// Reading themes
+type ReaderTheme = 'dark' | 'sepia' | 'light';
+const READER_THEMES: Record<ReaderTheme, {
+  label: string;
+  bg: string;
+  surface: string;
+  surface2: string;
+  text: string;
+  muted: string;
+  border: string;
+  accent: string;
+}> = {
+  dark: {
+    label: 'Otim (Dark)',
+    bg: '#1a1a1a',
+    surface: '#252525',
+    surface2: '#2f2f2f',
+    text: '#eaeaea',
+    muted: 'rgba(255,255,255,0.55)',
+    border: 'rgba(255,255,255,0.1)',
+    accent: '#f97316',
+  },
+  sepia: {
+    label: 'Sepia',
+    bg: '#f4ecd8',
+    surface: '#eadfc4',
+    surface2: '#e2d4b4',
+    text: '#3b3527',
+    muted: 'rgba(59,53,39,0.6)',
+    border: 'rgba(59,53,39,0.15)',
+    accent: '#b45309',
+  },
+  light: {
+    label: 'Ler (Light)',
+    bg: '#ffffff',
+    surface: '#f5f5f5',
+    surface2: '#ebebeb',
+    text: '#111111',
+    muted: 'rgba(0,0,0,0.55)',
+    border: 'rgba(0,0,0,0.12)',
+    accent: '#c2410c',
+  },
+};
+
+const FONT_STEPS = ['text-base', 'text-lg', 'text-xl', 'text-2xl'];
+const THEME_KEY = 'luo_bible_theme';
+const FONT_KEY = 'luo_bible_font_size';
 
 interface BibleStory {
   title: string;
@@ -124,6 +178,13 @@ export default function App() {
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
   const [selectorTab, setSelectorTab] = useState<'book' | 'chapter' | 'verse'>('book');
 
+  // Reading theme + font size states
+  const [readerTheme, setReaderTheme] = useState<ReaderTheme>('dark');
+  const [fontSizeIndex, setFontSizeIndex] = useState(1);
+  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+
+  const theme = READER_THEMES[readerTheme];
+
   // Top Search/Selector States
   const [isQuickJumpOpen, setIsQuickJumpOpen] = useState(false);
   const [quickBook, setQuickBook] = useState('Mathayo');
@@ -187,6 +248,27 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
   }, [bookmarks]);
+
+  // Load theme + font size
+  useEffect(() => {
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    if (savedTheme === 'dark' || savedTheme === 'sepia' || savedTheme === 'light') {
+      setReaderTheme(savedTheme);
+    }
+    const savedFont = localStorage.getItem(FONT_KEY);
+    if (savedFont) {
+      const idx = parseInt(savedFont, 10);
+      if (idx >= 0 && idx < FONT_STEPS.length) setFontSizeIndex(idx);
+    }
+  }, []);
+
+  // Persist theme + font size
+  useEffect(() => {
+    localStorage.setItem(THEME_KEY, readerTheme);
+  }, [readerTheme]);
+  useEffect(() => {
+    localStorage.setItem(FONT_KEY, String(fontSizeIndex));
+  }, [fontSizeIndex]);
 
   // Daily Verse logic
   const dailyVerse = useMemo(() => {
@@ -947,18 +1029,19 @@ export default function App() {
                 animate={{ y: 0 }}
                 exit={{ y: '100%' }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[520px] h-[94vh] bg-[#1a1a1a] rounded-t-3xl border-t border-white/10 z-50 flex flex-col overflow-hidden"
+                className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[520px] h-[94vh] rounded-t-3xl z-50 flex flex-col overflow-hidden"
+                style={{ backgroundColor: theme.bg, borderTop: `1px solid ${theme.border}` }}
               >
-                <div className="sticky top-0 z-10 px-4 py-4 bg-[#252525] border-b border-white/10 flex items-center justify-between">
+                <div className="sticky top-0 z-10 px-4 py-4 flex items-center justify-between" style={{ backgroundColor: theme.surface, borderBottom: `1px solid ${theme.border}` }}>
                   <div className="flex items-center gap-3">
-                    <button onClick={closeReader} className="text-white/60">
+                    <button onClick={closeReader} style={{ color: theme.muted }}>
                       <ArrowLeft size={24} />
                     </button>
                     <div className="cursor-pointer select-none" onClick={() => { setIsSelectorOpen(true); setSelectorTab('book'); }}>
-                      <h2 className="font-bold text-lg leading-none hover:text-orange-400 transition-colors flex items-center gap-1.5">
-                        {selectedBook.name} <Compass size={14} className="text-[#f97316] animate-pulse" />
+                      <h2 className="font-bold text-lg leading-none transition-colors flex items-center gap-1.5" style={{ color: theme.text }}>
+                        {selectedBook.name} <Compass size={14} className="animate-pulse" style={{ color: theme.accent }} />
                       </h2>
-                      <span className="text-[10px] uppercase tracking-widest text-[#f97316]/80 font-black">Loch kendo (Tap to jump)</span>
+                      <span className="text-[10px] uppercase tracking-widest font-black" style={{ color: theme.accent }}>Loch kendo (Tap to jump)</span>
                     </div>
                   </div>
                   
@@ -968,12 +1051,85 @@ export default function App() {
                         onClick={() => setShowIntro(!showIntro)}
                         className={cn(
                           "px-3 py-1.5 rounded-lg text-xs font-black tracking-widest uppercase transition-all",
-                          showIntro ? "bg-orange-500 text-black shadow-lg shadow-orange-500/20" : "bg-white/5 text-white/40"
+                          showIntro ? "text-white shadow-lg" : ""
                         )}
+                        style={showIntro ? { backgroundColor: theme.accent, color: '#000' } : { backgroundColor: theme.surface2, color: theme.muted }}
                       >
                         Intro
                       </button>
                     )}
+                    {/* Theme settings button */}
+                    <div className="relative">
+                      <button 
+                        onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
+                        className="p-2 rounded-lg transition-colors"
+                        style={{ backgroundColor: theme.surface2, color: theme.muted }}
+                        aria-label="Reading theme settings"
+                      >
+                        <Palette size={16} />
+                      </button>
+                      <AnimatePresence>
+                        {isThemeMenuOpen && (
+                          <>
+                            <div className="fixed inset-0 z-40" onClick={() => setIsThemeMenuOpen(false)} />
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0.95, y: -6 }}
+                              animate={{ opacity: 1, scale: 1, y: 0 }}
+                              exit={{ opacity: 0, scale: 0.95, y: -6 }}
+                              className="absolute right-0 mt-2 w-52 rounded-2xl shadow-2xl z-50 overflow-hidden p-3 space-y-3"
+                              style={{ backgroundColor: theme.surface, border: `1px solid ${theme.border}` }}
+                            >
+                              <div>
+                                <p className="text-[10px] uppercase tracking-widest font-black mb-2 flex items-center gap-1.5" style={{ color: theme.muted }}>
+                                  <Palette size={12} /> Kit Rang (Theme)
+                                </p>
+                                <div className="grid grid-cols-3 gap-1.5">
+                                  {(Object.keys(READER_THEMES) as ReaderTheme[]).map(t => (
+                                    <button
+                                      key={t}
+                                      onClick={() => setReaderTheme(t)}
+                                      className="rounded-lg py-2 px-1 flex flex-col items-center gap-1 transition-all"
+                                      style={{
+                                        backgroundColor: READER_THEMES[t].surface,
+                                        color: READER_THEMES[t].text,
+                                        border: `1px solid ${readerTheme === t ? theme.accent : theme.border}`,
+                                      }}
+                                    >
+                                      {t === 'dark' ? <Moon size={14} /> : t === 'sepia' ? <Sun size={14} /> : <Type size={14} />}
+                                      <span className="text-[9px] font-black uppercase">{t === 'dark' ? 'Otim' : t === 'sepia' ? 'Sepia' : 'Ler'}</span>
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                              <div>
+                                <p className="text-[10px] uppercase tracking-widest font-black mb-2 flex items-center gap-1.5" style={{ color: theme.muted }}>
+                                  <Type size={12} /> Duong Ndiko (Font)
+                                </p>
+                                <div className="flex items-center justify-between gap-2">
+                                  <button
+                                    onClick={() => setFontSizeIndex(Math.max(0, fontSizeIndex - 1))}
+                                    disabled={fontSizeIndex === 0}
+                                    className="p-2 rounded-lg disabled:opacity-30"
+                                    style={{ backgroundColor: theme.surface2, color: theme.text }}
+                                  >
+                                    <Minus size={14} />
+                                  </button>
+                                  <span className="text-xs font-black" style={{ color: theme.text }}>{fontSizeIndex + 1}x</span>
+                                  <button
+                                    onClick={() => setFontSizeIndex(Math.min(FONT_STEPS.length - 1, fontSizeIndex + 1))}
+                                    disabled={fontSizeIndex === FONT_STEPS.length - 1}
+                                    className="p-2 rounded-lg disabled:opacity-30"
+                                    style={{ backgroundColor: theme.surface2, color: theme.text }}
+                                  >
+                                    <Plus size={14} />
+                                  </button>
+                                </div>
+                              </div>
+                            </motion.div>
+                          </>
+                        )}
+                      </AnimatePresence>
+                    </div>
                     <div className="flex items-center gap-3 ml-2">
                       <button 
                         onClick={() => {
@@ -982,6 +1138,7 @@ export default function App() {
                         }}
                         disabled={selectedChapter <= 1}
                         className="p-1 disabled:opacity-30"
+                        style={{ color: theme.muted }}
                       >
                         <ChevronLeft size={24} />
                       </button>
@@ -991,7 +1148,8 @@ export default function App() {
                           setSelectedChapter(parseInt(e.target.value));
                           setShowIntro(false);
                         }}
-                        className="bg-[#333] border border-white/10 rounded-lg px-2 py-1.5 font-bold text-white text-[11px] outline-none min-w-[100px]"
+                        className="rounded-lg px-2 py-1.5 font-bold text-[11px] outline-none min-w-[100px]"
+                        style={{ backgroundColor: theme.surface2, color: theme.text, border: `1px solid ${theme.border}` }}
                       >
                         {Array.from({ length: selectedBook.chapters }, (_, i) => i + 1).map(ch => (
                           <option key={ch} value={ch}>Chapter {ch}</option>
@@ -1004,6 +1162,7 @@ export default function App() {
                         }}
                         disabled={selectedChapter >= selectedBook.chapters}
                         className="p-1 disabled:opacity-30"
+                        style={{ color: theme.muted }}
                       >
                         <ChevronRight size={24} />
                       </button>
@@ -1021,37 +1180,37 @@ export default function App() {
                   {showIntro && BOOK_INTROS[selectedBook.name] ? (
                     <div className="px-2 py-4 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                       <div className="space-y-1">
-                        <h1 className="text-4xl font-black text-white italic">{selectedBook.name}</h1>
-                        <p className="text-[#f97316] font-black uppercase tracking-[0.2em] text-xs">Wheche Motelo</p>
+                        <h1 className="text-4xl font-black italic" style={{ color: theme.text }}>{selectedBook.name}</h1>
+                        <p className="font-black uppercase tracking-[0.2em] text-xs" style={{ color: theme.accent }}>Wheche Motelo</p>
                       </div>
 
                       <div className="grid grid-cols-1 gap-4">
-                        <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                          <p className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">Jandiko (Author)</p>
-                          <p className="text-white font-bold">{BOOK_INTROS[selectedBook.name].author}</p>
+                        <div className="p-4 rounded-2xl" style={{ backgroundColor: theme.surface, border: `1px solid ${theme.border}` }}>
+                          <p className="text-[10px] uppercase font-black tracking-widest mb-1" style={{ color: theme.muted }}>Jandiko (Author)</p>
+                          <p className="font-bold" style={{ color: theme.text }}>{BOOK_INTROS[selectedBook.name].author}</p>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
-                          <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                            <p className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">Kar Ndiko</p>
-                            <p className="text-white font-bold">{BOOK_INTROS[selectedBook.name].location}</p>
+                          <div className="p-4 rounded-2xl" style={{ backgroundColor: theme.surface, border: `1px solid ${theme.border}` }}>
+                            <p className="text-[10px] uppercase font-black tracking-widest mb-1" style={{ color: theme.muted }}>Kar Ndiko</p>
+                            <p className="font-bold" style={{ color: theme.text }}>{BOOK_INTROS[selectedBook.name].location}</p>
                           </div>
-                          <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                            <p className="text-[10px] uppercase font-black text-white/30 tracking-widest mb-1">Kinde Ndiko</p>
-                            <p className="text-white font-bold">{BOOK_INTROS[selectedBook.name].date}</p>
+                          <div className="p-4 rounded-2xl" style={{ backgroundColor: theme.surface, border: `1px solid ${theme.border}` }}>
+                            <p className="text-[10px] uppercase font-black tracking-widest mb-1" style={{ color: theme.muted }}>Kinde Ndiko</p>
+                            <p className="font-bold" style={{ color: theme.text }}>{BOOK_INTROS[selectedBook.name].date}</p>
                           </div>
                         </div>
                       </div>
 
                       <div className="space-y-4">
-                        <h4 className="text-sm font-black uppercase text-[#f97316] tracking-widest px-1">Summary</h4>
-                        <div className="p-6 bg-white/5 rounded-3xl border border-white/5 leading-relaxed text-white/80 italic">
+                        <h4 className="text-sm font-black uppercase tracking-widest px-1" style={{ color: theme.accent }}>Summary</h4>
+                        <div className="p-6 rounded-3xl leading-relaxed italic" style={{ backgroundColor: theme.surface, border: `1px solid ${theme.border}`, color: theme.text }}>
                           {BOOK_INTROS[selectedBook.name].summary}
                         </div>
                       </div>
 
                       <div className="space-y-4">
-                        <h4 className="text-sm font-black uppercase text-[#f97316] tracking-widest px-1">Gik Manie Iye</h4>
-                        <div className="text-lg leading-relaxed text-white/70 space-y-4 px-2">
+                        <h4 className="text-sm font-black uppercase tracking-widest px-1" style={{ color: theme.accent }}>Gik Manie Iye</h4>
+                        <div className="text-lg leading-relaxed space-y-4 px-2" style={{ color: theme.muted }}>
                           {BOOK_INTROS[selectedBook.name].overview.split('. ').map((p, i) => (
                             <p key={i}>{p}.</p>
                           ))}
@@ -1059,12 +1218,12 @@ export default function App() {
                       </div>
 
                       <div className="space-y-4">
-                        <h4 className="text-sm font-black uppercase text-[#f97316] tracking-widest px-1">Weche Mochan</h4>
+                        <h4 className="text-sm font-black uppercase tracking-widest px-1" style={{ color: theme.accent }}>Weche Mochan</h4>
                         <div className="space-y-2">
                           {BOOK_INTROS[selectedBook.name].sections.map((s, i) => (
-                            <div key={i} className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 group hover:bg-orange-500/10 transition-colors">
-                              <span className="text-white/60 font-bold text-sm">{s.title}</span>
-                              <span className="text-orange-500 font-black text-xs tabular-nums">{s.range}</span>
+                            <div key={i} className="flex items-center justify-between p-4 rounded-xl group transition-colors" style={{ backgroundColor: theme.surface, border: `1px solid ${theme.border}` }}>
+                              <span className="font-bold text-sm" style={{ color: theme.muted }}>{s.title}</span>
+                              <span className="font-black text-xs tabular-nums" style={{ color: theme.accent }}>{s.range}</span>
                             </div>
                           ))}
                         </div>
@@ -1072,43 +1231,48 @@ export default function App() {
 
                       <button 
                         onClick={() => setShowIntro(false)}
-                        className="w-full py-5 bg-white text-black font-black rounded-2xl uppercase tracking-widest text-sm hover:bg-orange-500 transition-colors shadow-xl shadow-white/5"
+                        className="w-full py-5 font-black rounded-2xl uppercase tracking-widest text-sm transition-colors"
+                        style={{ backgroundColor: theme.accent, color: '#000' }}
                       >
                         Chak Somo (Start Reading)
                       </button>
                     </div>
                   ) : (
                     <div className="px-2">
-                      <h3 className="font-serif text-3xl mb-8 text-white/90 text-center">{selectedBook.name} {selectedChapter}</h3>
+                      <h3 className="font-serif text-3xl mb-8 text-center" style={{ color: theme.text }}>{selectedBook.name} {selectedChapter}</h3>
                       <div className="space-y-6">
                       {BIBLE_DATA[selectedBook.name]?.[selectedChapter]?.map((verse, i) => {
                         const verseNum = i + 1;
                         const isBookmarked = isVerseBookmarked(selectedBook.name, selectedChapter, verseNum);
+                        const headings = (HEADINGS[selectedBook.name]?.[selectedChapter] ?? []).filter(h => h.verse === verseNum);
                         return (
-                          <div key={i} id={`verse-${verseNum}`} className="flex gap-4 group">
-                            <span 
-                              className={cn(
-                                "shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-black text-xs transition-colors",
-                                isBookmarked ? "bg-orange-500 text-black" : "bg-white/5 text-[#f97316] group-hover:bg-white/10"
-                              )}
-                              onClick={() => toggleBookmark(selectedBook.name, selectedChapter, verseNum, verse)}
-                            >
-                              {verseNum}
-                            </span>
-                            <div className="flex-1 flex flex-col gap-2">
-                              <div className="flex justify-between items-start gap-2">
-                                <p className="text-lg leading-relaxed text-white/80 font-serif flex-1">
-                                  {verse}
-                                </p>
-                                <button 
-                                  onClick={() => toggleBookmark(selectedBook.name, selectedChapter, verseNum, verse)}
-                                  className={cn(
-                                    "p-1.5 rounded-lg transition-colors shrink-0",
-                                    isBookmarked ? "text-orange-500" : "text-white/10 hover:text-white/30"
-                                  )}
-                                >
-                                  {isBookmarked ? <BookmarkCheck size={20} /> : <Bookmark size={20} />}
-                                </button>
+                          <div key={i} id={`verse-${verseNum}`}>
+                            {headings.map((h, j) => (
+                              <h4 key={j} className="font-serif text-xl font-bold mt-8 mb-2 first:mt-0 text-left" style={{ color: theme.accent }}>
+                                {h.title}
+                              </h4>
+                            ))}
+                            <div className="flex gap-4 group">
+                              <span 
+                                className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-black text-xs transition-colors"
+                                style={isBookmarked ? { backgroundColor: theme.accent, color: '#000' } : { backgroundColor: theme.surface2, color: theme.accent }}
+                                onClick={() => toggleBookmark(selectedBook.name, selectedChapter, verseNum, verse)}
+                              >
+                                {verseNum}
+                              </span>
+                              <div className="flex-1 flex flex-col gap-2">
+                                <div className="flex justify-between items-start gap-2">
+                                  <p className={cn("leading-relaxed font-serif flex-1", FONT_STEPS[fontSizeIndex])} style={{ color: theme.text }}>
+                                    {verse}
+                                  </p>
+                                  <button 
+                                    onClick={() => toggleBookmark(selectedBook.name, selectedChapter, verseNum, verse)}
+                                    className="p-1.5 rounded-lg transition-colors shrink-0"
+                                    style={{ color: isBookmarked ? theme.accent : theme.border }}
+                                  >
+                                    {isBookmarked ? <BookmarkCheck size={20} /> : <Bookmark size={20} />}
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -1116,8 +1280,8 @@ export default function App() {
                       })}
                       {(!BIBLE_DATA[selectedBook.name] || !BIBLE_DATA[selectedBook.name][selectedChapter]) && (
                         <div className="py-20 flex flex-col items-center justify-center text-center px-8">
-                          <BookOpen size={48} className="text-white/10 mb-4" />
-                          <p className="text-white/40 italic font-serif">Muma manyien en piny owacho... (Scripture content for this chapter is being updated.)</p>
+                          <BookOpen size={48} className="mb-4" style={{ color: theme.border }} />
+                          <p className="italic font-serif" style={{ color: theme.muted }}>Muma manyien en piny owacho... (Scripture content for this chapter is being updated.)</p>
                         </div>
                       )}
                     </div>

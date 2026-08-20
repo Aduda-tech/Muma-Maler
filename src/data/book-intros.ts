@@ -1,3 +1,4 @@
+// Book introductions (generated from Ratil New Testament study notes)
 export interface BookIntro {
   author: string;
   location: string;
@@ -8,357 +9,405 @@ export interface BookIntro {
 }
 
 export const BOOK_INTROS: Record<string, BookIntro> = {
-  'Mathayo': {
-    author: 'Mathayo Jaote',
-    location: 'Palestine koso Suria',
-    date: '60-70 AD',
-    summary: 'Injili mar Mathayo nondik mondo onyis ni Yesu en Mesia mane osing',
-    overview: 'Kitabuni wuoyo mang’eny kuom pinyruodh Nyasaye...',
+  "Mathayo": {
+    author: "Mathayo",
+    location: "Palestina",
+    date: "60 - 65 E YIK RUOTH (AD)",
+    summary: "Injili mar Mathayo mondiki gi Mathayo mane en jasol osuru. En e achiel kuom ji mane Yesu oluongo mokuongo e kinde mane ochako tichne kendo en janeno wang' gi wang' kuom tije mang'eny mane Yesu otimo. Kitabuni ochak ndike kinyisogo kuom nyuol Yesu gi Bikira Maria, batisone gi temne e thim.Yesu nobiro koyalo kuom pinyruodh polo gi, donjo e ngima manyaka chieng'. Polo idonje mana kuom lokruok e richo kod yie. Mathayo otweyo puonj mag Yesu e migepe abich magin tim, lando Injili, ngeche, lalruok kod pinyruodh polo. Tho kod chier mar Yesu ema Injilini orumogo kopuonjo mondo wadhi e piny duto waland Injili mar Yesu Kristo.",
+    overview: "Gima duong’ mane omiyo Mathayo ondiko kitabuni en nine opuonjo ni Yesu ema ochopo singruok manie Muma Machon. Mae emomiyo kitabuni nyisoni Yesu oa e koth Ruoth Daudi kaachiel gi Abraham. (1:1), kendo Mathayo otiyo ni weche mang'eny mokor manie Muma Machon konyiso godo adimba kuom ngima mar Yesu. Yesu nobiro kaka Jawar mar Jo-Yahudi 1:21, dhout ogendini 4:13-16, to mogik to en Jawar mar piny 28:19. Tim kod kido mar oganda mar pinyruodh polo iyudo kondikie Injili mar Got 5-7 kama timbe mag piny ok nyal to pinyruodh polo gi wachne makare kende emani kod teko 6:33.",
     sections: [
-      { title: 'Chakruok mar Yesu', range: '1:1-2:23' },
-      { title: 'Tich Johana Ja-Batiso', range: '3:1-12' },
-      // ... will add more later
+      { title: "Nyuol Yesu kod tichne", range: "1:1-4:25" },
+      { title: "Injili e got", range: "5:1-7:29" },
+      { title: "Puonj mopogore opogore, weche gi weche mamoko", range: "8:1-18:35" },
+      { title: "Wuoth madhi Jerusalem kod siem mogik", range: "19:1-23:29" },
+      { title: "Weche mokor kuom ndalo mag giko", range: "24:1-25:46" },
+      { title: "Tho kod chier", range: "26:1-28:20" },
     ]
   },
-  'Mariko': {
-    author: 'Mariko (Johana Mariko)',
-    location: 'Rumi',
-    date: '65-70 E YIK RUOTH (AD)',
-    summary: 'Injili mar Mariko e Injili mokuongo mane ondiki. Opuonjo mang’eny kuom tich mane Yesu otiyo e piny.',
-    overview: 'Mariko ne ok en achiel kuom joote apar gariyo, to ne en osiep Petro kendo ne owuotho gi Paulo gi Barnaba. Nondiko Injili mare mondo onyis ni Yesu en Jatich Nyasaye mane ochiwo ngimane nikech warruok mar piny. Kitabuni wuoyo matek kuom tije honni mane Yesu otimo kendo onyiso matek ni Yesu en Wuod Nyasaye mane nigi teko kuom gik moko duto.',
+  "Mariko": {
+    author: "Mariko",
+    location: "Rumi",
+    date: "60-65 E YIK RUOTH (AD)",
+    summary: "Johana Mariko ne jatich kaachiel gi Jaote Paulo. Bang’e nodar modhi odak e dala mar Rumi, kama ne ondikoe gik mane Jaote Petro nyalo paro. Omiyo Injili mar Mariko nyiso weche mag janeno kuom gik mowuoyo kuomgigi. Gima duong’ mane omiyo ondiko bugni ne en nikech nodwaro mondo ochok weche duto mane ong’eyo kuom Injili. Omiyo onyiso malong’o kuom tije mane Yesu otiyo moloyo gik mane owacho to moloyo to owuoyo ahinya kuom tij Yesu kuom juma mogik. Injili mar Mariko ochakore gi tij Yesu ayanga kendo ka oyalo Injili mar Pinyruodh Nyasaye. En kod puonj mang’e- ny kendo moyangore manyiso kaka tho Yesu biro bedo 8:31 -9:31,10:33,34,45, bang’e to ogik gi tho Yesu e msalaba mondo othone richo mar piny.",
+    overview: "Mariko nyiso Yesu kaka jatich mar Nyasaye mane obiro mondo onyis dwaro mar Nyasaye. Timbe mag honni, chang, bedo giteko kuom jochiende gi tekone owuon nyiso piny ni Yesu ok ne en mana jatich kaka jomoko, to ne en Wuod Nyasaye 15:39 chier mar Yesu nyiso duto mane otimo kendo sani warito duoke kod duong’ koa e polo. Mariko bende nondiko kojiwogo Jo-Kristo man Rumi mondo gibed motegno to moloyo to e ndalo mag sandruok.",
     sections: [
-      { title: 'Chakruok mar tich Yesu', range: '1:1-13' },
-      { title: 'Tich Yesu e Galili', range: '1:14-9:50' },
-      { title: 'Wuoth mar dhi Jerusalem', range: '10:1-52' },
-      { title: 'Odiechieng’ mag giko Jerusalem', range: '11:1-15:47' },
-      { title: 'Chier mar Yesu', range: '16:1-20' }
+      { title: "Johana jabatiso gi batiso mar Ruoth", range: "1:1-13" },
+      { title: "Tich Yesu e dala mar Galili :", range: "1:14-9:50" },
+      { title: "Wuoth madhi Jerusalem gi donjone", range: "10:1-11:26" },
+      { title: "Lweny mane otimore e dala maduong", range: "11:27-12:44" },
+      { title: "Koro weche kuom gik mabiro 13: 1-37.", range: "" },
+      { title: "Tho Yesu kod chierne 14:1-16:8(9-20) 9-20 - kitepe moko", range: "" },
     ]
   },
-  'Luka': {
-    author: 'Luka (Laktar)',
-    location: 'Ok ong’ere',
-    date: '65-70 E YIK RUOTH (AD)',
-    summary: 'Luka nondiko Injili mare ne ng’at moro miluongo ni Theofilo.',
-    overview: 'Luka ne en laktar kendo ne en osiep Paulo. Nondiko Injili mare konyisogo ni Yesu e Jawar mar piny mangima, ok ne Jo-Yahudi kende. Opuonjo mang’eny kuom kech mar Nyasaye ne joma odhier kendo joma piny ochayo. Kitabuni bende wuoyo mang\'eny kuom nywol mar Yesu kendo onyiso kaka tich Nyasaye chopo ne ji duto.',
+  "Luka": {
+    author: "Luka",
+    location: "Rumi",
+    date: "60 E YIK RUOTH (AD)",
+    summary: "Luka ne en jathieth kendo ne en jawuodh jaote Paulo. Injili mare ne ondikone Ja- Yunani molony miluongoni Theofila 1:3, kanyise, kit Yesu mar dhano kod ngimane kaka obet. Mae nomiyo Luka notang' kuom weche duto mane ondiko konyiso adimba tarik gi odiechieng' mane gimoro ka gimoro timoree, ochako gi nyuol Yesu kod bikira Maria, konyise nyaka weche mamoko maok ondiki kamoro amora. Ondiko kuom tij Yesu e dala mar Galili, bang'e opuonjo marabora kuom wuoth mane Yesu odhigo Jerusalem. Bang' tho Yesu gi chierne, jopuonjre odong' ka gin kod ilo ka girito teko mar Nyasaye ma ae polo mondo opong’gi.",
+    overview: "Kaka Mathayo nyiso ni Yesu en Mesia mar Jo-Yahudi, Mariko to nyiso ni Yesu en Jatich mar Nyasaye. Luka to nyiso ni Yesu en Nyasaye Maler kendo en dhano moa kuom koth Adam 3:23-38. Yesu en jal mosetimo gik moko madongo e ndalo mar ngimane, moloyo ng'a- to ang'ata e piny. En dhano maduong’ moloyo ng'ato ang'ata kaluwore gi puonjne, gik mane otimo, gimane omiyo otho kaachiel gi chier aa kuom joma otho. Magi duto ema omiyo nyaka wayie kuome ni en Ruoth.",
     sections: [
-      { title: 'Chakruok mar Yesu', range: '1:1-2:52' },
-      { title: 'Tich Johana Ja-Batiso gi chakruok mar tich Yesu', range: '3:1-4:13' },
-      { title: 'Tich Yesu e Galili', range: '4:14-9:50' },
-      { title: 'Wuoth mar dhi Jerusalem', range: '9:51-19:27' },
-      { title: 'Odiechieng’ mag giko Jerusalem', range: '19:28-23:56' },
-      { title: 'Chier mar Yesu', range: '24:1-53' }
+      { title: "Nyuol gi ndalone mane en rawera 1:1-2:52.", range: "" },
+      { title: "Batiso mar Yesu kod tem", range: "3:1-4:13" },
+      { title: "Tij Yesu ei Galili", range: "4:14-950" },
+      { title: "Wuodh Yesu Jerusalem", range: "9:51-19:27" },
+      { title: "Tij Yesu ei Jerusalem", range: "19:28-20:47" },
+      { title: "Kor kuom gik mabiro 21:1-38.", range: "" },
+      { title: "Tho Yesu, gi chierne", range: "22:1-24:53" },
     ]
   },
-  'Johana': {
-    author: 'Johana Jaote',
-    location: 'EFESO',
-    date: '90-96 E YIK RUOTH (AD)',
-    summary: 'Injili mar Johana nondiki gi Jaote Johana higni mang\'eny bang\' tho Yesu kod chierne. Nondike mondo joma some oyie kuom Kristo kendo mondo ni giyud ngima kuom nyinge.',
-    overview: 'Johana ondiko weche motelo mana miyudo e kitabuni kende konyisogo ngima mane Yesu nigo gi Wuoro kapok onyuole e piny mondo onyis ni Yesu ne ok en ng’ama lich kende to ni ne en Nyasaye madier. Nitie honni kod puonj mang\'eny mag Yesu maok yudre kamoro amora makmana e kitabuni. Kwasomo sula 14-17 to wayudo puonj mane Yesu opuonjo godo jopuonjrene kapok otho. Bang\' tho gi chier Yesu wasomo kaka Yesu nofwenyore ni jootene. Injili mar Johana nigi puonj moko maok yudi e buge mamoko mag Injili moloyo to opuonjo kuom kit Nyasaye manie i Kristo kaachiel gi puonj matut kuom ngimane. Opuonjo kuome gi ngeche kaka ler, adiera, hera, jakwath maber, dhoot, chier gi ngima, pi mar ngima, makati ma adiera to gi mamoko. Weche mamit mwayudo e sula 14-17, nyisowa hera matut mane Yesu nigodo kuom joma oyie kaachiel gi kuwe ma yie kelo kain kuom Kristo.',
+  "Johana": {
+    author: "Johana Jaote",
+    location: "Efeso",
+    date: "90-96 E YIK RUOTH (AD)",
+    summary: "Injili mar Johana nondiki gi Jaote Johana higni mang'eny bang' tho Yesu kod chierne. Nondike mondo joma some oyie kuom Kristo kendo mondo ni giyud ngima kuom nyinge (20:3) Johana ondiko weche motelo mana miyudo e kitabuni kende konyisogo ngima mane Yesu nigo gi Wuoro kapok onyuole e piny mondo onyis ni Yesu ne ok en ng’ama lich kende to ni ne en Nyasaye madier. Nitie honni kod puonj mang'eny mag Yesu maok yudre kamoro amora makmana e kitabuni. Kwasomo sula 14-17 to wayudo puonj mane Yesu opuonjo godo jopuonjrene kapok otho. Bang' tho gi chier Yesu wasomo kaka Yesu nofwenyore ni jootene.",
+    overview: "Injili mar Johana nigi puonj moko maok yudi e buge mamoko mag Injili moloyo to opuonjo kuom kit Nyasaye manie i Kristo kaachiel gi puonj matut kuom ngimane. Opuonjo kuome gi ngeche kaka ler, adiera, hera, jakwath maber, dhoot, chier gi ngima, pi mar ngima, makati ma adiera to gi mamoko.Weche mamit mwayudo e sula 14-17, nyisowa hera matut mane Yesu nigodo kuom joma oyie kaachiel gi kuwe ma yie kelo kain kuom Kristo.",
     sections: [
-      { title: 'Chakruokne manyiso kaka Yesu en Nyasaye', range: '1:1-14' },
-      { title: 'Tichne kane pok ochako Injili e Galili', range: '1:15-4:54' },
-      { title: 'Injili dala mar Galili gi lwenje mane omonje Jerusalem.', range: '5:1-10:42' },
-      { title: 'Chiero Lazaro koa kuom joma otho', range: '11:157' },
-      { title: 'Giko mar tich Yesu', range: '12:1-13:38.' },
-      { title: 'Puonj mogik mag Yesu', range: '14:1-17:26' },
-      { title: 'Tho mar Yesu kod chierne', range: '18:1-20:10' },
-      { title: 'Chier Yesu kod nenruokne', range: '20:11-21:25' }
+      { title: "Chakruokne manyiso kaka Yesu en Nyasaye", range: "1:1-14" },
+      { title: "Tichne kane pok ochako Injili e Galili", range: "1:15-4:54" },
+      { title: "Injili dala mar Galili gi lwenje mane omonje Jerusalem.", range: "5:1-10:42" },
+      { title: "Chiero Lazaro koa kuom joma otho", range: "11:157" },
+      { title: "Giko mar tich Yesu 12:1-13:38.", range: "" },
+      { title: "Puonj mogik mag Yesu", range: "14:1-17:26" },
+      { title: "Tho mar Yesu kod chierne", range: "18:1-20:10" },
+      { title: "Chier Yesu kod nenruokne", range: "20:11-21:25" },
     ]
   },
-  'Tich Joote': {
-    author: 'Luka',
-    location: 'Ok ong’ere',
-    date: '65-70 E YIK RUOTH (AD)',
-    summary: 'Kitabu mar Tich Joote en ndiko machopo wi kama Injili mar Luka nogikie, ka Luka nyiso joma some ni tich mane Yesu ochako e piny, pod odhi nyime kotimo mano e ngima kanisa.',
-    overview: 'Kitabuni e chakne opuonjo kaka joote nopong’ gi teko mar Nyasaye kendo ka giyalo matek ma chieng’no ji 3,000 norwako Yesu kaka Jawar mar chunygi 2:41. Opuonjo ngima mar kanisa ei Jerusalem, kaka Injili nolandore mochopo Samaria, kaachiel gi tich jaote Petro, kod sand mager mokuongo majoma noyie noyudo. Bang\' mae to koro kitabuni wuoyo kuom jaote Paulo kendo kaka nolando Injili ne dhout ogendini. Wuodhe nyadi dek mar tero Injili owuoye malach, kendo kitabuni orumo gi wuodh Paulo Rumi. Jopuonjre mamoko mag muma to wacho ni Luka nedwaro ndiko kitabu maradek manyiso kaka nogony Paulo e jela, wuodhene mamoko, makne kaachiel kod thone. Tich Joote nondiki mondo wang’e kaka Injili nolandore koa e gwenge Jo-Yahudi nyaka ochopo e dhout ogendini 1:8. Wach maber manyiso kaka Yesu notho, kendo nochier ne en wach mane ok nyal mana nyis bath piny konchiel kende, to Nyasaye nedwaro nong’ere e piny mangima. Mae emomiyo Nyasaye nomiyo joge teko mondo ochopi tijgi. Roho Maler e wuon tekono. Teko mar Nyasaye maduong’ kuom gik moko duto nenore kuom locho mar tich Injili kuom timbe mag piny kod sand, to kata obedoni onyalo miyo ngima ji mang’eny lal (mana kaka Petro gi Paulo ma Tich Joote wuoyo kuomgi). To giyudo loch kuom Kristo.',
+  "Tich Joote": {
+    author: "Luka",
+    location: "Ok ong’ere",
+    date: "65-70 E YIK RUOTH (AD)",
+    summary: "Kitabu mar Tich Joote en ndiko machopo wi kama Injili mar Luka nogikie, ka Luka nyiso joma some ni tich mane Yesu ochako e piny, pod odhi nyime kotimo mano e ngima kanisa. Kitabuni e chakne opuonjo kaka joote nopong’ gi teko mar Nyasaye kendo ka giyalo matek ma chieng’no ji 3,000 norwako Yesu kaka Jawar mar chunygi 2:41. Opuonjo ngima mar kanisa ei Jerusalem, kaka Injili nolandore mochopo Samaria, kaachiel gi tich jaote Petro, kod sand mager mokuongo majoma noyie noyudo. Bang' mae to koro kitabuni wuoyo kuom jaote Paulo kendo kaka nolando Injili ne dhout ogendini. Wuodhe nyadi dek mar tero Injili owuoye malach, kendo kitabuni orumo gi wuodh Paulo Rumi. Jopuonjre mamoko mag muma to wacho ni Luka nedwaro ndiko kitabu maradek manyiso kaka nogony Paulo e jela, wuodhene mamoko, makne kaachiel kod thone.",
+    overview: "Tich Joote nondiki mondo wang’e kaka Injili nolandore koa e gwenge Jo-Yahudi nyaka ochopo e dhout ogendini 1:8. Wach maber manyiso kaka Yesu notho, kendo nochier ne en wach mane ok nyal mana nyis bath piny konchiel kende, to Nyasaye ned- waro nong’ere e piny mangima. Mae emomiyo Nyasaye nomiyo joge teko mondo ochopi tijgi. Roho Maler e wuon tekono. Teko mar Nyasaye maduong’ kuom gik moko duto nenore kuom locho mar tich Injili kuom timbe mag piny kod sand, to kata obedoni onyalo miyo ngima ji mang’eny lal (mana kaka Petro gi Paulo ma Tich Joote wuoyo kuomgi). To giyudo loch kuom Kristo.",
     sections: [
-      { title: 'Ndalo mag chakruok kanisa', range: '1:1-5:42' },
-      { title: 'Sand kod landruok mar Injili', range: '6:1-9:31' },
-      { title: 'Tich Petro mar tero Injili', range: '9:32-12:25' },
-      { title: 'Wuodh Paulo mokuongo mar tero Injili', range: '13:1-14:28' },
-      { title: 'Romo mane obedo Jerusalem', range: '15:1-41' },
-      { title: 'Wuodh Paulo marariyo mar tero Injili', range: '16:1-18:22' },
-      { title: 'Wuodh Paulo maradek mar tero Injili', range: '18:23-21:14' },
-      { title: 'Mak mar Paulo kod wuodhe ma Rumi', range: '21:15-28:31' }
+      { title: "Ndalo mag chakruok kanisa", range: "1:1-5:42" },
+      { title: "Sand kod landruok mar Injili", range: "6:1-9:31" },
+      { title: "Tich Petro mar tero Injili", range: "9:32-12:25" },
+      { title: "Wuodh Paulo mokuongo mar tero Injili", range: "13:1-14:28" },
+      { title: "Romo mane obedo Jerusalem", range: "15:1-41" },
+      { title: "Wuodh Paulo marariyo mar tero Injili", range: "16:1-18:22" },
+      { title: "Wuodh Paulo maradek mar tero Injili", range: "18:23-21:14" },
+      { title: "Mak mar Paulo kod wuodhe ma Rumi 21:15---", range: "28:31" },
     ]
   },
-  'Jo-Rumi': {
-    author: 'Jaote Paulo',
-    location: 'Korintho',
-    date: '58 kata 59 E YIK RUOTH (AD)',
-    summary: 'Paulo neni Korintho e wuodhe mar tero injili maradek kendo nochano kaka dodhi Rumi, kata obedo ninepok odhi kuno nyaka nene. Nondikonegi baruwani konyisogo kanisa ni en ng’a kendo konyisogi e yo machuok weche mane opuonjo mag muma.',
-    overview: 'Tim makare mar Nyasaye, kaka otiyo gipiny kod adiera, chenro makare mar warruok, magi e puonj manie kitabuni. Nyasaye inyiso kaka ng’at maduong’, kendo Nyasaye maler mar piny mangima, ok onyal mbeko chik nikech gia kuome. Kendo kaluwore gi chikego, noloso yo mar warruok machalre ni Jo-Yahudi, kaachiel gi dhout ogendini kane ooro Wuode koa e polo mondo othone richo mag piny. Omiyo koro ng’ato ang’ata moyie kuom Yesu noyud warruok 10:9, kendo yudo teko Nyasaye kuom richo, e ngimane.',
+  "Jo-Rumi": {
+    author: "Jaote Paulo",
+    location: "Korintho",
+    date: "58 kata 59 E YIK RUOTH (AD)",
+    summary: "Paulo neni Korintho e wuodhe mar tero injili maradek kendo nochano kaka dodhi Rumi, kata obedo ninepok odhi kuno nyaka nene. Nondikonegi baruwani konyisogo kanisa ni en ng’a kendo konyisogi e yo machuok weche mane opuonjo mag muma. Mae e baruwa ma Paulo ondiko manenore moriere maloyoe barupene mamoko. Ochake konyiso- go kaka ji duto gin joricho. Kuom mano dhout ogendini kata jo-Yahudi onge gi ratiro moro amora kuom Nyasaye nikech richo osemayogi ratirono, mak mana Nyasaye mang'eny gi miwafu kane pod wan joricho nolosonwa yo mwadok godo ire 5:8. En ema wanyalo yudoe ngima man kod loch kaka jo-Kristo. Bang’e Paulo puonjo kuom chenro mar Nyasaye kuom Jo-Yahudi 9-11, kendo otieko gi puonj moko mag siem kuom tim.",
+    overview: "Tim makare mar Nyasaye, kaka otiyo gipiny kod adiera, chenro makare mar warruok, magi e puonj manie kitabuni. Nyasaye inyiso kaka ng’at maduong’, kendo Nyasaye maler mar piny mangima, ok onyal mbeko chik nikech gia kuome. Kendo kaluwore gi chikego, noloso yo mar warruok machalre ni Jo-Yahudi, kaachiel gi dhout ogendini kane ooro Wuode koa e polo mondo othone richo mag piny. Omiyo koro ng’ato ang’ata moyie kuom Yesu noyud warruok 10:9, kendo yudo teko Nyasaye kuom richo, e ngimane. Kaluwore gi hera mar Nyasaye onge gima koro pogo ng'ama oyie kuome kode 8:38-39",
     sections: [
-      { title: 'Weche motelo', range: '1:1-17' },
-      { title: 'Richo kod warruok kuom yie man kuom Kristo', range: '1:18-15:21' },
-      { title: 'Loch kuom richo, e teko mar Kristo', range: '6:1-8:39' },
-      { title: 'Chenro mar Nyasaye kuom Jo-Yahudi', range: '9:1-11:36' },
-      { title: 'Kaka ngima gi dak Jakristo onego obedi', range: '12:1-15:13' },
-      { title: 'Weche mogik', range: '15:14-16:27' }
+      { title: "Weche motelo", range: "1:1-17" },
+      { title: "Richo kod warruok kuom yie man kuom Kristo", range: "1:18-15:21" },
+      { title: "Loch kuom richo, e teko mar Kristo", range: "6:1-8:39" },
+      { title: "Chenro mar Nyasaye kuom Jo-Yahudi", range: "9:1-11:36" },
+      { title: "Kaka ngima gi dak Jakristo onego obedi", range: "17:1-15:13" },
+      { title: "Weche mogik", range: "15:14-16:27" },
     ]
   },
-  '1 Jo-Korintho': {
-    author: 'Jaote Paulo',
-    location: 'Efeso',
-    date: '55 E YIK RUOTH (AD)',
-    summary: 'Paulo nondiko baruwani ne kanisa mar Korintho mondo okonygi e peche mang’eny mane gitiyo kuro.',
-    overview: 'Korintho ne en dala maduong’ kendo ne en gi joma moa e pinje mang’eny. Kanisa mar kuro noyudo nigi lwenje e kindgi, kendo Paulo nondiko baruwani mondo opuonjgi kuom hera, kendo kaka ginyalo dak kaachiel e kuwe. Opuonjo mang’eny kuom Mich mar Roho Maler kendo kuom chier mar joma otho (sula 15).',
+  "1 Jo-Korintho": {
+    author: "Jaote Paulo",
+    location: "Efeso",
+    date: "56 E YIK RUOTH (AD)",
+    summary: "Paulo nosechako kanisa e dala maduong’ mar Jo-Yunane miluongoni Korintho kane en e wuodhe mar Injili tero mar ariyo(Tich joote 18:1-8,) to bang’ wuokne kanyo noyudo wach ni weche neok beyo. Mae nochune ndikonegi baruwa kaluwore gi chandruok mang'eny mane gin godo. Jogi neok oyie gi chunygi ni Paulo ne en jaote adier, neok gimio mesa mar Ruoth luor, ne gichandore kuom chamo ring’o mane oyang’ne liswa, ne gidonjone jowete- gi e kar yalo bura, ne ok gikwedo timbe mochido, ne ok giyie ni chier nitie kendo ne gichan- dore e weche mag kend, to magi gin mana matin kuom chandruok mang’eny mane gin godo. Paulo noneno ni nyaka nondiki kuom wechegi kapok jo- Kristo man Korintho opogore mogore piny. E kinde ma Paulo puonjo kuom chandruokgi omedo puonjo matut ahinya kuom weche mag yie.",
+    overview: "Gima duong' momiyo Paulo nondiko baruwani en ni nodwaro mondo osiem Jo-Kristo man Korintho e timbe moko manono mane nitie e diergi konyisogi ber mar dak makare kaka Jo-Kristo. Ok oromo mondo waluongre ni wan Jo-Kristo, to nyaka watim gik moko kaka jo-Kristo. Tamruok timo mano en njawo nying Kristo. Paulo medo puonjo kaka Kristo ema oromo chutho e weche duto ne ng’atno moyie. Kuom Kristo oketwa maler, opwodhwa kendo orwakwa e nyim Nyasaye (1:30 )",
     sections: [
-      { title: 'Wach msalaba kendo rieko mar Nyasaye', range: '1:1-2:16' },
-      { title: 'Lwenje ei kanisa', range: '3:1-4:21' },
-      { title: 'Dak maler kod winjruok', range: '5:1-7:40' },
-      { title: 'Hera kod mich mar Roho', range: '8:1-14:40' },
-      { title: 'Chier mar joma otho', range: '15:1-58' },
-      { title: 'Gik mogik', range: '16:1-24' }
+      { title: "Mos mar Paulo", range: "1:1-9" },
+      { title: "Chandruok mar pogruok", range: "1:10-4:21" },
+      { title: "Chandruok mar timbe gath", range: "5:1-13" },
+      { title: "Chandruok mar tero wadu eod bura", range: "6:1-11" },
+      { title: "Chandruok mar timbe chode", range: "6:12-20" },
+      { title: "Chandruok eweche mag kend", range: "7:1-40" },
+      { title: "Chandruok kuom lamo nyiseche", range: "8:1-1:11" },
+      { title: "Chandruok kuom lemo", range: "11:2-14:40" },
+      { title: "Chandruok kuom chier", range: "15:1-58" },
+      { title: "Weche mogik", range: "16:1-24" },
     ]
   },
-  '2 Jo-Korintho': {
-    author: 'Jaote Paulo',
-    location: 'Makedonia',
-    date: '55-56 E YIK RUOTH (AD)',
-    summary: 'Paulo nondiko baruwani mar ariyo ne kanisa mar Korintho mondo ohokgi kendo onyisgi ratiro mar tichne kaka jaote.',
-    overview: 'Bang’ ndiko baruwa mokuongo, ne nitie joma noyore godo Paulo e kanisa mar Korintho. Nondiko baruwani mondo omiyo ji winjo tiende maber, kendo mondo ochikgi kuom chiwo (sula 8-9). Opuonjo mang’eny kuom riwa hera, kendo ni teko mar Nyasaye fwenyore e nyawo dhano.',
+  "2 Jo-Korintho": {
+    author: "Jaote Paulo",
+    location: "Efeso",
+    date: "57 E YIK RUOTH (AD)",
+    summary: "Barup Paulo mokuongo ne kanisa man Korintho ne ok otieko chandruok duto. Kata ne okonyo weche moko kuomgi to moko mang’eny nepod odong’ manyaka ne otim. Mokuongo nochuno Paulo mondo olernegi kuom ng’ama nomiye teko mar yalo. Weche mang'eny mag miriambo nosewach kuome maok wang’eyo gimomiyo, kuom mano nochuno Paulo mondo ondiki kuom teko mane en-go kaka Jaote. Bende otemo puonjo kuom weche moko motegno to moloyo to kaka ginyalo konyo jowadgi modhier ma Jo- Kristo man kuonde mamoko.",
+    overview: "Loch kuom jasigu nie baruwani aa chakruokne nyaka gikone. En barup osiepe, mane ondiki gi jal mohero joge, kata obedo nine gisekethone kamano. Ka Paulo nyiso kit ngi- mane, kod kit Injili mar ja-Kristo to inyalo neno ng’wono mar Nyasaye katiyo kokelo ber kuom rach. Satan nigi teko kendo otemo mar ketho tich Nyasaye to Nyasaye pod nigi teko moloye kendo osiro ji duto mogene.",
     sections: [
-      { title: 'Weche motelo kod hokruok', range: '1:1-11' },
-      { title: 'Paulo neno tichne kaka jaote', range: '1:12-7:16' },
-      { title: 'Chiwo ne kanyakla ei Jerusalem', range: '8:1-9:15' },
-      { title: 'Paulo siro tichne', range: '10:1-13:10' },
-      { title: 'Giko', range: '13:11-14' }
+      { title: "Mos mar Paulo", range: "1:1-11" },
+      { title: "Weche moko kuom timbe Paulo", range: "1:12-2:13" },
+      { title: "Weche moko kuom tich ja-Kriskto", range: "2:14-6:10" },
+      { title: "Weche moko kuom Paulo", range: "6:11-17:16" },
+      { title: "Golo chiwo ne joma odhier man Jerusalem", range: "8:1-9:15" },
+      { title: "Paulo osiro luongne mar jaote", range: "10:1-13:10" },
+      { title: "Weche mogik", range: "13:11-14" },
     ]
   },
-  'Jo-Galatia': {
-    author: 'Jaote Paulo',
-    location: 'Ok ong’ere',
-    date: '48 kata 49 E YIK RUOTH (AD)',
-    summary: 'Paulo nondiko baruwani ka siemogi kuom puonj marachni konyisogi ni dhano yudo warruok mana kuom ng’wono mar Nyasaye kokadho e yie kuom Kristo.',
-    overview: 'Paulo noseyalo ne Jo-Galatia e wuodhe mar tero Injili mokwongo. Bang\' kane osewuok kae to nenore ni jo-Yahudi moko moyie nobiro ka chuno jo Ogendini moyie ni nyaka gimak chik Musa eka inyalo wargi. Paulo siro maa motegno kowuoyo kuome owuon kaka Jaote kendo ojiwogi mondo giwuothi kaka jo-Kristo.',
+  "Jo-Galatia": {
+    author: "Jaote Paulo",
+    location: "Ok ong’ere",
+    date: "48 kata 49 E YIK RUOTH (AD)",
+    summary: "Paulo noseyalo ne Jo-Galatia e wuodhe mar tero Injili mokwongo-(Tich Joote 13:14- 23). Bang' kane osewuok kae to nenore ni jo-Yahudi moko moyie nobiro ka chuno jo- Ogendini moyie ni nyaka gimak chik Musa eka inyalo wargi. Paulo ondiko ka siemogi kuom puonj marachni konyisogi ni Ibrahim mane odak higni 400 kane pok ondik chike Musa nowar nikech noyie kuom Injili. Kuom mano ere kaka inyalo wachi ni mako chik nyalo waro ng’ato kata nyalo miyo ng’ama oyie kuom Kristo bedo ng’at makare moloyo? Paulo siro maa motegno kowuoyo kuome owuon kaka Jaote kendo ojiwogi mondo giwuothi kaka jo-Kristo.",
+    overview: "Paulo siro Injili gi tekone duto konyisogi ni dhano yudo warruok mana kuom ng’wono mar Nyasaye kokadho e yie kuom Kristo, kendo onge yo moro machielo. Puonj moro mopogore en ketho adiera mar Nyasaye. Oketwa kare e wang' Nyasaye kuom yie 2:16, kendo wabedo jo-Nyasaye (yawuot Ibrahim) mana e yo achielno, kuom yie 3:17. Nikech wan thuolo kuom Kristo, kik koro wawe ng'ato ang'ata wuondwa ni nyaka watii matek eka wayud warruok, to nyaka wadag kuom Injili. Mae puonjowa mondo waluor Roho mar Nyasaye 5:16, kendo mondo waher owetewa moloyo kaka waherore wan wawegi 5:14.",
     sections: [
-      { title: 'Paulo osiro kare kod Injili bende', range: '1:1-2:21' },
-      { title: 'Thuolo kuom kuong\' mar chik', range: '3:1-24' },
-      { title: 'Injili nigi teko maloyo chik', range: '3:25-4:31' },
-      { title: 'Thuolo mar ja-Kristo', range: '5:1-26' },
-      { title: 'Weche moko mag puonj', range: '6:1-18' }
+      { title: "Paulo osiro kare kod Injili bende", range: "1:1-2:21" },
+      { title: "Thuolo kuom kuong' mar chik", range: "3:1-24" },
+      { title: "Injili nigi teko maloyo chik", range: "3:25-4:31" },
+      { title: "Thuolo mar ja-Kristo", range: "5:1-26" },
+      { title: "Weche moko mag puonj", range: "6:1-18" },
     ]
   },
-  'Jo-Efeso': {
-    author: 'Jaote Paulo',
-    location: 'Rumi',
-    date: '60 kata 61 E YIK RUOTH (AD)',
-    summary: 'Paulo nondiko baruwani mondo ohogo kendo ojiwgo jo-Kristo mane odak e piny Asia Matin.',
-    overview: 'Baruwani Paulo nondike kaen e twech e dala mar Rumi. Otemo nyisogi weche mamoko mane osetimore chon, aa chakruok kama Nyasaye noselosoe chenro mar piny, nyaka kawuono makoro Nyasaye chiwo warruok ne joma oyie kuom Kristo. Onyisogi ni kaka wanto wan kaachiel e ringre Kristo, wan gi teko mar chungo motegno.',
+  "Jo-Efeso": {
+    author: "Jaote Paulo",
+    location: "Rumi",
+    date: "60 kata 61 E YIK RUOTH (AD)",
+    summary: "Baruwani Paulo nondike kaen e twech e dala mar Rumi, nondike mondo ohogo kendo ojiwgo jo-Kristo mane odak e piny Asia Matin. Otemo nyisogi weche mamoko mane osetimore chon, aa chakruok kama Nyasaye noselosoe chenro mar piny, nyaka kawuono makoro Nyasaye chiwo warruok ne joma oyie kuom Kristo, kendo nyaka giko kama richo duto ibiro tieko chuth. Onyisogi ni ngima mwadakieni nitie chandruok mang'eny nikech wan kod lweny gi teko maricho 6:12, to kaka wanto wan kaachiel e ringre Kristo, wan gi teko mar chungo motegno. Bang' mae to koro Paulo nyiso kaka wanyalo dak adimba kaka jo-Kristo e yore mag kend, timbewa jonyuol, nyithindo kod jotich .",
+    overview: "Puonj maduong' ne jo-Efeso nyisowa ni chenro mar Nyasaye mosiko iyudo kuom Kristo, kod kuom ringre ma en kanisa. Ka ng’ato oyie, to en kuom Kristo kendo onwang’o warruok kod kar pondo. Magi duto Nyasaye nochano aa chakruok, kendo joma oyie Nyasaye osemiyo gik ma giremo duto. Paulo tieko kitabuni kopuonjo jakristo mwandu ma Nyasasye osechiwo ni joge, kuom mano Satan onge teko nikech giko lweny to ja- Kristo ema nigi loch.",
     sections: [
-      { title: 'Chenro mar Nyasaye gi warruok mar ng\'at moyie', range: '1:1-2:22' },
-      { title: 'Midhiero mar Injili', range: '3:1-21' },
-      { title: 'Ngima mar ja-Kristo e piny', range: '4:1-5:21' },
-      { title: 'Dak mar ja-Kristo gijowadgi', range: '5:22-6:9' },
-      { title: 'Lwenj ja-Kristo kod richo', range: '6:10-24' }
+      { title: "Chenro mar Nyasaye gi warruok mar ng'at moyie", range: "1:1-2:22" },
+      { title: "Midhiero mar Injili 3:1-21.", range: "" },
+      { title: "Ngima mar ja-Kristo e piny", range: "4:1-5:21" },
+      { title: "Dak mar ja-Kristo gijowadgi", range: "5:22-6:9" },
+      { title: "Lwenj ja-Kristo kod richo", range: "6:10-24" },
     ]
   },
-  'Jo-Filipi': {
-    author: 'Jaote Paulo',
-    location: 'Rumi',
-    date: '60 kata 61 E YIK RUOTH (AD)',
-    summary: 'Baruwani Paulo nondike ne osiepene moko mogeno kogoyo nigi erokamano kuom chiwo mane gikowone.',
-    overview: 'Paulo nondike kaen e twech Rumi. Onyiso jo-Filipi ni mondo gidembre kaka Kristo. Ojiwogi kowacho ni, "Ka angima, to angima nikech Kristo, to ka atho to en ohala." Opuonjogi ni polo e thurwa, omiyo onego wabed mamor kinde duto.',
+  "Jo-Filipi": {
+    author: "Jaote Paulo",
+    location: "Rumi",
+    date: "60 kata 61 E YIK RUOTH (AD)",
+    summary: "Baruwani Paul nondike kaen e twech Rumi ne osiepene moko mogeno kogoyo nigi erokamano kuom pesa moko mane gikowone mondo okonyrego. Ochako kony- isogi ni en kodgi kod geno mang'eny, kendo onyisogi pek moko moneno kaen Rumi. Ok ong’eyo kata obiro tho kata obiro bedo mangima, to kaponi tho ema obirone to odhi bedo mamor e nyim Kristo, to kapod ongima to obiro medo tiyone Nyasaye kaka onyalo. Onyiso jo-Filipi ni mondo gidembre kaka Kristo. Kik giyie puonj mag miri- ambo kata matin. Nyimine ariyo madhawo ikwayo ni mondo giwinjre kendo joma oyie bende ikwayo mondo giwegi gibed gi timbe malong’o ka ging’eyo ni Nyasaye biro miyogi duto ma gichando.",
+    overview: "E barup osiepe ma Paulo ondikoni puonj maduong’ mar bedo mamor ineno e chakruok nyaka giko. Ka ng’ato ngima to obed mamor nikech Nyasaye ohere, Kristo nothone kendo Nyasaye osemiyie gik moko duto modwaro e ngimane. Ka ng’ato otho to mondo obed gimor nikech en e nyim Kristo nyaka chieng'. Mae ok onyiso nikoro jo-Kristo ok nobed gi chandruok kata matin. Mana kaka Kristo notimo chir e msalaba wan bende nyaka wabed mohikore mar luwo ranyisino mar bolruok e e nyim Nyasaye ka mano e gima dwarore. To nikech polo e thurwa (3:20) onego wabed gi parono e chunywa kinde duto.",
     sections: [
-      { title: 'Paulo gi chandruok kaen Rumi', range: '1:1-30' },
-      { title: 'Ranyisi mar muolo Yesu', range: '2:1-30' },
-      { title: 'Siem kod puonj kuom dak ja-Kristo', range: '3:1-21' },
-      { title: 'Kuwe mar Nyasaye kod chik Nyasaye', range: '4:1-23' }
+      { title: "Paulo gi chandruok kaen Rumi", range: "1:1-30" },
+      { title: "Ranyisi mar muolo Yesu", range: "2:1-30" },
+      { title: "Siem kod puonj kuom dak ja-Kristo", range: "3:1-21" },
+      { title: "Kuwe mar Nyasaye kod chik Nyasaye ni joma oyie", range: "4:1-23" },
     ]
   },
-  'Jo-Kolosai': {
-    author: 'Jaote Paulo',
-    location: 'Rumi',
-    date: '60 kata 61 E YIK RUOTH (AD)',
-    summary: 'Paulo nondiko baruwani mondo okwed puonj mag miriambo mane chando kanisa mar Kolosai.',
-    overview: 'Paulo nondiko baruwani kaen e twech Rumi, ne dala mane pok olimo nyaka nene. Opuonjo ni Kristo en Nyasaye adiera kendo kido duto mag Nyasaye manyaka chieng’ nitie kuome. Opuonjogi bende kaka ginyalo dak kaka jo-Kristo ka gikwedo rieko manono mag dhano.',
+  "Jo-Kolosai": {
+    author: "Jaote Paulo",
+    location: "Rumi",
+    date: "60 kata 61 E YIK RUOTH (AD)",
+    summary: "Paulo nondiko baruwani kaen e twech Rumi, nondike e dala mane pok olimo nyaka nene. Magi gin joma nowinjo wach kuomgi ni giyie kane en e dala mar Efeso e wuodhe mar tero Injili mar ariyo, to chunye nechandore bang' kane owinjo kit lamo moko magalagala mag jopiny mane donjo ei kanisa. Weche mane chando jo-Kolosai ne gin gik mopogore opogore machalo yedhe mag ajuoge mag pinyni,weche mag somo sulwe kod din jo-Yahudi mane koro miyo Kristo nenore matin mana kaka malaika. Paulo nondiko mondo okwed puonj marachni konyisogi ni Kristo en Nyasaye adiera kendo kido duto mag Nyasaye manyaka chieng’ nitie kuome 2:9. Opuonjogi bende kaka ginyalo dak kaka jo-Kristo.",
+    overview: "Baruwani ma Paulo ondiko gi chunye tee, onyisowa maber kuom kit Kristo kaka en Nyasaye kod duong’ne. En duto kuom duto kendo ja-Kristo yudo gimoro amora modwaro kuom Kristo. Paulo kwero jo-Kristo ni mondo kik wuondgi gi weche mofu - wo kod rieko manono mag dhano (2:8). Ochiwo puonj kuom dak mar ja-Kristo many- iso teko Nyasaye ne dhano kod mor ma joma oyie nyalo bedogo ka gitiyo gi gik moko duto magin-go koa kuom Kristo.",
     sections: [
-      { title: 'Lemb Paulo mokwongo', range: '1:1-14' },
-      { title: 'Duong\' mar Kristo', range: '1:15-2:3' },
-      { title: 'Siem kuom yie mag miriambo', range: '2:4-23' },
-      { title: 'Puonj kuom dak ja-Kristo', range: '3:1-4:1' },
-      { title: 'Puonj kuom lamo gi weche mogik', range: '4:2-18' }
+      { title: "Lemb Paulo mokwongo 1:1-14 2.", range: "" },
+      { title: "Duong' mar Kristo", range: "1:15-2:3" },
+      { title: "Siem kuom yie mag miriambo", range: "2:4-23" },
+      { title: "Puonj kuom dak ja-Kristo", range: "3:1-4:1" },
+      { title: "Puonj kuom lamo gi weche mogik", range: "4:2-18" },
     ]
   },
-  '1 Jo-Thesalonika': {
-    author: 'Jaote Paulo',
-    location: 'Korintho',
-    date: '51 E YIK RUOTH (AD)',
-    summary: 'Paulo nondiko baruwani mondo ojiw kendo opuonj kanisa manyien mar Thesalonika.',
-    overview: 'Baruwani en achiel kuom buge machon moloyo mag muma manyien. Paulo ohero kanisani kendo oywaknegi erokamano. Opuonjogi kuom chier mar jomaler kod biro mar Ruoth.',
+  "1 Jo-Thesalonika": {
+    author: "Jaote Paulo",
+    location: "Korintho",
+    date: "51 KATA 52 E YIK RUOTH (AD)",
+    summary: "Nene nitie weche mang'eny mane miyo Paulo ondiko baruani. Ne ondike mondo oteg Jokristo manyien mane ni Thessalonika, mane neno tem mang'eny. Ne odwaro mondo onyisgi kaka Jokristo dak, kendo ritore. Ne onyisogi ni mondo gi dhi nyime kod tijegi nyaka Ruoth Yesu duogi. Ne nitie ji mane puonjo ji ni onge ohand tiyo nikech Kristo chiegni duogo. Bende ne odwaro puonjo gi adiera mar geno Jo-Kristo matho ka oyie kuom Yesu.",
+    overview: "Sula duto mag barua mokwongo mar Thessalonika puonjo duogo mar ariyo mar Kristo. Sula mar ang'wen moloyo puonjo wachni (4:13-18). Paulo temo nyiso kaka Kristo en wuod Nyasaye kendo bang' dokne e polo obet e bat korachwich mar Nyasaye.",
     sections: [
-      { title: 'Erokamano kuom yie mar Jo-Thesalonika', range: '1:1-3:13' },
-      { title: 'Ngima maler kod biro Ruoth', range: '4:1-5:28' }
+      { title: "Goyo erokamano ni Jo-Thessalonika (1:1-10)", range: "" },
+      { title: "Rito tich jaote kaka entie/kata oonge", range: "(2-3)" },
+      { title: "Puonjo kod chiko Jo-Thessalonika (4:1-5:1-22)", range: "" },
+      { title: "Lemo mogik kod mos (5:23-28)", range: "" },
     ]
   },
-  '2 Jo-Thesalonika': {
-    author: 'Jaote Paulo',
-    location: 'Korintho',
-    date: '51-52 E YIK RUOTH (AD)',
-    summary: 'Paulo nondiko baruwani mar ariyo mondo ogol confusion mane nitie kuom biro mar Ruoth.',
-    overview: 'Jomoko ne parowa ni "Odiechieng\' mar Ruoth" osechopo. Paulo siemogi kowacho ni nyaka gik moko moko otimre eka Ruoth bi kendo. Ojiwogi mondo gichu e tich maber.',
+  "2 Jo-Thesalonika": {
+    author: "Jaote Paulo",
+    location: "Korintho",
+    date: "51 KATA 52 EYIK RUOTH (AD)",
+    summary: "Nenore ni barua ni ne Paulo ondiko bang' dweche auchiel kaluwo mokwongo nikech wach mar barua mokwongo - dwogo mar ariyo mar Kristo ne pod ok orumo. Jimoko ne wacho ni Kristo oseduogo to moko kwer ni podi ok oduogo. Omiyo ji ne opogore e wachni. Paulo ne ondiko kanyiso ni duogo Kristo ne ok nyalre e kindego nikech satan ne pod ok one. Bende ne omedo jiwo Jo-Kristo mondo gi dhi nyime kod tijegi nikech duogo Kristo mar ariyo ok ne ong'ere to onyalo bedo e saa asaya.",
+    overview: "Kaka jogo moyie kuom Kristo wan kod geno ni oduogo mapiyo. Ka waweyo paro mawa ni piny chiegni rumo nyaka wang'e ni satan biro tungo pinymalich ka Kristo pod ok oduogo. To kik wabed gi luoro nikech Kristo pod ok oduogo. To kik wabed gi luoro nikech Kristo oseloyo satan kane ochier oa kuom jomotho. Tichna kod mor marwa, kaka nyiri mane riek kendo e ngech Yesu (Mathayo 25:1-13) en ni nyaka wabed maler e duogo mar ariyo mar Kristo Yesu mondo okaw joge kaka mikayi mose yikne.",
     sections: [
-      { title: 'Biro mar Ruoth kod kum ne jomaricho', range: '1:1-12' },
-      { title: 'Ng\'ama rach kod biro mar Ruoth', range: '2:1-17' },
-      { title: 'Tich maber kod weche mogik', range: '3:1-18' }
+      { title: "Chako (Sula 1:1-12)", range: "" },
+      { title: "Weche puonj (2:1-17)", range: "" },
+      { title: "Wach mogik e puonjruok (3:1-18)", range: "" },
     ]
   },
-  '1 Timotheo': {
-    author: 'Jaote Paulo',
-    location: 'Makedonia',
-    date: '62-64 E YIK RUOTH (AD)',
-    summary: 'Paulo nondiko baruwani ne Timotheo mondo okonye e rito kanisa mar Efeso.',
-    overview: 'Opuonjo Timotheo kaka rito kanisa kendo kaka yiego jotend kanisa (joduong\' gi jodikoni). Osieme mondo orangre gi puonj mag miriambo.',
+  "1 Timotheo": {
+    author: "Jaote Paulo",
+    location: "Ok ong’ere",
+    date: "64 E YIK RUOTH (AD)",
+    summary: "Baruani nondiki kod Paulo ka ndalo mar thone ne chiegni, kendo ne ondike ne jalupne Timotheo, mane onwang’o oweyo Efeso mondo olose weche moko mane nitiere e kanisa. E kindeni ne nitiere weche moko manechendo mag puonj mane nitiere e kanisa , telo e kanisa kod gik mopoge opogore mamulo ngima mar ngima mar ja- Kristo. Paulo ne ondiko mondo olerne Timetheo kuom wechegi mondo mi tich otimre maber e kanisa. To bende ne ondiko ka ojiwo Timothero mondo kik ool kuom ngimane kaka ja-Kristo, to obed ka omiyo Nyasaye duong’ kinde duto. Bende nitiere puonj makende mochiw mawuoyo kuom walo jotich mag kanisa.",
+    overview: "Puonj maduong’ e baruani en ber mar bedo gi yie madier to gi tim makare. Paulo jiwo motegno ni nyaka wang’e adiera kendo mondo warite maber kuom puonj mawuok mag miriambo. To bende nyaka wabed motang’ mondo wadag e ngima molu- wore kod puonjno eka Jachien ok nonwang’ thuolo kuom jo- Nyasaye. To bende ojiwo motegno ber mar joma chunygi ler kendo ochiwore mar telone kanisa.",
     sections: [
-      { title: 'Siem kuom puonj miriambo', range: '1:1-20' },
-      { title: 'Wach lamo kod jotend kanisa', range: '2:1-3:16' },
-      { title: 'Puonj ne Timotheo kendo kaka orito kanisa', range: '4:1-6:21' }
+      { title: "Siem kuom puonj mag miriambo (1:1-20)", range: "" },
+      { title: "Puonj kaka onego lem (2:1-15)", range: "" },
+      { title: "Puonj kaka iwalo jotend kanisa gi gokonygi (3:1-16)", range: "" },
+      { title: "Jip kod tich (4:1-5:25)", range: "" },
+      { title: "Tij ja- Kristo kod ng’ado rieko ni Timotheo (6:1-21)", range: "" },
     ]
   },
-  '2 Timotheo': {
-    author: 'Jaote Paulo',
-    location: 'Rumi (Twech)',
-    date: '66-67 E YIK RUOTH (AD)',
-    summary: 'Ma e barua mogik mane Paulo ondiko kapok onege.',
-    overview: 'Paulo nigi kwayo ne Timotheo mondo obi limne mapiyo. Ojiwe mondo ochung\' motegno e yie kendo oywakne maber Wach Nyasaye.',
+  "2 Timotheo": {
+    author: "Jaote Paulo",
+    location: "Ok ong’ere",
+    date: "66 E YIK RUOTH (AD)",
+    summary: "Baruani nyalo bedo ni en e barua mogik mane Paulo ondiko kendo ondike ne jal mane gitiyogo miluongoni Timotheo. En barua mar osiep manyiso gima ni e chuny Paulo maiye kendo kaka ne en gi adiera mi kata obedo ni ne ochiegni tho, Nyasaye ne osekanone ngima mochwere e polo 1:10-12. Paulo bende paro kaka ng’wono mar Nyasaye ose taye e ngimane duto tee, to bende oparo kuom kinde maricho mabiro ma ji biro weyo luwo adiera ka gidagi yie ni Nyasaye en Ruoth. Ojiwo Timotheo mondo ochung’ motegno kuom sand e kinde mabiro.",
+    overview: "Puonj maduong’ mar baruani en teko ma Nyasaye nigo ewi gik moko duto kata bedo ni chandruok nitie kendo biro medore, to Nyasaye pod ni e loch kendo jogo moyie kuome ok noluor gimoro ngang’. Paulo bende medo wuoyo kuom chal mar ngi- mane mar yie, ka owuoyo kaka ne okedone adiera kendo kaka Nyasaye nomiye pok chieng’ giko (4:6-8)",
     sections: [
-      { title: 'Agera ne Timotheo', range: '1:1-18' },
-      { title: 'Tich maber mar Kristo', range: '2:1-26' },
-      { title: 'Ndalo mag giko kod Wach Nyasaye', range: '3:1-4:5' },
-      { title: 'Weche mogik mag Paulo', range: '4:6-22' }
+      { title: "Duoko erokamano mar Paulo kuom Timotheo (1:1-5)", range: "" },
+      { title: "Paulo ng’ado rieko ni Timotheo (1:6-2:2)", range: "" },
+      { title: "Puoch kuom jatich makare (2:3-26)", range: "" },
+      { title: "Puonj kuom puonj maricho mabiro (3:1-17)", range: "" },
+      { title: "Weche Paulo mogik (4:1-22)", range: "" },
     ]
   },
-  'Tito': {
-    author: 'Jaote Paulo',
-    location: 'Ok ong’ere',
-    date: '63-65 E YIK RUOTH (AD)',
-    summary: 'Paulo nondiko baruwani ne Tito mondo okonye e rito kanisni mag Krete.',
-    overview: 'Chik manyiso kaka jotend kanisa onego obedi kendo kaka jo-Kristo onego odak e piny manyiso timbe mabeyo.',
+  "Tito": {
+    author: "Jaote Paulo",
+    location: "Ok ong’ere",
+    date: "65 E YIK RUOTH (AD)",
+    summary: "Tito ne en jatiend Paulo kendo ne okonye e kinde mane owuotho koyalo injili. Kane Paulo owuok e tuechne mokuongo Roma ne giyalo injili kod Tito e piny Crete moweyo Tito e chulano mondo odhi nyime kod wach yalo injili.",
+    overview: "Barua ni nene nyiso Tito kaka onego oti e kanisa kendo kaka onego opuonj Jokristo dak maber. Ne onyise kaka jogo madwaro tiyo ni Kristo onego yier kendo kaka idwaro mondo gibedi.",
     sections: [
-      { title: 'Yiero jotend kanisa', range: '1:1-16' },
-      { title: 'Dak maber mar ja-Kristo', range: '2:1-3:15' }
+      { title: "Mos (1:1-4)", range: "" },
+      { title: "Chike mag jodongo (1:5-9)", range: "" },
+      { title: "Weche koluwore kod jopuonj manono (1:10-16)", range: "" },
+      { title: "Puonj e kind ji mopogore e kanisa (2:1-15)", range: "" },
+      { title: "Puonj ma jo-Kristo onego luw (3:1-8)", range: "" },
+      { title: "Puonjo joma oweyo yor chier (3:9-11)", range: "" },
+      { title: "Tieko (3:12-15)", range: "" },
     ]
   },
-  'Filemon': {
-    author: 'Jaote Paulo',
-    location: 'Rumi',
-    date: '60-62 E YIK RUOTH (AD)',
-    summary: 'Baruwa machwok mane Paulo ondiko ne Filemon kuom Onisimo.',
-    overview: 'Onisimo ne en misumba Filemon maneoringo. Bang\'e noromo gi Paulo mi oyie. Paulo koro kwayo Filemon mondo orwak Onisimo kaka owadgi e Kristo.',
+  "Filemon": {
+    author: "Jaote Paulo",
+    location: "Rumi",
+    date: "60 E YIK RUOTH (AD)",
+    summary: "Barua nondiko ni Filemon Ja-kristo modak Kolosai. Filemon ne nigi misumba miluongo ni Onesimo mane oyudo okwale aye oringo, mani ne en richo mane nyalo miyo oneg Onesimo. Kata kamano Onesimo noromo kod Paulo mane oloke mobedo Jakristo. Bang yie ne ogombo mondo odog ir Ruodhe Filemon. Omiyo Paulo nondiko ne Filemon mondo oyie kaka Jakristo okaw Onesimo makoro bende noselopkore obedo Jakristo. Paulo nondiko gi chuny mar hera ka onyiso Filemon hera manie kind Jokristo kaka owete kuom Ruoth. Ne okwaye ni oyie ong'uonne Onesimo kuom ketho mane osetimo ne kendo oruake kaka owadgi e nying Kristo.",
+    overview: "",
     sections: [
-      { title: 'Lamo kod pak ne Filemon', range: '1-7' },
-      { title: 'Kwayo kuom Onisimo', range: '8-25' }
+      { title: "Mos", range: "(1-3)" },
+      { title: "Goyo erokamano kod lamo", range: "(4-7)" },
+      { title: "Kwayo mar Paulo ni Onesimo kuom Filemon", range: "(8-21)" },
+      { title: "Kwayo mogik, mos kod lamo", range: "(22-25)" },
     ]
   },
-  'Hibrania': {
-    author: 'Ok ong’ere',
-    location: 'Ok ong’ere',
-    date: '67-69 E YIK RUOTH (AD)',
-    summary: 'Baruwani nondik ne jo-kristo ma jo-Yahudi mane gajore ni gidue kendo e chik jo-Yahudi nikech sand.',
-    overview: 'Onyiso ni Kristo duong\' moloyo malaike, Musa, kod dolo machon. Ojiwogi mondo gimak yie matek (sula 11).',
+  "Jo-Hibrania": {
+    author: "Ok ong’ere nikech ok ofalo nyinge",
+    location: "Rumi",
+    date: "70 E YIK RUOTH (AD)",
+    summary: "Baruani ondiki ni jo-Kristo ma Jo-yahudi. Magi ne gin jo Yahudi mane osebedo giparo mar duogo e din mar Jo-Juda nikech yomyom margi e winjo e tiend ndiko.",
+    overview: "Jo-Hibrania phonjo duong’ kod loch mar Yesu Kristo kod bedo jalno ma ochung’n- wa e bura kod Ruoth Nyasaye. Baruani nyiso ber kod loch Yesu kuom gik mang’eny.",
     sections: [
-      { title: 'Kristo duong\' moloyo malaike kod Musa', range: '1:1-4:13' },
-      { title: 'Kristo Jadolo Maduong\'', range: '4:14-10:18' },
-      { title: 'Yie kod kinda', range: '10:19-12:29' },
-      { title: 'Weche mogik', range: '13:1-25' }
+      { title: "Chakruok (1:1-4)", range: "" },
+      { title: "Loch kod duong' Kristo ewi Jotelo moko (1:5-7:28)", range: "" },
+      { title: "Kristo duong' kendo lochne ohingo mar malaike (1:5-2:18)", range: "" },
+      { title: "Kristo oloyo Musa kod duong' (3:1-4:13)", range: "" },
+      { title: "Kristo duong'ne oloyo mar Jadolo Harun (4:14-7-28)", range: "" },
+      { title: "Kristo e Jadolo maduong' ma wan-go", range: "(8-10)" },
+      { title: "Kwayo mogik mar chung' e yie Kristo kende", range: "(11-12)" },
+      { title: "Tieko mos kod lamo (13:1-25)", range: "" },
     ]
   },
-  'Jakobo': {
-    author: 'Jakobo',
-    location: 'Jerusalem',
-    date: '45-50 E YIK RUOTH (AD)',
-    summary: 'Jakobo nondiko baruwani ne jo-Kristo duto mogur e piny.',
-    overview: 'Puonj mathoth kuom dak maber manyiso yie kuom timbe mabeyo. Osiemi kuom rieko ma piny kod rieko mar polo.',
+  "Jakobo": {
+    author: "Jakobo owadgi gi Yesu",
+    location: "Ok ong’ere",
+    date: "45-48 E YIK RUOTH (AD)",
+    summary: "Kitabu mar Jakobo nondikne jo- Yahudi ma jo- Kristo mondo okonygi kod puonj kuom ngima jo- Kristo mapile. Oting’o weche moko machwok mag ngeche kendo onyiso matut puonj mag Yesu kod puonj mago mane opuonjo ewi got. Chandruok mowuoyo kuomgi nyiso kit pek mane chando kanisa. Wasomo kuom sunga, buono ji, wuoro, gombo, wuondruok, timbe jopiny kod kuoth. Jakobo ndiko mondo orie timbe marichogi ka onyiso ni yie maonge kod tim otho (2:26), mano tiendeni wacho gi dhok ni ng’ato oyie ok oromo kata matin yie maradiera biro kelo ngima maber mana kaka yien maber nyago olemo.",
+    overview: "Jakobo siro motegno ni dak maber mar jo- Kristo mondo onyis adier yie ma ng’a- to nigo e chunye kendo mondo onyis jopiny ni Injili miyo lokruok bedo e ngima ji. Ka ng’ato wachoni en ja- Kristo to ok opogore kaka ne en chon kane pod en japiny to ere ohala ma en-go owuon kata ne piny man gi dwaro? To adier, Injili miyo lokruok bedo e ngima ji, omiyo ka wachiwore ne Kristo, to wabiro nwang’o ni kuom yiewa mangi- ma biro wuok timbe mangima mag hera kod ng’wono.",
     sections: [
-      { title: 'Yie kod temruok', range: '1:1-18' },
-      { title: 'Yie kod tich', range: '1:19-2:26' },
-      { title: 'Rieko kod dho dhano', range: '3:1-4:12' },
-      { title: 'Siem kuom mwandu kod kinda', range: '4:13-5:20' }
+      { title: "Ngima madier mar yie (1:1-27)", range: "" },
+      { title: "Kony ma yie kelo e kanyakla mar ji (2:1-13)", range: "" },
+      { title: "Yie kod tim (2:14-26)", range: "" },
+      { title: "Puonj kuom rito lep (3:1-18)", range: "" },
+      { title: "Puonj mar ngima mapile (4:1-17)", range: "" },
+      { title: "Jomwandu osiem (5:1-6)", range: "" },
+      { title: "Weche mag jip mogik (5:7-20)", range: "" },
     ]
   },
-  '1 Petro': {
-    author: 'Jaote Petro',
-    location: 'Rumi',
-    date: '62-64 E YIK RUOTH (AD)',
-    summary: 'Petro nondiko baruwani mondo ojiw jo-Kristo mane sandore.',
-    overview: 'Ojiwogi ni gichung\' motegno kendo gisak e hera nikech warruok mane giyudo kuom Kristo.',
+  "1 Petro": {
+    author: "Jaote Petro",
+    location: "Ok ong’ere to onyalo bedo Rumi",
+    date: "63-64 E YIK RUOTH (AD)",
+    summary: "Jaote Petro nondiko baruani ka thone chiegni mondo ojiw kendo oho jo-Kristo ma jo-Yahudi mane odak Asia matin. Otemo nyisogi ni sandruok en gima nyaka timre e ngima ja-Kristo kendo ni Nyasaye nigi pok maok lal ne jogo mogeno kuome. Kadipo ni nenitiero jomoko mane paro dok e din jo-Yahudi mondo mi kik ginwang’ sand, Petro nyiso kanisa ni koro osebedo oganda moyier kendo jodolo mag Nyasaye (2:9). Omiyo paro moro amora mar dok e din jo-Yahudi en kayiem nono. Petro bang’e tiyo gi ranyisi mar Kristo mane osandore kendo jiwo joma oyie mondo oikre ne gima chal kamano. Baruani rumo kod puonj mopogore opogore ne oganda mopogore opogore mar jo-Kristo .",
+    overview: "Puonj maduong’ mar Petro mokwongo en locho kokadho kuom sand. Jo-kristo machon ne odak e ngima matek; yiegi ne nyalo miyo oneg-gi, to baruani nyiso ni en gima kare kata obedo ni ang’o maditimre. Nyasaye ong’eyo gik moko tim- ore kaka berne. Nyaka waket yiewa kuome kendo wabed kawengewa ng’iyo polo gi geno kawang’eyo ni dalawa en kuno maok piny ka.",
     sections: [
-      { title: 'Warruok manyien kod ngima maler', range: '1:1-2:10' },
-      { title: 'Sandruok ne Kristo', range: '2:11-4:19' },
-      { title: 'Puonj ne jaduong kanisa kod jandiko', range: '5:1-14' }
+      { title: "Duong’ mar warruok mar Kristo (1:1-25)", range: "" },
+      { title: "Luor mar ja-Kristo (2:1-10)", range: "" },
+      { title: "Sandruok kod ranyis mar Kristo (2:11-25)", range: "" },
+      { title: "Dak ja-Kristo e dala kendo e piny (3:1-17)", range: "" },
+      { title: "Sandruok kod ranyisi mar Kristo (3:18-4:9)", range: "" },
+      { title: "Tij ja-Kristo kod weche mogik (5:1-14)", range: "" },
     ]
   },
-  '2 Petro': {
-    author: 'Jaote Petro',
-    location: 'Rumi',
-    date: '65-68 E YIK RUOTH (AD)',
-    summary: 'Petro siemo kanisa kuom jopuonj miriambo.',
-    overview: 'Opuonjogi mondo gidhi nyime dongo e ng\'eyo mar Nyasaye kendo rito biro mar Ruoth.',
+  "2 Petro": {
+    author: "Jaote Petro",
+    location: "Ok ong’ere to onyalo bedo Rumi",
+    date: "66 E YIE RUOTH (AD)",
+    summary: "Baruani nondiki kod Petro ka thone ne chiegni kendo owuoyo kuom chandruok mane Petro oneno ni biro bedo bang’ ka osetho. Otemo jiwo jo- Kristo mondo omed dongo e ngmagi mar yie, kagimedo ng’eyo adieri manie Injili mar jo- Kristo. Ok ondike sigana to mana weche mag adiera. Osiemogi kuom jopuonj mag miriambo mabiro tamore winjo adieri ka gijiwo puonjgi giwegi magala gala mopogore gi puonj kanisa. To mogik to owachoni Kristo biro duogo odiechieng’ moro mondo oketh kendo otiek chenro manie pinyni omiyo kuom mano kik waket yiewa kuom pinyni.",
+    overview: "Petro mar ariyo wuoyo kuom bedo motegno e kind sand mang’eny ma kedo kodwa mondo mi wawe adieri. Piny temo mondo otiek gik ma Nyasaye timo, to nyaka wakwed gik ma kamago ka wadak e ngima mowinjore e nyim Nyasaye, kawageno kuom adiera, dhil e sand, yie kuom Nyasaye, kod bedo gi geno kuom biro Kristo.",
     sections: [
-      { title: 'Dongo e yie', range: '1:1-21' },
-      { title: 'Jopuonj mag miriambo', range: '2:1-22' },
-      { title: 'Biro mar Ruoth', range: '3:1-18' }
+      { title: "Chenro maber makelo dongruok ne ngima ja- Kristo (1:1-21)", range: "" },
+      { title: "Siem kuom jopuonj mag miriambo (2:1-22)", range: "" },
+      { title: "Jip mawuoyo kuom biro Kristo mar ariyo (3:1-18)", range: "" },
     ]
   },
-  '1 Yohana': {
-    author: 'Jaote Johana',
-    location: 'Efeso',
-    date: '90-95 E YIK RUOTH (AD)',
-    summary: 'Johana nondiko baruwani mondo onyis ji adiera mar Yesu kendo mondo gisedak e hera.',
-    overview: 'Opuonjo ji manyalo ng\'eyo Nyasaye. Nyasaye en ler kendo Nyasaye en hera. Ng\'at man gi Nyasaye onego oher wadgi.',
+  "1 Johana": {
+    author: "Jaote Johana",
+    location: "Ok ong’ere to onyalo bedo Efeso",
+    date: "85-96 E YIK RUOTH (AD)",
+    summary: "Barua mar osiepni ne ondik gi Jaote Johana kane en ng’ama hike ng’eny ne jo- Kristo mane ogeno ahinya. Ondiko ka oluongogi ni nyithinda matindo kendo omiyo- gi puonj mar dak mapile kaka jo- Kristo. Ochako puonj ka oleronigi malong’o kuom nyuol mane onyuolgo Yesu e ringruok kendo ogero chikene e adier ni jogo mong’eyo Yesu ong’eyo Wuoro bende. To jogo maok ong’eyo Yesu ok ong’eyo Wuoro, to bende ok ging’eyo hera mar Wuoro kata matin. Jo- Kristo to oserwako kendo ong’eyo hera Nyasaye e kit ngimagi nikech Nyasaye en hera, omiyo onge tiende mondo gibed gi luoro e ngima masani kata e ngima mabiro.",
+    overview: "Johana medo puonjo ahinya e baruani kuom adiera mar yie ja-Kristo mondo oho kendo ojiw nyithinde kuom yie. Wach maduong’ ka en hera, weyo richo, lalruok, loyo richo, bedo gadiera, bedo maler kod ngima mochwere oket kanyakla e chenro maber marieny gi ler mar Nyasaye e piny motimo mudho.",
     sections: [
-      { title: 'Nyasaye en ler', range: '1:1-2:29' },
-      { title: 'Nyasaye en hera', range: '3:1-4:21' },
-      { title: 'Warruok manyaka chieng\'', range: '5:1-21' }
+      { title: "Lalruok mar ja- Kristo gi Nyasaye (1:1-10)", range: "" },
+      { title: "Chik manyien mondo Waherre (2:1-17)", range: "" },
+      { title: "Siem kuom joma kwedo Kristo kod timbe maricho (2:18-29)", range: "" },
+      { title: "Kaka ja- Kristo onego odagi (3:1-24)", range: "" },
+      { title: "Jopuonj mag miriambo (4:1-6)", range: "" },
+      { title: "Hera mar Nyasaye (4:7-21)", range: "" },
+      { title: "Locho mar yie (5:1-21)", range: "" },
     ]
   },
-  '2 Yohana': {
-    author: 'Jaote Johana',
-    location: 'Efeso',
-    date: '90-95 E YIK RUOTH (AD)',
-    summary: 'Baruwa machwok ne "miyo moyier".',
-    overview: 'Ojiwogi mondo gikud adiera kendo giwuothie e hera, kendo gitang\' gi jopuonj miriambo.',
+  "2 Johana": {
+    author: "Jaote Johana",
+    location: "Ok ong’ere, to nyalo bedo Efeso",
+    date: "85-96 E YIK RUOTH (AD)",
+    summary: "Baruwa machwokni nyalo bedo ni nondikne dhako moro ma ja- Krissto ma Johana nong’eyo kata ne kanisa moro mane opar luongo ni dhako. To kuom adier, nondike mondo ojiw hera madier mar jo-Kristo kendo mondo osiem jomiriambo mane donjo e piny. Johana siemo jo-Kristo mondo kik gibedi e achiel kuom timbe maricho to gichung’ motegno e adier kata obedo ni lweny tek manade.",
+    overview: "Puonj maduong’ mar baruwani en ni mondo jo-Kristo duto obed motang’ kendo mariek ne puonj mag miriambo. Nyaka wabed ka wang’eyo ni puonj mag miriambo nitiere omiyo nyaka wabed moikore mondo wakwede ka obironwa. Kata kamano nyaka wadag e ngima mar hera mar Nyasaye.",
     sections: [
-      { title: 'Wuotho e adiera kod hera', range: '1-13' }
+      { title: "Mos", range: "(1-3)" },
+      { title: "Dak e ngima mar hera", range: "(4-6)" },
+      { title: "Tamruok joma kwedo Kristo kod jo-Kristo kod jo-miriambo.", range: "(7-13)" },
     ]
   },
-  '3 Yohana': {
-    author: 'Jaote Johana',
-    location: 'Efeso',
-    date: '90-95 E YIK RUOTH (AD)',
-    summary: 'Baruwa ne Gaius.',
-    overview: 'Johana pako Gaius nikech rwakoye welo kod jowete tich. Osundo Diotrefe kendo pako Demetrio.',
+  "3 Johana": {
+    author: "Jaote Johana",
+    location: "Ok ong’ere, to nyalo bedo Efeso",
+    date: "85-70 E YIK RUOTH (AD)",
+    summary: "Baruwa machwok mar osiepni ondiki gi Jaote Johana ne osiepne Gaius, kojiwe mondo okony jogo malando injili kuonde mopogore opogore ka giyalo wach adiera. Osiemo Gaius kuom ji machalo kaka Diotrefes motamore chiwo kony e lando injili to bende opwoyo joma moko kaka Demetrias kuom chiwo kony.",
+    overview: "Jo- Kristo nyaka konyre ng’ato ka ng’ato e tich Kristo. Ka ok watimo kamano to nyiso ni watimo tich Jachien, madwaro mana tieko ngima jo- Kristo. Johana jiwo matek ni jo- Kristo nyaka bed e yie achiel kaka jo- Kristo kendo nyaka wati tich mamiyo ji duto mor.",
     sections: [
-      { title: 'Pako Gaius kod siem kuom Diotrefe', range: '1-15' }
+      { title: "Mos", range: "(1-4)" },
+      { title: "Ber bedo ja- Kristo", range: "(5-8)" },
+      { title: "Tich marach mar Diotrefes", range: "(9-11)" },
+      { title: "Tich maber mar Demetrias (12)", range: "" },
+      { title: "Weche mogik", range: "(13-15)" },
     ]
   },
-  'Juda': {
-    author: 'Juda',
-    location: 'Ok ong’ere',
-    date: '65-80 E YIK RUOTH (AD)',
-    summary: 'Juda siemo kanisa kuom jomaricho mane osedonjo e dier ji.',
-    overview: 'Ojiwogi mondo giked matek kuom yie mane ochiwnegi. Onyiso kaka Nyasaye biro kumogi.',
+  "Juda": {
+    author: "Juda ma owadgi Yesu",
+    location: "OK ong’ere",
+    date: "65-70 E YIK RUOTH (AD)",
+    summary: "Ok ong’ere malong’o ni buruwani nondikne ng’a, chandruok ma Juda wuoyeka win- jore malong’o. Juda jiwo jo-Kristo mondo gichung’ motegno e yie ma gin-go, ne puonj mag miriambo kod jopuonj mag miriambo. E nonro marabora, Juda chiwo ranyisi kaka chon Nyasaye ne ng’ado bura kuom richo kod timbe maricho mar ngima jopuonj mag miriambo. Juda tieko wachne gi puonj ne jo-Kristo mondo ochung’ motegno gi teko mar Nyasaye mabiro sirowa mondo kik wapodhi.",
+    overview: "Puonj maduong’ mar kitabuni en siem kuom gik ma puonj mag miriambo kelo to bende opuonjowa mondo wabed joma otang’ kaka kanisa. Juda wachonwa mondo watang’ gi gik ma ji wacho kod kit ngima ma gin-go mondo omi wakaw mana gik maber e wang’ Nyasaye kende. Omiyo wanyalo kwayo Nyasaye mondo okonywa e ma ka wan gi adier chutho ni obiro winjowa kendo duoko lamowa.",
     sections: [
-      { title: 'Siem kuom joparicho', range: '1-16' },
-      { title: 'Kinda kod lamo', range: '17-25' }
+      { title: "Mos", range: "(1-2)" },
+      { title: "Siem kuom jopuonj mag mirambo", range: "(3-7)" },
+      { title: "Kit ngima marach mag jopuonj mag miriambo", range: "(8-19)" },
+      { title: "Puonj ne jo- Kristo", range: "(20-23)" },
+      { title: "Pak", range: "(24-25)" },
     ]
   },
-  'Fweny': {
-    author: 'Jaote Johana',
-    location: 'Patmos',
-    date: '95-96 E YIK RUOTH (AD)',
-    summary: 'Kitabu mar Fweny e kitabu mogik e muma manyien, kendo Johana nondiko fweny mane Nyasaye onyise kendo dhood Johana.',
-    overview: 'Johana nondiko baruwani kane en e twech e chula mar Patmos. Kitabuni opong\' gi ngero mathoth manyiso locho mar Nyasaye kuom Satan, kendo manyiso kaka jo-Kristo biro loyo sand duto kendo dak gi Nyasaye chieng\' maber e Jerusalem Manyien.',
+  "Fweny": {
+    author: "Jaote Johana",
+    location: "Fatimo",
+    date: "90-96 E YIK RUOTH (AD)",
+    summary: "Nitiere migepe ariyo madongo e kitabu ma tiende winjo tekni, mokwongo en barupe ne kanise abiriyo mantie e piny Asia (1-3) to mar ariyo wuoyo kuom fweny mopogore opogore kaka: ngima ja- Kristo kod sand ma jo- Nyasaye yudo, loch mol- ogo timbe maricho, dwok Kristo, ng’ado bura mogik, higa alafu achiel kod polo (4-22). Migepe madongo mar fwenygi wuoyo kuom masiche mang’eny mool e piny bang’ goyo turumbeta kod mago manie bakunde kama mirimb Nyarambo (Yesu) inyiso e lela. Moriwore ei fwenygi gin fweny mar jo- Nyasaye man e polo mane onegi nikech yie margi kaachiel gi sand ma jogo mopwodhi yudo e piny. Fwenygi medo nenore e kedo mantiere kind ochot gi Babulon (ma en tim marach) to gi locho mar Wach Nyasaye, ma en Jatelo mar jotelo kendo Ruodh ruodhi (9:16) mabiro tieko gik mari- cho kaeto oiko nyasi ne jo- Kristo. Bang’ magi to nitiere weche mag kum kod chiwo dwong’ ka itieko gi lamo ni: \"Amin! Bi, Ruoth Yesu\" (22:20)",
+    overview: "Kitabu malich miwuoroni wuoyo kuom Yesu mayande ocha, ma nyarombo mar Nyasaye mayande onegi nikech richo mag piny, koro obedo gi teko morito gik mati- more e piny e kinde mag giko kendo omiyo gik mabeyo makrum ( manyaka chieng’) obedo ka otieko timbe maricho kendo ka oketo tim makare mondo obed manyaka chieng’. En e geno madieri mar ja- Kristo ni gik moko duto nobed maber chieng’ moro kendo Nyasaye nobed moromo kuom gik moko duto. Pi wenge noywe oko, kendo tho, kuyo, ywak kod lit ok nobedie ngang’ (21:4). Wach hochni en mar joma oyie duto tee.",
     sections: [
-      { title: 'Weche motelo kod baruwa ne kanise abiriyo', range: '1:1-3:22' },
-      { title: 'Fweny mar polo kod siche abiriyo', range: '4:1-8:1' },
-      { title: 'Turumbe abiriyo', range: '8:2-11:19' },
-      { title: 'Lweny mar Nyasaye gi ng\'ama rach', range: '12:1-14:20' },
-      { title: 'Agulu mag mirima gi kethruok Babilon', range: '15:1-19:10' },
-      { title: 'Loch Kristo mar higa alufu achiel kod bura mogik', range: '19:11-20:15' },
-      { title: 'Jerusalem manyien kod giko', range: '21:1-22:21' }
+      { title: "Fweny mokuongo", range: "1:1-20" },
+      { title: "Barupe abiriyo mag kanise", range: "2:1-3:22" },
+      { title: "Fweny kuom Nyasaye kod Nyarombo", range: "4:1-5:14" },
+      { title: "Kido abiriyo mag kum", range: "6:1-8:5" },
+      { title: "Tunge abiriyo mag kum", range: "8:6-11:19" },
+      { title: "Fweny mar kedo manie kind piny gi polo", range: "12:1-14:20" },
+      { title: "Bakunde abiriyo mag kum", range: "15:1-16:21" },
+      { title: "Kum mar jachode kod Babulon", range: "17:1-19:21" },
+      { title: "Giko mar ndaloni to gi ndalo mabiro", range: "20:1-22" },
     ]
-  }
+  },
 };

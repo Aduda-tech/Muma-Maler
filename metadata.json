@@ -1,11 +1,13 @@
 {
-  "name": "Luo Bible — Muma Manyien",
-  "description": "A complete Luo New Testament application with search, chapter navigation, and devotionals. Fully offline-capable native Android app built with Capacitor.",
+  "name": "Luo Bible — Muma Maler",
+  "description": "A complete Luo New Testament application with search, chapter navigation, reading themes, section headings, Bible stories and devotionals. Fully offline-capable native Android app built with Capacitor.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "OFFLINE_READING",
     "NATIVE_SEARCH",
     "BOOKMARK_ENGINE",
-    "QUICK_JUMPER"
+    "QUICK_JUMPER",
+    "READING_THEMES",
+    "BIBLE_STORIES"
   ]
 }
