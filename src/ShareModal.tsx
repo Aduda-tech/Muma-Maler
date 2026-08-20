@@ -1,8 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
-  X, Download, Share2, Upload, Copy, Check, RefreshCw, MessageCircle, Facebook, Image as ImageIcon
+  X, Download, Share2, Upload, Copy, Check, RefreshCw,
+  MessageCircle, Facebook, Instagram, Twitter
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 
 export interface ShareVerseProps {
   verse: string;
@@ -67,8 +71,10 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
   const [bgImage, setBgImage] = useState<HTMLImageElement | null>(null);
   const [copied, setCopied] = useState(false);
   const [onlineLoading, setOnlineLoading] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
 
   const reference = `${book} ${chapter}:${verseNum}`;
+  const isNative = Capacitor.isNativePlatform();
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -88,19 +94,16 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
       ctx.fillRect(0, 0, W, H);
     }
 
-    // legibility overlay
     ctx.fillStyle = 'rgba(0,0,0,0.42)';
     ctx.fillRect(0, 0, W, H);
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
-    // opening quote mark
     ctx.fillStyle = 'rgba(255,255,255,0.45)';
     ctx.font = 'bold 170px Georgia, serif';
     ctx.fillText('\u201c', W / 2, 185);
 
-    // verse text
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 58px Georgia, serif';
     const maxWidth = W - 170;
@@ -114,17 +117,14 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
       y += lineHeight;
     }
 
-    // reference
     ctx.fillStyle = '#f97316';
     ctx.font = 'bold 54px Georgia, serif';
     ctx.fillText(reference, W / 2, H - 160);
-    // brand
     ctx.fillStyle = 'rgba(255,255,255,0.72)';
     ctx.font = '38px Georgia, serif';
     ctx.fillText('Muma Maler', W / 2, H - 85);
   }, [bg, bgImage, verse, reference]);
 
-  // load image backgrounds
   useEffect(() => {
     if (bg.type === 'image' && bg.src) {
       const img = new Image();
@@ -139,66 +139,105 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
 
   useEffect(() => { draw(); }, [draw, bgImage]);
 
-  const downloadImage = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const a = document.createElement('a');
-    a.href = canvas.toDataURL('image/png');
-    a.download = `${book}-${chapter}-${verseNum}.png`;
-    a.click();
+  const flashStatus = (msg: string) => {
+    setStatus(msg);
+    setTimeout(() => setStatus(null), 2500);
   };
 
-  const getImageFile = async (): Promise<File | null> => {
+  // Returns the rendered verse card as a PNG data URL.
+  const getDataUrl = (): string | null => {
     const canvas = canvasRef.current;
     if (!canvas) return null;
-    const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, 'image/png'));
-    if (!blob) return null;
-    return new File([blob], `${book}-${chapter}-${verseNum}.png`, { type: 'image/png' });
+    try {
+      return canvas.toDataURL('image/png');
+    } catch {
+      return null;
+    }
   };
 
-  // Share the rendered verse image (with its background) through the native
-  // share sheet. On Android the user picks WhatsApp / Facebook / etc. and the
-  // image itself is attached.
-  const shareImage = async () => {
-    const file = await getImageFile();
-    if (!file) return;
-    const nav = navigator as any;
-    if (nav.canShare && nav.canShare({ files: [file] })) {
+  // Native share (Capacitor) — hands the image to the Android/iOS share sheet.
+  const nativeShare = async (text: string) => {
+    const dataUrl = getDataUrl();
+    if (!dataUrl) { flashStatus('Koro ok otim tije. Tem kendo.'); return; }
+    try {
+      await Share.share({
+        title: 'Muma Maler',
+        text,
+        dialogTitle: 'Or wes',
+        files: [dataUrl],
+      });
+    } catch {
+      // user cancelled
+    }
+  };
+
+  // Web share — image via navigator.share, fallback to text links.
+  const webShare = async (text: string, textUrl?: string) => {
+    const dataUrl = getDataUrl();
+    if (dataUrl) {
+      const blob = await (await fetch(dataUrl)).blob();
+      const file = new File([blob], `${book}-${chapter}-${verseNum}.png`, { type: 'image/png' });
+      const nav = navigator as any;
+      if (nav.canShare && nav.canShare({ files: [file] })) {
+        try { await nav.share({ files: [file], title: 'Muma Maler', text }); return; } catch { return; }
+      }
+    }
+    if (textUrl) window.open(textUrl, '_blank');
+    else downloadImage();
+  };
+
+  const shareImage = () => {
+    const text = `${verse}\n— ${reference}`;
+    if (isNative) nativeShare(text);
+    else webShare(text);
+  };
+
+  const shareWhatsApp = () => {
+    const text = `*${reference}*\n${verse}`;
+    if (isNative) nativeShare(text);
+    else webShare(text, `https://wa.me/?text=${encodeURIComponent(text)}`);
+  };
+
+  const shareFacebook = () => {
+    const text = `${verse} — ${reference}`;
+    if (isNative) nativeShare(text);
+    else webShare(text, `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(text)}`);
+  };
+
+  const shareInstagram = () => {
+    const text = `${verse} — ${reference}`;
+    if (isNative) nativeShare(text);
+    else webShare(text);
+  };
+
+  const shareTwitter = () => {
+    const text = `${verse}\n— ${reference}`;
+    if (isNative) nativeShare(text);
+    else webShare(text, `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`);
+  };
+
+  const downloadImage = async () => {
+    const dataUrl = getDataUrl();
+    if (!dataUrl) { flashStatus('Koro ok otim tije.'); return; }
+    if (isNative) {
       try {
-        await nav.share({ files: [file], title: 'Muma Maler', text: `${verse}\n— ${reference}` });
-      } catch { /* user cancelled */ }
+        const base64 = dataUrl.split(',')[1];
+        const path = `${book}-${chapter}-${verseNum}.png`;
+        await Filesystem.writeFile({
+          path,
+          data: base64,
+          directory: Directory.Documents,
+        });
+        flashStatus('Osekan e Documents mar app!');
+      } catch {
+        flashStatus('Koro ok otim tije.');
+      }
     } else {
-      downloadImage();
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = `${book}-${chapter}-${verseNum}.png`;
+      a.click();
     }
-  };
-
-  const shareWhatsApp = async () => {
-    const file = await getImageFile();
-    const nav = navigator as any;
-    if (file && nav.canShare && nav.canShare({ files: [file] })) {
-      try {
-        await nav.share({ files: [file], title: 'Muma Maler', text: `*${reference}*\n${verse}` });
-        return;
-      } catch { /* user cancelled or fall through */ }
-    }
-    // fallback: text-only link
-    window.open(`https://wa.me/?text=${encodeURIComponent(`*${reference}*\n${verse}`)}`, '_blank');
-  };
-
-  const shareFacebook = async () => {
-    const file = await getImageFile();
-    const nav = navigator as any;
-    if (file && nav.canShare && nav.canShare({ files: [file] })) {
-      try {
-        await nav.share({ files: [file], title: 'Muma Maler', text: `${verse} — ${reference}` });
-        return;
-      } catch { /* user cancelled or fall through */ }
-    }
-    const url = window.location.href;
-    window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(`${verse} — ${reference}`)}`,
-      '_blank'
-    );
   };
 
   const copyText = async () => {
@@ -253,7 +292,6 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
           onClick={(e) => e.stopPropagation()}
           className="w-full max-w-[520px] max-h-[92vh] overflow-y-auto bg-[#1a1a1a] rounded-t-3xl sm:rounded-3xl border-t border-white/10 p-4 space-y-4"
         >
-          {/* header */}
           <div className="flex items-center justify-between">
             <h3 className="font-extrabold text-white text-base uppercase tracking-widest">Or Wes (Share Verse)</h3>
             <button onClick={onClose} className="p-1.5 rounded-lg bg-white/5 text-white/60 hover:text-white">
@@ -261,12 +299,10 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
             </button>
           </div>
 
-          {/* preview */}
           <div className="rounded-2xl overflow-hidden border border-white/10">
             <canvas ref={canvasRef} width={1080} height={1350} className="w-full h-auto" />
           </div>
 
-          {/* background picker */}
           <div className="space-y-2">
             <p className="text-[10px] uppercase tracking-widest text-white/40 font-black">Yier Gima Inyalo Ket Bang’ (Background)</p>
             <div className="flex gap-2 overflow-x-auto pb-1">
@@ -307,7 +343,6 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
             <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={onUpload} />
           </div>
 
-          {/* actions */}
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={shareImage}
@@ -322,26 +357,44 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
               <Download size={18} /> Kan E Simbi (Download)
             </button>
           </div>
-          <div className="grid grid-cols-3 gap-2">
+
+          {status && (
+            <p className="text-center text-xs font-bold text-green-400">{status}</p>
+          )}
+
+          <div className="grid grid-cols-4 gap-2">
             <button
               onClick={shareWhatsApp}
-              className="h-11 bg-[#25D366]/15 hover:bg-[#25D366]/25 text-[#25D366] font-black rounded-xl flex items-center justify-center gap-1.5 text-xs uppercase tracking-wider"
+              className="h-12 bg-[#25D366]/15 hover:bg-[#25D366]/25 text-[#25D366] font-black rounded-xl flex flex-col items-center justify-center gap-0.5 text-[10px] uppercase tracking-wider"
             >
-              <MessageCircle size={16} /> WhatsApp
+              <MessageCircle size={18} /> WhatsApp
             </button>
             <button
               onClick={shareFacebook}
-              className="h-11 bg-[#1877F2]/15 hover:bg-[#1877F2]/25 text-[#1877F2] font-black rounded-xl flex items-center justify-center gap-1.5 text-xs uppercase tracking-wider"
+              className="h-12 bg-[#1877F2]/15 hover:bg-[#1877F2]/25 text-[#1877F2] font-black rounded-xl flex flex-col items-center justify-center gap-0.5 text-[10px] uppercase tracking-wider"
             >
-              <Facebook size={16} /> Facebook
+              <Facebook size={18} /> Facebook
             </button>
             <button
-              onClick={copyText}
-              className="h-11 bg-white/10 hover:bg-white/15 text-white font-black rounded-xl flex items-center justify-center gap-1.5 text-xs uppercase tracking-wider"
+              onClick={shareInstagram}
+              className="h-12 bg-[#E4405F]/15 hover:bg-[#E4405F]/25 text-[#E4405F] font-black rounded-xl flex flex-col items-center justify-center gap-0.5 text-[10px] uppercase tracking-wider"
             >
-              {copied ? <Check size={16} className="text-green-400" /> : <Copy size={16} />} Kopi (Copy)
+              <Instagram size={18} /> Instagram
+            </button>
+            <button
+              onClick={shareTwitter}
+              className="h-12 bg-white/10 hover:bg-white/15 text-white font-black rounded-xl flex flex-col items-center justify-center gap-0.5 text-[10px] uppercase tracking-wider"
+            >
+              <Twitter size={18} /> X
             </button>
           </div>
+
+          <button
+            onClick={copyText}
+            className="w-full h-11 bg-white/10 hover:bg-white/15 text-white font-black rounded-xl flex items-center justify-center gap-1.5 text-xs uppercase tracking-wider"
+          >
+            {copied ? <Check size={16} className="text-green-400" /> : <Copy size={16} />} Kopi (Copy)
+          </button>
         </motion.div>
       </motion.div>
     </AnimatePresence>
