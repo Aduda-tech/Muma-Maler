@@ -148,29 +148,52 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
     a.click();
   };
 
-  const shareImage = () => {
+  const getImageFile = async (): Promise<File | null> => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    canvas.toBlob(async (blob) => {
-      if (!blob) return;
-      const file = new File([blob], `${book}-${chapter}-${verseNum}.png`, { type: 'image/png' });
-      const nav = navigator as any;
-      if (nav.canShare && nav.canShare({ files: [file] })) {
-        try {
-          await nav.share({ files: [file], title: 'Muma Maler', text: `${verse}\n— ${reference}` });
-        } catch { /* user cancelled */ }
-      } else {
-        downloadImage();
-      }
-    }, 'image/png');
+    if (!canvas) return null;
+    const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, 'image/png'));
+    if (!blob) return null;
+    return new File([blob], `${book}-${chapter}-${verseNum}.png`, { type: 'image/png' });
   };
 
-  const shareWhatsApp = () => {
-    const text = `*${reference}*\n${verse}\n\n— Muma Maler`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+  // Share the rendered verse image (with its background) through the native
+  // share sheet. On Android the user picks WhatsApp / Facebook / etc. and the
+  // image itself is attached.
+  const shareImage = async () => {
+    const file = await getImageFile();
+    if (!file) return;
+    const nav = navigator as any;
+    if (nav.canShare && nav.canShare({ files: [file] })) {
+      try {
+        await nav.share({ files: [file], title: 'Muma Maler', text: `${verse}\n— ${reference}` });
+      } catch { /* user cancelled */ }
+    } else {
+      downloadImage();
+    }
   };
 
-  const shareFacebook = () => {
+  const shareWhatsApp = async () => {
+    const file = await getImageFile();
+    const nav = navigator as any;
+    if (file && nav.canShare && nav.canShare({ files: [file] })) {
+      try {
+        await nav.share({ files: [file], title: 'Muma Maler', text: `*${reference}*\n${verse}` });
+        return;
+      } catch { /* user cancelled or fall through */ }
+    }
+    // fallback: text-only link
+    window.open(`https://wa.me/?text=${encodeURIComponent(`*${reference}*\n${verse}`)}`, '_blank');
+  };
+
+  const shareFacebook = async () => {
+    const file = await getImageFile();
+    const nav = navigator as any;
+    if (file && nav.canShare && nav.canShare({ files: [file] })) {
+      try {
+        await nav.share({ files: [file], title: 'Muma Maler', text: `${verse} — ${reference}` });
+        return;
+      } catch { /* user cancelled or fall through */ }
+    }
     const url = window.location.href;
     window.open(
       `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(`${verse} — ${reference}`)}`,
@@ -232,7 +255,7 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
         >
           {/* header */}
           <div className="flex items-center justify-between">
-            <h3 className="font-extrabold text-white text-base uppercase tracking-widest">Gol Wach (Share Verse)</h3>
+            <h3 className="font-extrabold text-white text-base uppercase tracking-widest">Or Wes (Share Verse)</h3>
             <button onClick={onClose} className="p-1.5 rounded-lg bg-white/5 text-white/60 hover:text-white">
               <X size={18} />
             </button>
@@ -268,7 +291,7 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
               <button
                 onClick={() => fileInputRef.current?.click()}
                 className="shrink-0 w-12 h-12 rounded-lg border-2 border-white/10 bg-white/5 flex items-center justify-center text-white/60 hover:text-white"
-                title="Gol e simbi (Upload from device)"
+                title="Kel e Simbi (From device)"
               >
                 <Upload size={18} />
               </button>
@@ -276,7 +299,7 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
                 onClick={fetchOnline}
                 disabled={onlineLoading}
                 className="shrink-0 w-12 h-12 rounded-lg border-2 border-white/10 bg-white/5 flex items-center justify-center text-white/60 hover:text-white disabled:opacity-40"
-                title="Gol e mbofwa (Fetch online)"
+                title="Kel e Mbofwa (Online)"
               >
                 <RefreshCw size={18} className={onlineLoading ? 'animate-spin' : ''} />
               </button>
@@ -290,13 +313,13 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
               onClick={shareImage}
               className="h-12 bg-orange-500 hover:bg-orange-400 text-black font-black rounded-xl flex items-center justify-center gap-2 text-sm uppercase tracking-wider"
             >
-              <Share2 size={18} /> Gol (Share)
+              <Share2 size={18} /> Or (Share)
             </button>
             <button
               onClick={downloadImage}
               className="h-12 bg-white/10 hover:bg-white/15 text-white font-black rounded-xl flex items-center justify-center gap-2 text-sm uppercase tracking-wider"
             >
-              <Download size={18} /> Lok Piny (Download)
+              <Download size={18} /> Kan E Simbi (Download)
             </button>
           </div>
           <div className="grid grid-cols-3 gap-2">
@@ -316,7 +339,7 @@ export default function ShareModal({ verse, book, chapter, verseNum, onClose }: 
               onClick={copyText}
               className="h-11 bg-white/10 hover:bg-white/15 text-white font-black rounded-xl flex items-center justify-center gap-1.5 text-xs uppercase tracking-wider"
             >
-              {copied ? <Check size={16} className="text-green-400" /> : <Copy size={16} />} Lok (Copy)
+              {copied ? <Check size={16} className="text-green-400" /> : <Copy size={16} />} Kopi (Copy)
             </button>
           </div>
         </motion.div>

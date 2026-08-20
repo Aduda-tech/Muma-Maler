@@ -573,7 +573,7 @@ export default function App() {
                           className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-left text-sm font-bold text-white/80 hover:bg-white/5 transition-colors"
                         >
                           <FileText size={18} />
-                          <span>Wach Ma Kawuono</span>
+                          <span>Wes Ma Kawuono</span>
                         </button>
                         <div className="h-px bg-white/5 my-1" />
                         <div className="px-3 py-1.5 text-[10px] text-white/30 font-black uppercase tracking-widest">
@@ -612,7 +612,7 @@ export default function App() {
                   </>
                 ) : (
                   <>
-                    <span>Sula gi Wach (Quick Jump)</span>
+                    <span>Sula gi Wes (Quick Jump)</span>
                     <ChevronDown size={14} className="text-[#f97316] animate-bounce" />
                   </>
                 )}
@@ -674,7 +674,7 @@ export default function App() {
 
                       {/* Verse typing box */}
                       <div className="col-span-2 space-y-1">
-                        <label className="block text-[9px] uppercase tracking-widest text-white/40 font-black">Wach (Ver.)</label>
+                        <label className="block text-[9px] uppercase tracking-widest text-white/40 font-black">Wes (Ver.)</label>
                         <input
                           type="number"
                           placeholder="1"
@@ -985,7 +985,7 @@ export default function App() {
                   </div>
                 ) : (
                   <div className="p-8 border border-dashed border-white/10 rounded-xl text-center text-white/30 text-sm">
-                    Pok iketo wach moro amora (No bookmarks yet)
+                    Pok iketo wes moro amora (No bookmarks yet)
                   </div>
                 )}
               </section>
@@ -994,7 +994,7 @@ export default function App() {
 
           {activeTab === 'daily' && (
             <div className="space-y-4">
-              <h2 className="text-xs font-black uppercase tracking-widest text-[#f97316] mb-2 px-1">Wach Ma Kawuono</h2>
+              <h2 className="text-xs font-black uppercase tracking-widest text-[#f97316] mb-2 px-1">Wes Ma Kawuono</h2>
               {dailyVerse && (
                 <div 
                   className="p-6 bg-gradient-to-br from-orange-500/20 to-transparent border border-orange-500/20 rounded-3xl cursor-pointer"
@@ -1017,7 +1017,7 @@ export default function App() {
             { id: 'old', icon: Home, label: 'Muma Machon' },
             { id: 'new', icon: BookOpen, label: 'Muma Manyien' },
             { id: 'stories', icon: Plus, label: 'Sigendni' },
-            { id: 'daily', icon: FileText, label: 'Wach Ma Kawuono' },
+            { id: 'daily', icon: FileText, label: 'Wes Ma Kawuono' },
             { id: 'more', icon: Info, label: 'Mamoko' }
           ].map(tab => (
             <button
@@ -1067,7 +1067,7 @@ export default function App() {
                       <h2 className="font-bold text-lg leading-none transition-colors flex items-center gap-1.5" style={{ color: theme.text }}>
                         {selectedBook.name} <Compass size={14} className="animate-pulse" style={{ color: theme.accent }} />
                       </h2>
-                      <span className="text-[10px] uppercase tracking-widest font-black" style={{ color: theme.accent }}>Go mondo ilok (Tap to jump)</span>
+                      <span className="text-[10px] uppercase tracking-widest font-black" style={{ color: theme.accent }}>Lok Somo</span>
                     </div>
                   </div>
                   
@@ -1081,7 +1081,7 @@ export default function App() {
                         )}
                         style={showIntro ? { backgroundColor: theme.accent, color: '#000' } : { backgroundColor: theme.surface2, color: theme.muted }}
                       >
-                        Intro
+                        Nonro
                       </button>
                     )}
                     {/* Theme settings button */}
@@ -1296,7 +1296,7 @@ export default function App() {
                                       onClick={() => setShareVerse({ verse, book: selectedBook.name, chapter: selectedChapter, verseNum })}
                                       className="p-1.5 rounded-lg transition-colors shrink-0"
                                       style={{ color: theme.muted }}
-                                      title="Gol wach (Share verse)"
+                                      title="Or wes (Share verse)"
                                     >
                                       <Share2 size={18} />
                                     </button>
@@ -1347,7 +1347,7 @@ export default function App() {
                     <div className="px-4 py-3.5 bg-[#222] border-b border-white/5 flex items-center justify-between">
                       <div className="space-y-0.5">
                         <h3 className="font-extrabold text-white text-sm uppercase tracking-wider">Yor Manyo (Quick Navigator)</h3>
-                        <p className="text-[11px] text-white/40">Goch sula kata wach ma idwaro somo piyo.</p>
+                        <p className="text-[11px] text-white/40">Goch sula kata wes ma idwaro somo piyo.</p>
                       </div>
                       <button
                         onClick={() => setIsSelectorOpen(false)}
@@ -1370,7 +1370,7 @@ export default function App() {
                       {[
                         { id: 'book', label: 'Buku (Book)' },
                         { id: 'chapter', label: 'Sula (Chapter)' },
-                        { id: 'verse', label: 'Wach (Verse)' }
+                        { id: 'verse', label: 'Wes (Verse)' }
                       ].map(tab => (
                         <button
                           key={tab.id}
