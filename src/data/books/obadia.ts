@@ -1,0 +1,26 @@
+// Luo Old Testament — Obadia (Biblica Open New Luo Translation)
+export const OBADIA_DATA: Record<number, string[]> = {
+  1: [
+    "Fweny mag Obadia. Magi e weche ma Jehova Nyasaye Manyalo Gik Moko Duto wacho kuom Edom. Wasewinjo wach; koa kuom Jehova Nyasaye. Jaote oseor ir ogendini mondo owach niya, “Chunguru, wadhi waked kode.”",
+    "“To neuru, abiro miyo udok matin e kind ogendini, bende ibiro chau ahinya.",
+    "Sunga manie chunyu osewuondou, un mudak e kind lwendni, kendo ugero miechu kuonde moting’ore, un ma uwacho kendu niya, ‘En ng’a manyalo dwokowa piny?’",
+    "To kata obedo ni unyalo fuyo malo mabor ka ongo, kendo ugero kar daku maber e kind sulwe malo, to koa kuno abiro dwokou piny,” Jehova Nyasaye owacho.",
+    "“Ka jokwoge obironu, jomecho mag otieno, to mano kaka masira malich ritou, donge gibiro kwalo mwandu magu kaka ginyalo? Ka jopon mzabibu obiro iru donge digiwe olemb mzabibu matin?",
+    "To mano kaka Esau ibiro choko gigene kendo mwandune mopandi noyaki!",
+    "Ogendini ma uriworugo biro sembou nyaka giko mar tong’; osiepeu biro wuondou ma lowu; kendo joma chamo chiembu biro ketonu obadho, to ok unufweny.”",
+    "Jehova Nyasaye wacho niya, “Odiechieng’no donge abiro tieko jorieko mag Edom, jogo man-gi winjo e gode mag Esau?",
+    "Jolweny magi, yaye Teman, biro bedo kod bwok kendo ji duto modak, e gode mag Esau ibiro negi.",
+    "Nikech lweny mane utimone owadu Jakobo unubed gi wichkuot; mi nokethu nyaka chieng’.",
+    "Chieng’ mane ichung’ tenge ka joma moko donjo e dhorangeyene, kendo gigoyo ombulu ne Jerusalem, ne ichal mana kodgi.",
+    "Ne ok onego ung’igi kod achaya chieng’ masichgi, bende ne ok onego ubed mamor chieng’ mane ikethoe Juda, kata bedo gi ng’ayi chieng’ chandruokgi.",
+    "Ne ok onego udonj e dhorangeye mag joga chieng’ mane masira omakogi, kata ng’iyogi gachaya e thagruokgi, kata kawo mwandugi, e chieng’ thagruokgi gi chieng’ masichegi.",
+    "Ne ok onego uchung’ e akek yore, ka ugeng’one jogegi maringo, kendo ne ok onego uchiw jogegi motony e lwet wasikgi chieng’ chandruokgi.",
+    "“Chieng’ Jehova Nyasaye okayo machiegni ne ogendini duto, bende kaka isetimo e kaka notimni, timbeni nodwogi e wiyi iwuon.",
+    "Mana kaka ne umer ewi goda maler e kaka ogendini duto, biro metho ametha, ginimeth ametha ma ginichal joma onge.",
+    "To ewi got mar Sayun tony nobedie, mi enobed kama ler, kendo od Jakobo nokaw girkeni mage.",
+    "Od Jakobo nobed mach kendo od Josef mach nokaknie, od Esau nobed chuk mach, mi ginimoke moliel pep, onge ng’at ma notony koa e od Esau.” Jehova Nyasaye osewacho.",
+    "Jo-Negev nokaw piny gode mag Esau, kendo joma odak e tiend gode nokaw piny jo-Filistia, ginikaw nyaka piny Efraim gi Samaria, eka jo-Benjamin nokaw piny Gilead.",
+    "To oganda mar jo-Israel mane oter e twech e piny Kanaan, nokaw pinyno nyaka chop Zarefath, kendo jo-Jerusalem manie twech, e piny Sefarad biro kawo miech Negev.",
+    "Jores noidhi ewi got mar Sayun, mi ginibed kod loch ewi gode mag Esau, kendo pinyruoth duto nobed e lwet Jehova Nyasaye.",
+  ],
+};

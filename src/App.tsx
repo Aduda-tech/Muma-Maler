@@ -99,6 +99,11 @@ const FONT_STEPS = ['text-base', 'text-lg', 'text-xl', 'text-2xl'];
 const THEME_KEY = 'luo_bible_theme';
 const FONT_KEY = 'luo_bible_font_size';
 
+// Old-Testament book groups (used to split the two testaments)
+const OT_GROUPS = ['Pentateuch', 'Old History', 'Poetry', 'Major Prophets', 'Minor Prophets'];
+const OT_BOOKS = BOOKS.filter(b => OT_GROUPS.includes(b.group));
+const NT_BOOKS = BOOKS.filter(b => !OT_GROUPS.includes(b.group));
+
 interface BibleStory {
   title: string;
   reference: { book: string; chapter: number };
@@ -794,7 +799,7 @@ export default function App() {
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-3">
-                  {BOOKS.map((book) => (
+                  {NT_BOOKS.map((book) => (
                     <div
                       key={book.key}
                       onClick={() => openReader(book.name)}
@@ -815,16 +820,46 @@ export default function App() {
           )}
 
           {activeTab === 'old' && (
-            <div className="flex flex-col items-center justify-center p-12 text-center h-[60vh] space-y-6">
-              <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center">
-                <BookOpen size={40} className="text-white/20" />
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-lg font-black text-white/40 uppercase tracking-widest italic">Muma Machon</h3>
-                <p className="text-white/20 text-sm italic max-w-[240px] mx-auto">
-                  Muma Machon (Old Testament) biro e lokruok mabiro.
-                </p>
-              </div>
+            <div className="space-y-4">
+              {searchQuery ? (
+                <div className="space-y-3">
+                  {searchResults.length > 0 ? (
+                    searchResults.map((res, i) => (
+                      <div
+                        key={i}
+                        onClick={() => openReader(res.book, res.chapter)}
+                        className="p-4 bg-[#333] rounded-xl border border-white/5 cursor-pointer flex justify-between items-center group"
+                      >
+                        <div className="flex-1">
+                          <h3 className="font-bold text-white text-sm">{res.book} {res.chapter}:{res.verse}</h3>
+                          <p className="mt-1 text-sm text-white/60 line-clamp-2">{res.text}</p>
+                        </div>
+                        <ChevronRight size={18} className="text-white/20 group-hover:text-orange-500 transition-colors" />
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-12 text-center text-white/40 italic">Onge wach moyudi ne "{searchQuery}"</div>
+                  )}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  {OT_BOOKS.map((book) => (
+                    <div
+                      key={book.key}
+                      onClick={() => openReader(book.name)}
+                      className="p-4 bg-[#333] rounded-xl border border-white/5 flex flex-col relative cursor-pointer active:scale-95 transition-transform"
+                    >
+                      <span className={cn("font-black text-lg", book.color)}>
+                        {book.name}
+                      </span>
+                      <span className="text-[12px] font-bold text-white/20 mt-1">
+                        {book.chapters} Sula
+                      </span>
+                      <ChevronRight size={20} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/10" />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 

@@ -8,14 +8,17 @@ A complete, offline-capable **Luo-language Bible app** (Dholuo) for the New Test
 
 ## About
 
-**Muma Maler** (the *full* Bible project) unifies the complete **Muma Manyien (New Testament)** with a rich, modern reader. It ships all 27 books, 260 chapters, and **7,957 verses**, transcribed and corrected from the *Ratil New Testament*, plus the study-note introductions for every book.
+**Muma Maler** is a **complete Luo Bible** — the full **Muma Machon (Old Testament)** and **Muma Manyien (New Testament)** in Dholuo. It ships all **66 books**, 1,189 chapters, and **31,102 verses**:
+
+- **Old Testament** (39 books) — the *Biblica Open New Luo Translation* (CC BY-SA)
+- **New Testament** (27 books) — the *Ratil New Testament*, with study-note introductions
 
 This is the unified home of the project — the previous `Muma-Manyien` repository has been merged in here.
 
 ## Features
 
-- **27 books** — Mathayo (Matthew) through Fweny (Revelation), fully searchable
-- **Complete, corrected text** — all 7,957 verses, faithful to the source
+- **Complete Bible** — 66 books, fully searchable across both testaments
+- **Complete, corrected text** — all 31,102 verses, faithful to the sources
 - **Reading themes** — Otim (dark), Sepia, and Ler (light) themes + adjustable font size
 - **Red-letter words of Christ** — every word spoken by Jesus is coloured red in the reader
 - **Section headings** — per-book section titles rendered inline with the verses
@@ -32,7 +35,8 @@ This is the unified home of the project — the previous `Muma-Manyien` reposito
 
 - `src/data/books/*.ts` — Scripture text (one file per book, keyed chapter → verse array)
 - `src/data/red-letter.ts` — character spans marking the words of Jesus (red-letter)
-- `src/data/book-intros.ts` — study-note introductions
+- `src/data/book-intros.ts` — study-note introductions (New Testament)
+- `src/data/headings.ts` — section headings mapped to verses (both testaments)
 - `src/data/headings.ts` — section headings mapped to verses
 - `src/data/bible-data.ts` — combined book index
 - `src/constants.ts` — book metadata (names, chapter counts, colours, groups)
@@ -70,8 +74,10 @@ cd android && ./gradlew assembleDebug
 
 ## Note on the text
 
-The Scripture text is reproduced faithfully from the source, including its spelling and punctuation. A few verses whose numbers are omitted in the source edition have been handled as follows:
+The Scripture text is reproduced faithfully from the sources, including spelling and punctuation. A few verses whose numbers are omitted in the sources have been handled as follows:
 
 - **Tich Joote (Acts) 2:11** and **7:29** — text present but the verse number was missing; split at the correct boundary.
 - **Mariko (Mark) 11:26** — verse number omitted, text merged into v25; split back out.
 - **Mariko 10:46 heading** — source typo "Bartiman" corrected to "Bartimau".
+
+The Old Testament uses the **Biblica Open New Luo Translation** (© 2020 Biblica, Inc., CC BY-SA 4.0); the New Testament uses the *Ratil New Testament* with its study-note introductions.
