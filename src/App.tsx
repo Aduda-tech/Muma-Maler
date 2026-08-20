@@ -39,6 +39,7 @@ import { BOOKS } from './constants';
 import { BIBLE_DATA } from './data/bible-data';
 import { BOOK_INTROS, BookIntro } from './data/book-intros';
 import { HEADINGS } from './data/headings';
+import { RED_LETTER } from './data/red-letter';
 import { Book } from './types';
 
 // Storage key for bookmarks
@@ -55,6 +56,7 @@ const READER_THEMES: Record<ReaderTheme, {
   muted: string;
   border: string;
   accent: string;
+  red: string;
 }> = {
   dark: {
     label: 'Otim (Dark)',
@@ -65,6 +67,7 @@ const READER_THEMES: Record<ReaderTheme, {
     muted: 'rgba(255,255,255,0.55)',
     border: 'rgba(255,255,255,0.1)',
     accent: '#f97316',
+    red: '#ff6b6b',
   },
   sepia: {
     label: 'Sepia',
@@ -75,6 +78,7 @@ const READER_THEMES: Record<ReaderTheme, {
     muted: 'rgba(59,53,39,0.6)',
     border: 'rgba(59,53,39,0.15)',
     accent: '#b45309',
+    red: '#b91c1c',
   },
   light: {
     label: 'Ler (Light)',
@@ -85,6 +89,7 @@ const READER_THEMES: Record<ReaderTheme, {
     muted: 'rgba(0,0,0,0.55)',
     border: 'rgba(0,0,0,0.12)',
     accent: '#c2410c',
+    red: '#d62828',
   },
 };
 
@@ -466,6 +471,22 @@ export default function App() {
     
     setTouchStartX(null);
     setTouchStartY(null);
+  };
+
+  // Render a verse, colouring the words of Jesus (red-letter) using the
+  // character spans in RED_LETTER.
+  const renderVerse = (verse: string, bookName: string, chapter: number, verseNum: number) => {
+    const spans = RED_LETTER[bookName]?.[chapter]?.[verseNum];
+    if (!spans || spans.length === 0) return verse;
+    const nodes: React.ReactNode[] = [];
+    let last = 0;
+    spans.forEach(([s, e], idx) => {
+      if (s > last) nodes.push(verse.slice(last, s));
+      nodes.push(<span key={idx} style={{ color: theme.red }}>{verse.slice(s, e)}</span>);
+      last = e;
+    });
+    if (last < verse.length) nodes.push(verse.slice(last));
+    return nodes;
   };
 
   return (
@@ -1263,7 +1284,7 @@ export default function App() {
                               <div className="flex-1 flex flex-col gap-2">
                                 <div className="flex justify-between items-start gap-2">
                                   <p className={cn("leading-relaxed font-serif flex-1", FONT_STEPS[fontSizeIndex])} style={{ color: theme.text }}>
-                                    {verse}
+                                    {renderVerse(verse, selectedBook.name, selectedChapter, verseNum)}
                                   </p>
                                   <button 
                                     onClick={() => toggleBookmark(selectedBook.name, selectedChapter, verseNum, verse)}

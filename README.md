@@ -17,6 +17,7 @@ This is the unified home of the project — the previous `Muma-Manyien` reposito
 - **27 books** — Mathayo (Matthew) through Fweny (Revelation), fully searchable
 - **Complete, corrected text** — all 7,957 verses, faithful to the source
 - **Reading themes** — Otim (dark), Sepia, and Ler (light) themes + adjustable font size
+- **Red-letter words of Christ** — every word spoken by Jesus is coloured red in the reader
 - **Section headings** — per-book section titles rendered inline with the verses
 - **Book introductions** — author, place/date of writing, summary, overview, and outline
 - **Quick Jump & Quick Selector** — jump to any book / chapter / verse instantly
@@ -29,6 +30,7 @@ This is the unified home of the project — the previous `Muma-Manyien` reposito
 ## Project structure
 
 - `src/data/books/*.ts` — Scripture text (one file per book, keyed chapter → verse array)
+- `src/data/red-letter.ts` — character spans marking the words of Jesus (red-letter)
 - `src/data/book-intros.ts` — study-note introductions
 - `src/data/headings.ts` — section headings mapped to verses
 - `src/data/bible-data.ts` — combined book index
