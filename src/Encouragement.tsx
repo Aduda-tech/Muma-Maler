@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, BookOpen, Share2, Sparkles } from 'lucide-react';
 import { BIBLE_DATA } from './data/bible-data';
 import {
-  EMOTIONS, GREETING, FALLBACK_REPLY, detectEmotion,
+  EMOTIONS, GREETING, FALLBACK_REPLY, POLITE_REPLY, FALLBACK_VERSE, detectEmotion,
   EmotionVerse,
 } from './data/encouragement';
 
@@ -41,6 +41,9 @@ export default function Encouragement({ onOpen, onShare }: Props) {
   ]);
   const [input, setInput] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
+  // True after we've asked for clarification once — a second unrecognised
+  // answer triggers the polite message + fallback verse.
+  const awaitingClarification = useRef(false);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
@@ -54,14 +57,23 @@ export default function Encouragement({ onOpen, onShare }: Props) {
 
     const newMsgs: Msg[] = [userMsg];
     if (emotion) {
+      // Understood — reply with an empathetic line + matching verse(s).
+      awaitingClarification.current = false;
       newMsgs.push({ id: nextId(), role: 'app', kind: 'text', text: emotion.reply });
       for (const vr of emotion.verses) {
         const ref = toRef(vr);
         if (ref) newMsgs.push({ id: nextId(), role: 'app', kind: 'verse', verse: ref });
       }
-    } else {
-      // Didn't understand the feeling — ask the user to rephrase in English or Kiswahili.
+    } else if (!awaitingClarification.current) {
+      // First miss — ask the user to rephrase in English or Kiswahili.
+      awaitingClarification.current = true;
       newMsgs.push({ id: nextId(), role: 'app', kind: 'text', text: FALLBACK_REPLY });
+    } else {
+      // Still not understood — polite message + fallback encouragement.
+      awaitingClarification.current = false;
+      newMsgs.push({ id: nextId(), role: 'app', kind: 'text', text: POLITE_REPLY });
+      const ref = toRef(FALLBACK_VERSE);
+      if (ref) newMsgs.push({ id: nextId(), role: 'app', kind: 'verse', verse: ref });
     }
     setMessages(m => [...m, ...newMsgs]);
   };
