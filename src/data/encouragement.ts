@@ -108,14 +108,25 @@ export const EMOTIONS: Emotion[] = [
     ],
   },
   {
-    id: "osiel",
+    id: "kenda",
     label: "Aol gi bedo kenda! (Lonely)",
     emoji: "🥺",
-    keywords: ["kenda", "jwang", "kende", "oweya", "osiel", "onge ng'at", "ajwang'", "aol gi bedo kenda"],
+    keywords: ["kenda", "kende", "oweya", "an kenda", "ojwang'a", "aonge ng'ato", "jwang", "aol gi bedo kenda"],
     reply: "Nyasaye osingore ni ok nowei kata jwang'i.",
     verses: [
       { book: "Jo-Hibrania", chapter: 13, verse: 5 },
       { book: "Mathayo", chapter: 28, verse: 20 },
+    ],
+  },
+  {
+    id: "watna_otho",
+    label: "Watna otho (Grief)",
+    emoji: "💔",
+    keywords: ["watna otho", "otho", "ne otho", "loso", "tho mar", "ywak ne", "awinjo lit ne"],
+    reply: "Ayie ni chunyi opogore. Nyasaye chiegni kodi kendo obiro weyo pi wengegi.",
+    verses: [
+      { book: "Fweny", chapter: 21, verse: 4 },
+      { book: "Mathayo", chapter: 5, verse: 4 },
     ],
   },
   {
