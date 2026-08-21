@@ -250,7 +250,7 @@ export const FALLBACK_REPLY =
 // If the clarification is still not understood, reply politely and offer a
 // general encouragement verse.
 export const POLITE_REPLY =
-  "Otimo — ok awinjo gima iwacho. To aduogo gi wach mar jiwo chuny matin.";
+  "Atimo mos — ok awinjo gima iwacho. To we awachni wach ma nyalo jiwo chunyi matin.";
 export const FALLBACK_VERSE: EmotionVerse = { book: "Zaburi", chapter: 23, verse: 1 };
 
 // Detect emotion from free text; returns null if none matched.
