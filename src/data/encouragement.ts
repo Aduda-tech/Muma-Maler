@@ -43,7 +43,7 @@ export const EMOTIONS: Emotion[] = [
   },
   {
     id: "luoro",
-    label: "Aluoro (Afraid)",
+    label: "An gi luoro (Afraid)",
     emoji: "😨",
     keywords: ["luor", "aluor", "luoro", "bwok", "abwok", "alwo", "aluora"],
     reply: "Kik iluor — Nyasaye ni kodi kendo ok nowei.",
@@ -54,7 +54,7 @@ export const EMOTIONS: Emotion[] = [
   },
   {
     id: "chandruok",
-    label: "Achandore (Worried)",
+    label: "Achandora (Worried)",
     emoji: "😟",
     keywords: ["chandruok", "parruok", "chand", "parruok", "pek", "ok anyal", "achandore"],
     reply: "Ket dwachu duto kuom Nyasaye, nimar oheroi.",
@@ -76,7 +76,7 @@ export const EMOTIONS: Emotion[] = [
   },
   {
     id: "richo",
-    label: "Atimo richo (Guilty)",
+    label: "Richo Oloya (Guilty)",
     emoji: "😔",
     keywords: ["richo", "ketho", "keth", "bal", "asetimo marach", "asetho ketho"],
     reply: "Ka wahulo richowa, Nyasaye en jaadiera kendo obiro weyonwagi.",
@@ -87,7 +87,7 @@ export const EMOTIONS: Emotion[] = [
   },
   {
     id: "mirima",
-    label: "Awang (Angry)",
+    label: "Iya Owang’ (Angry)",
     emoji: "😠",
     keywords: ["mirima", "nyiego", "sin", "kecho", "awang", "ich wang", "sin kod"],
     reply: "Dwoko wach mamuol kweyo mirima.",
@@ -109,9 +109,9 @@ export const EMOTIONS: Emotion[] = [
   },
   {
     id: "osiel",
-    label: "Osiel (Lonely)",
+    label: "Aol gi bedo kenda! (Lonely)",
     emoji: "🥺",
-    keywords: ["kenda", "jwang", "kende", "oweya", "osiel", "onge ng'at", "ajwang'"],
+    keywords: ["kenda", "jwang", "kende", "oweya", "osiel", "onge ng'at", "ajwang'", "aol gi bedo kenda"],
     reply: "Nyasaye osingore ni ok nowei kata jwang'i.",
     verses: [
       { book: "Jo-Hibrania", chapter: 13, verse: 5 },
@@ -120,7 +120,7 @@ export const EMOTIONS: Emotion[] = [
   },
   {
     id: "geno",
-    label: "Ageno (Hopeful)",
+    label: "An gi geno (Hopeful)",
     emoji: "🌟",
     keywords: ["geno", "ageno", "erokamano", "goyo erokamano", "awinjo maber", "agen kuom"],
     reply: "Geno ma in-go kuom Nyasaye ok wichkuot.",

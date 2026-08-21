@@ -1057,7 +1057,7 @@ export default function App() {
             <div className="flex flex-col bg-[#1a1a1a] rounded-2xl border border-white/5 overflow-hidden h-[70vh] min-h-[440px]">
               <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2 bg-[#1e1e1e]">
                 <HeartHandshake size={18} className="text-orange-500" />
-                <h2 className="text-xs font-black uppercase tracking-widest text-[#f97316]">Jiwo (Encouragement)</h2>
+                <h2 className="text-xs font-black uppercase tracking-widest text-[#f97316]">Jiwri Kawuono</h2>
               </div>
               <Encouragement
                 onOpen={(book, chapter, verse) => jumpToVerse(book, chapter, verse)}
@@ -1074,7 +1074,7 @@ export default function App() {
             { id: 'new', icon: BookOpen, label: 'Manyien' },
             { id: 'stories', icon: Plus, label: 'Sigendni' },
             { id: 'daily', icon: FileText, label: 'Kawuono' },
-            { id: 'encourage', icon: HeartHandshake, label: 'Jiwo' },
+            { id: 'encourage', icon: HeartHandshake, label: 'Jipo' },
             { id: 'more', icon: Info, label: 'Mamoko' }
           ].map(tab => (
             <button
