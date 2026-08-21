@@ -101,10 +101,23 @@ offline. Network access is used only for the optional online share backgrounds.
 
 ## 8. Assets checklist
 
-- [ ] App icon — `public/icon-512.png` (512×512)
-- [ ] Screenshots (2–4) — capture from the live preview:
-      book list, reader with red-letter, daily verse, Jiwo chat
-- [ ] Feature graphic (1024×500) — optional for APKPure/Uptodown
+All assets are in `store-assets/` (committed to the repo):
+
+- [x] App icon — `store-assets/` (also `public/icon-512.png`, 512×512)
+- [x] Feature graphic — `store-assets/feature-graphic.png` (1024×500)
+- [x] Screenshots (10, phone-sized 824×1830) — `store-assets/screenshots/`:
+      - `01-manyien.png` — New Testament book list
+      - `02-intro.png` — book introduction
+      - `03-reader.png` — verse reader
+      - `04-red-letter.png` — red-letter words of Jesus
+      - `05-machon.png` — Old Testament book list
+      - `06-sigendni.png` — Bible stories
+      - `07-kawuono.png` — daily verse
+      - `08-jipo.png` — encouragement chat
+      - `09-jipo-verse.png` — encouragement verse reply
+      - `10-mamoko.png` — more / bookmarks
+
+Upload the icon, feature graphic, and a handful of these screenshots to each store.
 
 ---
 
