@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, BookOpen, Share2, Sparkles } from 'lucide-react';
 import { BIBLE_DATA } from './data/bible-data';
 import {
-  EMOTIONS, GREETING, FALLBACK_REPLY, FALLBACK_VERSE, detectEmotion,
+  EMOTIONS, GREETING, FALLBACK_REPLY, detectEmotion,
   EmotionVerse,
 } from './data/encouragement';
 
@@ -60,9 +60,8 @@ export default function Encouragement({ onOpen, onShare }: Props) {
         if (ref) newMsgs.push({ id: nextId(), role: 'app', kind: 'verse', verse: ref });
       }
     } else {
+      // Didn't understand the feeling — ask the user to rephrase in English or Kiswahili.
       newMsgs.push({ id: nextId(), role: 'app', kind: 'text', text: FALLBACK_REPLY });
-      const ref = toRef(FALLBACK_VERSE);
-      if (ref) newMsgs.push({ id: nextId(), role: 'app', kind: 'verse', verse: ref });
     }
     setMessages(m => [...m, ...newMsgs]);
   };
