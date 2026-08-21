@@ -23,11 +23,11 @@ This is the unified home of the project — the previous `Muma-Manyien` reposito
 - **Red-letter words of Christ** — every word spoken by Jesus is coloured red in the reader
 - **Section headings** — per-book section titles rendered inline with the verses
 - **Verse sharing** — share any verse to WhatsApp, Facebook or other apps as a beautiful image card, with bundled backgrounds, device upload, or online backgrounds; or download/copy the text
-- **Book introductions** — author, place/date of writing, summary, overview, and outline
+- **Book introductions** — author, place/date of writing, summary, overview, and outline for **all 66 books** (Old and New Testament)
 - **Quick Jump & Quick Selector** — jump to any book / chapter / verse instantly
 - **Scroll tracking** — the reader tracks the verse you're reading
 - **Bible stories** — illustrated summaries of key events
-- **Daily verse** — "Wes Ma Kawuono"
+- **Daily verse** — "Wes Ma Kawuono", drawing from both Old and New Testaments
 - **Bookmarks** — save and manage favourite verses (persisted locally)
 - **Offline & installable** — full offline PWA + native Android APK (Capacitor)
 
