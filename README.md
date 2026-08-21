@@ -27,13 +27,16 @@ This is the unified home of the project — the previous `Muma-Manyien` reposito
 - **Quick Jump & Quick Selector** — jump to any book / chapter / verse instantly
 - **Scroll tracking** — the reader tracks the verse you're reading
 - **Bible stories** — illustrated summaries of key events
-- **Daily verse** — "Wes Ma Kawuono", drawing from both Old and New Testaments
+- **Daily verse** — "Wes Ma Kawuono", drawn from a large algorithmic pool of encouraging, inspiring, hopeful, correcting and teaching verses spanning the whole Bible (a different verse every day, no repeats for years); tapping it jumps straight to that verse
+- **Encouragement chat** — a "Jiwo" section where the app greets you ("Arwaki! Iwinjo nade kawuono?"), listens to how you feel (via chips or free text) and replies with a verse that resonates — fully offline
 - **Bookmarks** — save and manage favourite verses (persisted locally)
 - **Offline & installable** — full offline PWA + native Android APK (Capacitor)
 
 ## Project structure
 
 - `src/data/books/*.ts` — Scripture text (one file per book, keyed chapter → verse array)
+- `src/data/devotional-pool.ts` — algorithmic devotional verse pool (classified across the whole Bible)
+- `src/data/encouragement.ts` — emotion → verse mapping for the encouragement chat
 - `src/data/red-letter.ts` — character spans marking the words of Jesus (red-letter)
 - `src/data/book-intros.ts` — study-note introductions (New Testament)
 - `src/data/headings.ts` — section headings mapped to verses (both testaments)

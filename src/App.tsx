@@ -31,7 +31,8 @@ import {
   Palette,
   Minus,
   Type,
-  Share2
+  Share2,
+  HeartHandshake
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Capacitor } from '@capacitor/core';
@@ -43,6 +44,8 @@ import { HEADINGS } from './data/headings';
 import { RED_LETTER } from './data/red-letter';
 import { Book } from './types';
 import ShareModal from './ShareModal';
+import Encouragement from './Encouragement';
+import { DEVOTIONAL_POOL } from './data/devotional-pool';
 
 // Storage key for bookmarks
 const BOOKMARKS_KEY = 'luo_bible_bookmarks';
@@ -158,78 +161,6 @@ const STORY_ICONS: Record<string, React.ComponentType<any>> = {
   Sunrise,
   Flame
 };
-
-// Curated daily devotional verses — encouraging, inspiring passages (not a
-// random verse). One per day, cycling through the list.
-interface Devotional {
-  book: string;
-  chapter: number;
-  verse: number;
-  theme: string; // short inspiring Luo caption
-}
-
-const DEVOTIONALS: Devotional[] = [
-  // Old Testament
-  { book: 'Chakruok', chapter: 28, verse: 15, theme: 'Anabed Kodi (I Am With You)' },
-  { book: 'Wuok', chapter: 14, verse: 14, theme: 'Kueyo (Peace)' },
-  { book: 'Rapar Mar Chik', chapter: 31, verse: 6, theme: 'Chir (Courage)' },
-  { book: 'Rapar Mar Chik', chapter: 31, verse: 8, theme: 'Ok Noweu (Never Forsake)' },
-  { book: 'Joshua', chapter: 1, verse: 9, theme: 'Bed Motegno (Be Strong)' },
-  { book: '1 Samuel', chapter: 16, verse: 7, theme: 'Chuny (The Heart)' },
-  { book: '2 Weche Mag Ndalo', chapter: 7, verse: 14, theme: 'Lokruok (Turn)' },
-  { book: 'Ayub', chapter: 19, verse: 25, theme: 'Jawarna (My Redeemer)' },
-  { book: 'Zaburi', chapter: 23, verse: 1, theme: 'Jakwadha (Shepherd)' },
-  { book: 'Zaburi', chapter: 27, verse: 1, theme: 'Ler kod Warruok (Light & Salvation)' },
-  { book: 'Zaburi', chapter: 37, verse: 4, theme: 'Mor Kuom Ruoth (Delight)' },
-  { book: 'Zaburi', chapter: 46, verse: 1, theme: 'Kar Pondo (Refuge)' },
-  { book: 'Zaburi', chapter: 118, verse: 24, theme: 'Odiechieng\' (This Day)' },
-  { book: 'Zaburi', chapter: 121, verse: 1, theme: 'Konyruok (Help)' },
-  { book: 'Ngeche', chapter: 3, verse: 5, theme: 'Gen Kuom Jehova (Trust)' },
-  { book: 'Ngeche', chapter: 3, verse: 6, theme: 'Yoreni Duto (All Your Ways)' },
-  { book: 'Ngeche', chapter: 18, verse: 10, theme: 'Ohinga (Tower)' },
-  { book: 'Isaya', chapter: 40, verse: 31, theme: 'Teko Manyien (New Strength)' },
-  { book: 'Isaya', chapter: 41, verse: 10, theme: 'Kik Iluor (Fear Not)' },
-  { book: 'Isaya', chapter: 43, verse: 2, theme: 'Anabed Kodi (I Will Be With You)' },
-  { book: 'Jeremia', chapter: 29, verse: 11, theme: 'Chenro (Plans)' },
-  { book: 'Ywagruok', chapter: 3, verse: 22, theme: 'Ng\'wono (Compassion)' },
-  { book: 'Ywagruok', chapter: 3, verse: 23, theme: 'Nyien Kokinyi (New Every Morning)' },
-  { book: 'Ezekiel', chapter: 36, verse: 26, theme: 'Chuny Manyien (New Heart)' },
-  { book: 'Mika', chapter: 6, verse: 8, theme: 'Gima Nyasaye Dwaro (What God Requires)' },
-  { book: 'Nahum', chapter: 1, verse: 7, theme: 'Kar Pondo (Refuge)' },
-  { book: 'Habakuk', chapter: 3, verse: 19, theme: 'Teko (Strength)' },
-  { book: 'Zefania', chapter: 3, verse: 17, theme: 'Mor Mar Nyasaye (God Rejoices)' },
-  { book: 'Zekaria', chapter: 4, verse: 6, theme: 'Roho (The Spirit)' },
-  { book: 'Malaki', chapter: 3, verse: 10, theme: 'Gweth (Blessing)' },
-  // New Testament
-  { book: 'Mathayo', chapter: 11, verse: 28, theme: 'Yweyo (Rest)' },
-  { book: 'Mathayo', chapter: 6, verse: 33, theme: 'Dwar Pinyruodhe (Seek First)' },
-  { book: 'Mathayo', chapter: 5, verse: 14, theme: 'Ler Mar Piny (Light)' },
-  { book: 'Mathayo', chapter: 28, verse: 20, theme: 'An Kodu (I Am With You)' },
-  { book: 'Johana', chapter: 3, verse: 16, theme: 'Hera (Love)' },
-  { book: 'Johana', chapter: 14, verse: 27, theme: 'Kuwe (Peace)' },
-  { book: 'Johana', chapter: 16, verse: 33, theme: 'Lojo (Overcome)' },
-  { book: 'Johana', chapter: 8, verse: 12, theme: 'Ler Mar Piny (Light)' },
-  { book: 'Jo-Rumi', chapter: 8, verse: 28, theme: 'Tiyo Maber (Works For Good)' },
-  { book: 'Jo-Rumi', chapter: 8, verse: 38, theme: 'Hera Maok We (Unfailing Love)' },
-  { book: 'Jo-Rumi', chapter: 15, verse: 13, theme: 'Geno (Hope)' },
-  { book: 'Jo-Filipi', chapter: 4, verse: 6, theme: 'Kik Iparru (Do Not Worry)' },
-  { book: 'Jo-Filipi', chapter: 4, verse: 7, theme: 'Kuwe Mar Nyasaye (God\'s Peace)' },
-  { book: 'Jo-Filipi', chapter: 4, verse: 13, theme: 'Teko (Strength)' },
-  { book: 'Jo-Filipi', chapter: 4, verse: 19, theme: 'Chiwo (Provision)' },
-  { book: '1 Jo-Korintho', chapter: 13, verse: 13, theme: 'Hera (Love)' },
-  { book: '2 Jo-Korintho', chapter: 12, verse: 9, theme: 'Ng\'wono (Grace)' },
-  { book: '2 Jo-Korintho', chapter: 5, verse: 17, theme: 'Chwech Manyien (New Creation)' },
-  { book: 'Jo-Efeso', chapter: 3, verse: 20, theme: 'Teko (Power)' },
-  { book: 'Jo-Kolosai', chapter: 3, verse: 15, theme: 'Kuwe Mar Kristo (Peace of Christ)' },
-  { book: 'Jo-Hibrania', chapter: 13, verse: 5, theme: 'Ok Anaweu (Never Forsake)' },
-  { book: 'Jo-Hibrania', chapter: 4, verse: 16, theme: 'Ng\'wono (Grace)' },
-  { book: 'Jakobo', chapter: 1, verse: 5, theme: 'Rieko (Wisdom)' },
-  { book: '1 Petro', chapter: 5, verse: 7, theme: 'Ket Dwachu (Cast Your Cares)' },
-  { book: '2 Petro', chapter: 1, verse: 3, theme: 'Ngima (Life)' },
-  { book: '1 Johana', chapter: 4, verse: 19, theme: 'Hera (Love)' },
-  { book: 'Fweny', chapter: 21, verse: 4, theme: 'Geno Mogik (Final Hope)' },
-  { book: 'Fweny', chapter: 3, verse: 20, theme: 'Luongo (He Knocks)' },
-];
 
 interface BookmarkItem {
   book: string;
@@ -357,12 +288,12 @@ export default function App() {
     localStorage.setItem(FONT_KEY, String(fontSizeIndex));
   }, [fontSizeIndex]);
 
-  // Daily Verse logic — picks a curated, inspiring verse for the day
+  // Daily Verse logic — picks a verse from the large devotional pool.
+  // Indexed by day number (days since epoch) so every day is a different verse
+  // and the same verse is never repeated within the pool cycle (years long).
   const dailyVerse = useMemo(() => {
-    const today = new Date();
-    const start = new Date(today.getFullYear(), 0, 0);
-    const dayOfYear = Math.floor((today.getTime() - start.getTime()) / 86400000);
-    const dev = DEVOTIONALS[dayOfYear % DEVOTIONALS.length];
+    const dayNumber = Math.floor(Date.now() / 86400000);
+    const dev = DEVOTIONAL_POOL[dayNumber % DEVOTIONAL_POOL.length];
     const text = BIBLE_DATA[dev.book]?.[dev.chapter]?.[dev.verse - 1];
     if (!text) return null;
     // strip stray opening/closing quote marks for clean display
@@ -1105,7 +1036,7 @@ export default function App() {
               {dailyVerse && (
                 <div 
                   className="p-6 bg-gradient-to-br from-orange-500/20 to-transparent border border-orange-500/20 rounded-3xl cursor-pointer"
-                  onClick={() => openReader(dailyVerse.book, dailyVerse.chapter)}
+                  onClick={() => jumpToVerse(dailyVerse.book, dailyVerse.chapter, dailyVerse.verse)}
                 >
                   <div className="flex items-center gap-2 mb-4">
                     <span className="px-3 py-1 rounded-full bg-orange-500/15 text-orange-400 text-[10px] font-black uppercase tracking-widest">
@@ -1121,15 +1052,29 @@ export default function App() {
               )}
             </div>
           )}
+
+          {activeTab === 'encourage' && (
+            <div className="flex flex-col bg-[#1a1a1a] rounded-2xl border border-white/5 overflow-hidden h-[70vh] min-h-[440px]">
+              <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2 bg-[#1e1e1e]">
+                <HeartHandshake size={18} className="text-orange-500" />
+                <h2 className="text-xs font-black uppercase tracking-widest text-[#f97316]">Jiwo (Encouragement)</h2>
+              </div>
+              <Encouragement
+                onOpen={(book, chapter, verse) => jumpToVerse(book, chapter, verse)}
+                onShare={(verse, book, chapter, verseNum) => setShareVerse({ verse, book, chapter, verseNum })}
+              />
+            </div>
+          )}
         </main>
 
         {/* Bottom Nav - Matching Image */}
-        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[520px] bg-[#222] border-t border-white/5 h-16 grid grid-cols-5 items-center px-1">
+        <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[520px] bg-[#222] border-t border-white/5 h-16 grid grid-cols-6 items-center px-1">
           {[
-            { id: 'old', icon: Home, label: 'Muma Machon' },
-            { id: 'new', icon: BookOpen, label: 'Muma Manyien' },
+            { id: 'old', icon: Home, label: 'Machon' },
+            { id: 'new', icon: BookOpen, label: 'Manyien' },
             { id: 'stories', icon: Plus, label: 'Sigendni' },
-            { id: 'daily', icon: FileText, label: 'Wes Ma Kawuono' },
+            { id: 'daily', icon: FileText, label: 'Kawuono' },
+            { id: 'encourage', icon: HeartHandshake, label: 'Jiwo' },
             { id: 'more', icon: Info, label: 'Mamoko' }
           ].map(tab => (
             <button
@@ -1146,7 +1091,7 @@ export default function App() {
               )}>
                 <tab.icon size={22} strokeWidth={2.5} />
               </div>
-              <span className="text-[10px] font-bold whitespace-nowrap">{tab.label}</span>
+              <span className="text-[9px] font-bold whitespace-nowrap">{tab.label}</span>
             </button>
           ))}
         </nav>
