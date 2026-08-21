@@ -12,6 +12,14 @@ jobs:
     name: Build Android Artifacts
     runs-on: ubuntu-latest
 
+    # Secrets are not accessible inside `if:` conditionals, so expose them as
+    # environment variables at the job level and test those instead.
+    env:
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4.2.2
@@ -42,19 +50,17 @@ jobs:
 
       # ---- Release signing (only when secrets are configured) ----
       - name: Decode release keystore
-        if: ${{ secrets.KEYSTORE_BASE64 != '' }}
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        if: env.KEYSTORE_BASE64 != ''
         run: echo "$KEYSTORE_BASE64" | base64 -d > android/release.keystore
 
       - name: Write keystore.properties
-        if: ${{ secrets.KEYSTORE_BASE64 != '' }}
+        if: env.KEYSTORE_BASE64 != ''
         run: |
           cat > android/keystore.properties <<EOF
           storeFile=release.keystore
-          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
-          keyAlias=${{ secrets.KEY_ALIAS }}
-          keyPassword=${{ secrets.KEY_PASSWORD }}
+          storePassword=$KEYSTORE_PASSWORD
+          keyAlias=$KEY_ALIAS
+          keyPassword=$KEY_PASSWORD
           EOF
 
       # ---- Builds ----
@@ -64,7 +70,7 @@ jobs:
           ./gradlew assembleDebug
 
       - name: Compile Signed Release AAB
-        if: ${{ secrets.KEYSTORE_BASE64 != '' }}
+        if: env.KEYSTORE_BASE64 != ''
         run: |
           cd android
           ./gradlew bundleRelease
@@ -78,7 +84,7 @@ jobs:
           retention-days: 7
 
       - name: Upload Release AAB (Play Store)
-        if: ${{ secrets.KEYSTORE_BASE64 != '' }}
+        if: env.KEYSTORE_BASE64 != ''
         uses: actions/upload-artifact@v4
         with:
           name: muma-maler-release-aab
